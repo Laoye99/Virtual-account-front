@@ -7,6 +7,7 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 // ** Demo Components Imports
 import FormLayoutsTabs from 'src/views/forms/form-layouts/FormLayoutsTabs'
+import FormLayoutsStaffLoan from 'src/views/forms/form-layouts/formLayoutStaffloan'
 import FormLayoutsBasic from 'src/views/forms/form-layouts/FormLayoutsBasic'
 import FormLayoutsIcons from 'src/views/forms/form-layouts/FormLayoutsIcons'
 import FormLayoutsSeparator from 'src/views/forms/form-layouts/FormLayoutsSeparator'
@@ -33,29 +34,11 @@ const AnalyticsDashboard = () => {
   return (
     <DatePickerWrapper>
       <Grid container spacing={6}>
-        <Grid item xs={12} md={6}>
-          <FormLayoutsBasic />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FormLayoutsIcons />
-        </Grid>
-        <Grid item xs={12}>
-          <FormLayoutsSeparator />
-        </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>Form with Tabs</Typography>
+          <Typography variant='h5'>LOAN REQUEST (to be filled in by applicant)</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-          <FormLayoutsTabs />
-        </Grid>
-        <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>Collapsible Sections</Typography>
-        </Grid>
-        <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-          <FormLayoutsCollapsible />
-        </Grid>
-        <Grid item xs={12}>
-          <FormLayoutsAlignment />
+          <FormLayoutsStaffLoan />
         </Grid>
       </Grid>
     </DatePickerWrapper>

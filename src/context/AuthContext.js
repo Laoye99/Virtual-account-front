@@ -65,17 +65,19 @@ const AuthProvider = ({ children }) => {
     axios
       .post(authConfig.loginEndpoint, params)
       .then(async response => {
+        console.log(response)
         params.rememberMe
           ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
           : null
         const returnUrl = router.query.returnUrl
         setUser({ ...response.data.userData })
         params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-        router.replace(redirectURL)
+        const redirectURL = returnUrl && returnUrl !== '/dashboards' ? returnUrl : '/dashboards'
+        router.push('/dashboards')
       })
       .catch(err => {
         if (errorCallback) errorCallback(err)
+        console.log(err)
       })
   }
 

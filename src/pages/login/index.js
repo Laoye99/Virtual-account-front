@@ -81,14 +81,9 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
+  no_: yup.string().required(),
   password: yup.string().min(5).required()
 })
-
-const defaultValues = {
-  password: 'admin',
-  email: 'admin@vuexy.com'
-}
 
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(true)
@@ -110,15 +105,14 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    defaultValues,
     mode: 'onBlur',
     resolver: yupResolver(schema)
   })
 
   const onSubmit = data => {
-    const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
-      setError('email', {
+    const { no_, password } = data
+    auth.login({ no_, password, rememberMe }, () => {
+      setError('no_', {
         type: 'manual',
         message: 'Email or Password is invalid'
       })
@@ -203,7 +197,7 @@ const LoginPage = () => {
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <Box sx={{ mb: 4 }}>
                 <Controller
-                  name='email'
+                  name='no_'
                   control={control}
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (
@@ -215,8 +209,6 @@ const LoginPage = () => {
                       onBlur={onBlur}
                       onChange={onChange}
                       placeholder='admin@vuexy.com'
-                      error={Boolean(errors.email)}
-                      {...(errors.email && { helperText: errors.email.message })}
                     />
                   )}
                 />
