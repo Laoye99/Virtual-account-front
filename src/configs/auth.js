@@ -1,7 +1,7 @@
 export default {
-  meEndpoint: '/auth/me',
+  meEndpoint: 'http://10.200.0.27:8001/api/helper/me',
   loginEndpoint: 'http://10.200.0.27:8001/api/login',
-  registerEndpoint: '/jwt/register',
+  csrfEndpoint: 'http://10.200.0.27:8001/sanctum/csrf-cookie',
   storageTokenKeyName: 'accessToken',
   onTokenExpiration: 'refreshToken' // logout | refreshToken
 }

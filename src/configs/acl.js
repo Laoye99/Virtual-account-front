@@ -2,20 +2,37 @@ import { AbilityBuilder, Ability } from '@casl/ability'
 
 export const AppAbility = Ability
 
+// ** Config
+import { useAuth } from 'src/hooks/useAuth'
+import authConfig from 'src/configs/auth'
+
 /**
  * Please define your own Ability rules according to your app requirements.
  * We have just shown Admin and Client rules for demo purpose where
  * admin can manage everything and client can just visit ACL page
  */
+//const storedToken = localStorage.getItem(authConfig.storageTokenKeyName)
+//console.log('xxxxxxxxxx',storedToken)
 const defineRulesFor = (role, subject) => {
+  const auth = useAuth()
+  console.log('ffffffffff', auth.abl)
+  const ablData = auth.abl.map(item => item.action)
+
+  console.log('ddddddddddddd', ablData)
+  console.log('aaaaaaaaa', role)
+  console.log('bbbbbbbbb', subject)
   const { can, rules } = new AbilityBuilder(AppAbility)
-  if (role === 'admin') {
-    can('manage', 'all')
-  } else if (role === 'client') {
-    can(['read'], 'acl-page')
-  } else {
-    can(['read', 'create', 'update', 'delete'], subject)
+  can('user', 'user')
+
+  for (let i of ablData) {
+    can(i, i)
   }
+
+  // if (role === 'admin') {
+  //   can('manage', 'all')
+  // }else {
+  //   can(ablData, "SLA")
+  // }
 
   return rules
 }

@@ -10,8 +10,8 @@ const UseBgColor = () => {
 
   return {
     primaryFilled: {
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.primary.main
+      color: '#ffffff',
+      backgroundColor: '#71ace0'
     },
     primaryLight: {
       color: theme.palette.primary.main,

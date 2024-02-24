@@ -1,5 +1,5 @@
 // ** React Imports
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -24,6 +24,7 @@ import getHomeRoute from 'src/layouts/components/acl/getHomeRoute'
 const AclGuard = props => {
   // ** Props
   const { aclAbilities, children, guestGuard = false, authGuard = true } = props
+  const [showSpinner, setShowSpinner] = useState(true)
 
   // ** Hooks
   const auth = useAuth()
@@ -36,13 +37,22 @@ const AclGuard = props => {
       const homeRoute = getHomeRoute(auth.user.role)
       router.replace(homeRoute)
     }
+
+    // Simulate a loading spinner for 2 seconds
+    const spinnerTimeout = setTimeout(() => {
+      setShowSpinner(false) // Hide the spinner after 2 seconds
+    }, 2000)
+
+    return () => {
+      clearTimeout(spinnerTimeout) // Clear the timer if the component unmounts
+    }
   }, [auth.user, guestGuard, router])
 
   // User is logged in, build ability for the user based on his role
   if (auth.user && !ability) {
     ability = buildAbilityFor(auth.user.role, aclAbilities.subject)
     if (router.route === '/') {
-      return <Spinner />
+      return showSpinner ? <Spinner /> : children // Show spinner until the timer expires
     }
   }
 
@@ -60,7 +70,7 @@ const AclGuard = props => {
   // Check the access of current user and render pages
   if (ability && auth.user && ability.can(aclAbilities.action, aclAbilities.subject)) {
     if (router.route === '/') {
-      return <Spinner />
+      return showSpinner ? <Spinner /> : children
     }
 
     return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>

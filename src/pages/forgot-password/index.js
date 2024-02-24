@@ -1,5 +1,15 @@
+// ** React Imports
+import { createContext, useEffect, useState } from 'react'
+
 // ** Next Import
 import Link from 'next/link'
+
+// ** Third Party Imports
+import * as yup from 'yup'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // ** MUI Components
 import Button from '@mui/material/Button'
@@ -7,12 +17,18 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
+import Image from 'next/image'
+import axios from 'axios'
+import { BASE_URL } from 'src/configs/constanst'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
+
+// ** Icon Image
+import ablogo from 'src/assets/abn_logo.png'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
@@ -52,16 +68,65 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   alignItems: 'center',
   textDecoration: 'none',
   justifyContent: 'center',
-  color: theme.palette.primary.main,
+  color: '#71ace0',
   fontSize: theme.typography.body1.fontSize
 }))
 
+const schema = yup.object().shape({
+  email: yup.string().required()
+})
+
 const ForgotPassword = () => {
+  const [isButtonDisabled, setButtonDisabled] = useState(false)
+
+  const {
+    control,
+    setError,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(schema)
+  })
+
   // ** Hooks
   const theme = useTheme()
 
   // ** Vars
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
+
+  const sendResetPasswordEmail = async data => {
+    setButtonDisabled(true)
+    try {
+      const apiUrl = `${BASE_URL}/forgot-password`
+
+      // Make a POST request to the API endpoint
+      const response = await axios.post(apiUrl, {
+        email: data.email
+      })
+
+      // Handle the response from the server
+      if (response.status === 200) {
+        // Reset email sent successfully
+        toast.success('Request successful, check your mailbox to proceed')
+        reset()
+      } else {
+        // Handle any error or validation response from the server
+        toast.error('Error sending reset email')
+        console.error('Error sending reset email:', response.data)
+      }
+    } catch (error) {
+      // Handle any network or unexpected errors
+      toast.error('Error sending reset email')
+      console.error('An error occurred while sending the reset email:', error)
+    } finally {
+      setTimeout(() => {
+        // Re-enable the button
+        setButtonDisabled(false)
+      }, 2000) // Adjust the time (in milliseconds) to your desired delay
+    }
+  }
 
   return (
     <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
@@ -80,7 +145,7 @@ const ForgotPassword = () => {
         >
           <ForgotPasswordIllustration
             alt='forgot-password-illustration'
-            src={`/images/pages/auth-v2-forgot-password-illustration-${theme.palette.mode}.png`}
+            src={`/images/pages/misc-under-maintenance.png`}
           />
           <FooterIllustrationsV2 />
         </Box>
@@ -96,34 +161,7 @@ const ForgotPassword = () => {
           }}
         >
           <Box sx={{ width: '100%', maxWidth: 400 }}>
-            <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
-              <path
-                fillRule='evenodd'
-                clipRule='evenodd'
-                fill={theme.palette.primary.main}
-                d='M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z'
-              />
-              <path
-                fill='#161616'
-                opacity={0.06}
-                fillRule='evenodd'
-                clipRule='evenodd'
-                d='M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z'
-              />
-              <path
-                fill='#161616'
-                opacity={0.06}
-                fillRule='evenodd'
-                clipRule='evenodd'
-                d='M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z'
-              />
-              <path
-                fillRule='evenodd'
-                clipRule='evenodd'
-                fill={theme.palette.primary.main}
-                d='M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z'
-              />
-            </svg>
+            <Image src={ablogo} alt='logo-ab' width={200} />
             <Box sx={{ my: 6 }}>
               <Typography sx={{ mb: 1.5, fontWeight: 500, fontSize: '1.625rem', lineHeight: 1.385 }}>
                 Forgot Password? 🔒
@@ -132,10 +170,39 @@ const ForgotPassword = () => {
                 Enter your email and we&prime;ll send you instructions to reset your password
               </Typography>
             </Box>
-            <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-              <CustomTextField fullWidth autoFocus type='email' label='Email' sx={{ display: 'flex', mb: 4 }} />
-              <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
-                Send reset link
+            <form noValidate autoComplete='off' onSubmit={handleSubmit(sendResetPasswordEmail)}>
+              <Controller
+                defaultValue=''
+                name='email'
+                control={control}
+                render={({ field }) => (
+                  <CustomTextField
+                    fullWidth
+                    autoFocus
+                    label='Email or Staff-ID'
+                    placeholder='Enter Email or Staff-ID'
+                    sx={{ display: 'flex', mb: 4 }}
+                    error={!!errors.email}
+                    helperText={errors.email ? 'Email or staff ID is required' : ''}
+                    {...field}
+                  />
+                )}
+              />
+              <Button
+                fullWidth
+                type='submit'
+                variant='contained'
+                sx={{
+                  backgroundColor: '#71ace0',
+                  color: 'white',
+                  mb: 4,
+                  '&:hover': {
+                    backgroundColor: '#22668D'
+                  }
+                }}
+                disabled={isButtonDisabled}
+              >
+                {isButtonDisabled ? 'Processing...' : 'Send reset link'}
               </Button>
               <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', '& svg': { mr: 1 } }}>
                 <LinkStyled href='/login'>
@@ -147,6 +214,7 @@ const ForgotPassword = () => {
           </Box>
         </Box>
       </RightWrapper>
+      <ToastContainer />
     </Box>
   )
 }

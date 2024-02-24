@@ -1,15 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { BASE_URL } from 'src/configs/constanst'
+import authConfig from 'src/configs/auth'
 
 // ** Axios Imports
 import axios from 'axios'
 
 // ** Fetch Invoices
 export const fetchData = createAsyncThunk('appInvoice/fetchData', async params => {
-  const response = await axios.get('/apps/invoice/invoices', {
-    params
-  })
+  const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+  console.log(storedToken)
 
-  return response.data
+  const response = await axios.get(`${BASE_URL}/autoloan/loan/allloans?page=1`, {
+    params,
+    headers: {
+      Authorization: `Bearer ${storedToken}`,
+      'Content-Type': 'application/json' // Fixed typo 'content-Type' to 'Content-Type'
+    }
+  })
+  const invoices = response.data.data
+  const total = response.data.total
+  const allData = response.data.data
+  console.log({
+    allData: allData,
+    invoices: invoices,
+    params: params,
+    total: total
+  })
+  console.log(response.data)
+
+  return {
+    allData: allData,
+    invoices: invoices,
+    params: params,
+    total: total
+  }
 })
 
 export const deleteInvoice = createAsyncThunk('appInvoice/deleteData', async (id, { getState, dispatch }) => {

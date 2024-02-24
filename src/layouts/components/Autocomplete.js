@@ -4,8 +4,10 @@ import { useEffect, useCallback, useRef, useState } from 'react'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 // ** MUI Imports
+import ablogo from 'src/assets/abn_logo.png'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
@@ -216,6 +218,12 @@ const Dialog = styled(MuiDialog)({
   }
 })
 
+const LinkStyled = styled(Link)({
+  display: 'flex',
+  alignItems: 'center',
+  textDecoration: 'none'
+})
+
 const NoResult = ({ value, setOpenDialog }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
@@ -236,7 +244,7 @@ const NoResult = ({ value, setOpenDialog }) => {
         <ListItem sx={{ py: 2 }} disablePadding onClick={() => setOpenDialog(false)}>
           <Box
             component={Link}
-            href='/dashboards/ecommerce'
+            href='/dashboards'
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -407,17 +415,16 @@ const AutocompleteComponent = ({ hidden, settings }) => {
     return null
   } else {
     return (
-      <Box
-        ref={wrapper}
-        onClick={() => !openDialog && setOpenDialog(true)}
-        sx={{ display: 'flex', cursor: 'pointer', alignItems: 'center' }}
-      >
-        <IconButton color='inherit' sx={!hidden && layout === 'vertical' ? { mr: 0.5, ml: -2.75 } : {}}>
+      <Box ref={wrapper} sx={{ display: 'flex', cursor: 'pointer', alignItems: 'center' }}>
+        <LinkStyled href='/dashboards'>
+          <Image src={ablogo} alt='logo-ab' width={150} />
+        </LinkStyled>
+        {/* <IconButton color='inherit' sx={!hidden && layout === 'vertical' ? { mr: 0.5, ml: -2.75 } : {}}>
           <Icon fontSize='1.625rem' icon='tabler:search' />
         </IconButton>
         {!hidden && layout === 'vertical' ? (
           <Typography sx={{ userSelect: 'none', color: 'text.disabled' }}>Search (Ctrl+/)</Typography>
-        ) : null}
+        ) : null} */}
         {openDialog && (
           <Dialog fullWidth open={openDialog} fullScreen={fullScreenDialog} onClose={() => setOpenDialog(false)}>
             <Box sx={{ top: 0, width: '100%', position: 'sticky' }}>

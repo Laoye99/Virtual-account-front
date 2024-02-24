@@ -1,7 +1,9 @@
+
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
 // ** MUI Imports
+import DOMPurify from 'dompurify';
 import Box from '@mui/material/Box'
 import Badge from '@mui/material/Badge'
 import Button from '@mui/material/Button'
@@ -24,6 +26,14 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Util Import
 import { getInitials } from 'src/@core/utils/get-initials'
+
+// ** Config
+import authConfig from 'src/configs/auth'
+import axios from 'axios'
+
+// ** Next Import
+import { useRouter } from 'next/router'
+import { BASE_URL } from 'src/configs/constanst'
 
 // ** Styled Menu component
 const Menu = styled(MuiMenu)(({ theme }) => ({
@@ -100,6 +110,8 @@ const NotificationDropdown = props => {
 
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [apiDataa, setApiDataa] = useState([])
 
   // ** Hook
   const hidden = useMediaQuery(theme => theme.breakpoints.down('lg'))
@@ -111,9 +123,58 @@ const NotificationDropdown = props => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleDropdownClose = () => {
-    setAnchorEl(null)
+  const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+  console.log(storedToken)
+
+  const fetchData = async () => {
+    setIsLoading(true)
+    try {
+      const response = await axios.get(`${BASE_URL}/notification`, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'content-Type': 'application/json',
+        },
+      });
+  
+      // Check if the response data is an array before updating the state
+      if (Array.isArray(response.data)) {
+        setApiDataa(response.data) // Update the state with the fetched data
+      } else {
+        console.error('Invalid data format:', response.data)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+      setIsLoading(false)
+    }
   }
+  
+
+  useEffect(() => {
+    fetchData() // Invoke the function to fetch data
+  }, [])
+
+  // const handleDropdownClose = () => {
+  //   setAnchorEl(null)
+  // }
+
+    // ** Hooks
+    const router = useRouter();
+
+    const handleDropdownClose = (event) => {
+      console.log('oooooooo')
+      // Check if the clicked element is the "Read All Notifications" button
+      const isReadAllButton =
+        event.target.tagName === 'BUTTON' &&
+        event.target.textContent === 'Read All Notifications';
+  
+      if (isReadAllButton) {
+        // Navigate to the "/notifications" route
+        router.push('/notifications')
+      }
+  
+      // Always close the dropdown
+      setAnchorEl(null);
+    }
 
   const RenderAvatar = ({ notification }) => {
     const { avatarAlt, avatarImg, avatarIcon, avatarText, avatarColor } = notification
@@ -164,25 +225,39 @@ const NotificationDropdown = props => {
             <Typography variant='h5' sx={{ cursor: 'text' }}>
               Notifications
             </Typography>
-            <CustomChip skin='light' size='small' color='primary' label={`${notifications.length} New`} />
+            <CustomChip skin='light' size='small' color='primary' label={`${apiDataa.length} New`} />
           </Box>
         </MenuItem>
         <ScrollWrapper hidden={hidden}>
-          {notifications.map((notification, index) => (
-            <MenuItem key={index} disableRipple disableTouchRipple onClick={handleDropdownClose}>
-              <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                <RenderAvatar notification={notification} />
-                <Box sx={{ mr: 4, ml: 2.5, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
-                  <MenuItemTitle>{notification.title}</MenuItemTitle>
-                  <MenuItemSubtitle variant='body2'>{notification.subtitle}</MenuItemSubtitle>
-                </Box>
-                <Typography variant='body2' sx={{ color: 'text.disabled' }}>
-                  {notification.meta}
-                </Typography>
-              </Box>
-            </MenuItem>
-          ))}
-        </ScrollWrapper>
+        {console.log('apiDataa type:', typeof apiDataa)}
+            {apiDataa?.map((item, index) => {
+              // Parse the ISO date string into a JavaScript Date object
+              const createdAtDate = new Date(item?.created_at)
+
+              // Format the date as a string
+              const formattedDate = new Intl.DateTimeFormat('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              }).format(createdAtDate)
+                // Log the message to identify the issue
+           // console.log('Message:', item?.data?.message)
+
+              return (
+                <MenuItem key={index} disableRipple disableTouchRipple onClick={handleDropdownClose}>
+                  <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+                    {/* <RenderAvatar notification={notification} /> */}
+                    <Box sx={{ mr: 4, ml: 2.5, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
+                        <MenuItemSubtitle variant="body2" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item?.data?.message) }} />
+                      </Box>
+                    <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+                      {formattedDate}
+                    </Typography>
+                  </Box>
+                </MenuItem>
+              )
+            })}
+          </ScrollWrapper>
         <MenuItem
           disableRipple
           disableTouchRipple
@@ -190,11 +265,13 @@ const NotificationDropdown = props => {
             borderBottom: 0,
             cursor: 'default',
             userSelect: 'auto',
+            color: 'primary',
             backgroundColor: 'transparent !important',
             borderTop: theme => `1px solid ${theme.palette.divider}`
           }}
         >
-          <Button fullWidth variant='contained' onClick={handleDropdownClose}>
+          <Button fullWidth variant='contained'  sx={{
+          backgroundColor: '#71ace0'}} onClick={handleDropdownClose}>
             Read All Notifications
           </Button>
         </MenuItem>
@@ -204,3 +281,5 @@ const NotificationDropdown = props => {
 }
 
 export default NotificationDropdown
+
+

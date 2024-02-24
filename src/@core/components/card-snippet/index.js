@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Tooltip from '@mui/material/Tooltip'
+// import Tooltip from '@mui/material/Tooltip'
 import Divider from '@mui/material/Divider'
 import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
@@ -110,19 +110,6 @@ const CardSnippet = props => {
                 ) : null}
               </ToggleButtonGroup>
             </Box>
-            <Tooltip title='Copy the source' placement='top'>
-              <IconButton
-                onClick={handleClick}
-                sx={{
-                  top: '5rem',
-                  color: 'grey.100',
-                  right: '2.5625rem',
-                  position: 'absolute'
-                }}
-              >
-                <Icon icon='tabler:copy' fontSize={20} />
-              </IconButton>
-            </Tooltip>
             <div>{renderCode()}</div>
           </CardContent>
         </Collapse>
