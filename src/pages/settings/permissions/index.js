@@ -32,7 +32,7 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Third Party Imports
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Actions Imports
@@ -122,7 +122,7 @@ const PermissionsTable = () => {
       if (error.code == "ERR_NETWORK"){
         window.location.reload()
       }
-     
+
       console.error('An error occurred:', error.code)
     }
   }, [searchValue])

@@ -5,9 +5,10 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { BASE_URL } from 'src/configs/constanst'
 
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 import { styled } from '@mui/material/styles'
+
 // ** Config
 import authConfig from 'src/configs/auth'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
@@ -76,7 +77,7 @@ const FormLayoutLoanCalculator = () => {
   const [isButtonDisabled, setButtonDisabled] = useState(false)
   const [monthlyPaymentCopied, setMonthlyPaymentCopied] = useState(false)
   const [totalLoanAmountCopied, setTotalLoanAmountCopied] = useState(false)
-  
+
   // Create a state variable to track form submission
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
@@ -236,7 +237,7 @@ const FormLayoutLoanCalculator = () => {
       }
 
       // console.log('Form submitted successfully', response.data)
-    } 
+    }
     catch (error) {
       if (error?.response?.data?.errors) {
         const errorMessages = Object.values(error.response.data.errors).flatMap(messages => messages);
@@ -248,11 +249,12 @@ const FormLayoutLoanCalculator = () => {
       console.error('Error processing Request', error);
       console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', error);
     }
+
     // catch (error) {
     //   toast.error(error?.response?.data?.message)
     //   console.error('Error processing Request', error)
-    // } 
-  
+    // }
+
     finally {
       setTimeout(() => {
         // Re-enable the button
@@ -302,8 +304,9 @@ const FormLayoutLoanCalculator = () => {
                     type='text' // Input type as number
                     value={tenor}
                     onChange={handleTenor}
+
                    // onChange={e => setTenor(e.target.value)}
-                   required 
+                   required
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>

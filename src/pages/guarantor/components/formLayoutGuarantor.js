@@ -4,9 +4,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+
 // ** Axios
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Next Import
@@ -139,7 +140,7 @@ const FormLayoutsGuarantor = guarantorId => {
     }
   }
 
-  
+
 
   const handleEmailChange = e => {
     const value = e.target.value
@@ -178,6 +179,7 @@ const FormLayoutsGuarantor = guarantorId => {
 
     e.preventDefault()
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
     //console.log(storedToken)
 
     // You can access form values from the state (values, months, etc.)
@@ -222,6 +224,7 @@ const FormLayoutsGuarantor = guarantorId => {
 
       if (response.status === 200 && !isToastShown) {
         toast.success(response.data.message.charAt(0).toUpperCase() + response.data.message.slice(1));
+
        // toast.success(response.data.message)
         setIsToastShown(true)
 
@@ -248,12 +251,14 @@ const FormLayoutsGuarantor = guarantorId => {
       e.preventDefault()
     }
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
     //console.log(storedToken)
 
     const formData = {
       id: guarantor,
       status: 2
     }
+
    // console.log(formData)
     try {
       // Make an HTTP POST request to your endpoint
@@ -277,13 +282,15 @@ const FormLayoutsGuarantor = guarantorId => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     console.log('storedToken statussssssss',storedToken)
     if (storedToken == '' || storedToken == 'null') {
-    
+
       toast.error('Session Expired')
+
      // setIsToastShown(true)
 
       // Redirect to login page after session expiration
       router.push('/login')
     } else {}
+
     //console.log(storedToken)
 
     const fetchData = async () => {
@@ -294,6 +301,7 @@ const FormLayoutsGuarantor = guarantorId => {
             'content-Type': 'application/json'
           }
         })
+
        // console.log(response.data)
         setApiData(response.data) // Update the state with the fetched data
         // Set the staff ID field with the fetched data
@@ -376,7 +384,7 @@ const FormLayoutsGuarantor = guarantorId => {
                       })}
                     </TableCell>
                   </TableRow>
-                  
+
                   <TableRow>
                     <TableCell>Loan Type:</TableCell>
                     <TableCell>{apiData.data?.loan?.loan_type}</TableCell>
@@ -396,7 +404,7 @@ const FormLayoutsGuarantor = guarantorId => {
         >
           <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Guarantor's Form</span>} />
         </TabList>
-         ): null} 
+         ): null}
           {apiData?.data?.status == 0 ? (
         <fieldset>
           <legend>Guarantor's Form</legend>
@@ -456,7 +464,7 @@ const FormLayoutsGuarantor = guarantorId => {
                     <Box sx={{ mb: 5 }}>
                       <DatePickerWrapper sx={{ '& .MuiFormControl-root': { width: '100%' } }}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker 
+                        <DatePicker
                           label='Date of Birth (e.g 2000-01-31)'
                           customInput={<CustomInput />}
                           selected={date}
@@ -465,12 +473,13 @@ const FormLayoutsGuarantor = guarantorId => {
                           helperText={!isValidDate ? 'Invalid date format (yyyy-mm-dd)' : ''}
                           value={dob}
                           maxDate={dayjs()}
+
                         // maxDate={new Date()} // Set maxDate to disable future dates
                         />
                       </LocalizationProvider>
 
-                    
-                        
+
+
                       </DatePickerWrapper>
                     </Box>
                   </Grid>
@@ -601,7 +610,7 @@ const FormLayoutsGuarantor = guarantorId => {
             </CardActions>
           </form>
         </fieldset>
-        ): null} 
+        ): null}
       </TabContext>
     </Card>
   )

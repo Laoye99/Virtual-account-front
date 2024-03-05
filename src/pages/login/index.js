@@ -49,6 +49,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import toast from 'react-hot-toast'
 
 // ** Styled Components
 const LoginIllustration = styled('img')(({ theme }) => ({
@@ -147,25 +148,27 @@ const LoginPage = () => {
   })
 
   const onSubmit = data => {
-    // Disable the button
-    setButtonDisabled(true)
-    const { no_, password } = data
+    toast.error('The source code has been copied to your clipboard.')
 
-    setTimeout(() => {
-      // Re-enable the button
-      setButtonDisabled(false)
-    }, 2000) // Adjust the time (in milliseconds) to your desired delay
-    auth.login({ no_, password }, () => {
-      setError('no_', {
-        type: 'manual',
-        message: 'Email or Password is invalid'
-      })
-    })
-    if (rememberMe) {
-      window.localStorage.setItem('staffID', no_)
-    } else {
-      window.localStorage.removeItem('staffID')
-    }
+    // Disable the button
+    // setButtonDisabled(true)
+    // const { no_, password } = data
+
+    // setTimeout(() => {
+    //   // Re-enable the button
+    //   setButtonDisabled(false)
+    // }, 2000) // Adjust the time (in milliseconds) to your desired delay
+    // auth.login({ no_, password }, () => {
+    //   setError('no_', {
+    //     type: 'manual',
+    //     message: 'Email or Password is invalid'
+    //   })
+    // })
+    // if (rememberMe) {
+    //   window.localStorage.setItem('staffID', no_)
+    // } else {
+    //   window.localStorage.removeItem('staffID')
+    // }
   }
   const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 

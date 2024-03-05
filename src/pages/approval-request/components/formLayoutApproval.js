@@ -4,15 +4,17 @@ import { Input, Select, Space, Checkbox, Form, Radio, Modal, Popconfirm, Spin, m
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import React from 'react'
+
 //import { MuiFileInput } from 'mui-file-input'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { DropzoneArea } from 'material-ui-dropzone';
+
 //import mammoth from 'mammoth';
 
 //import { Modal } from '@material-ui/core';
 //  Axios
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 //  Next Import
@@ -22,6 +24,7 @@ import { BASE_URL } from 'src/configs/constanst'
 //  Config
 import authConfig from 'src/configs/auth'
 import { AuthContext } from 'src/context/AuthContext'
+
 //  Context
 import { useAuth } from 'src/hooks/useAuth'
 
@@ -29,6 +32,7 @@ import { useAuth } from 'src/hooks/useAuth'
 // MUI Imports
 import { CardMedia } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 //import DeleteIcon from '@mui/icons-material/Delete';
 // import Paper from '@mui/material/Paper'
 import Dialog from '@mui/material/Dialog'
@@ -62,6 +66,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew'; // Import an appropria
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import CustomAvatar from 'src/@core/components/mui/avatar'
+
 //  Custom Component Import
 //  Third Party Imports
 //import DatePicker from 'react-datepicker'
@@ -72,14 +77,17 @@ import { styled } from '@mui/system';
 import {  Paper, Typography } from '@material-ui/core';
 import { ExcelRenderer } from 'react-excel-renderer'; // Used for Excel rendering
 import { makeStyles } from '@material-ui/core/styles'
+
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
+
 const CustomInput = forwardRef((props, ref) => {
   return (
     <CustomTextField fullWidth {...props} inputRef={ref} label='Date of First Installment' autoComplete='off' />
@@ -95,7 +103,7 @@ const CustomInputt = forwardRef((props, ref) => {
 const StyledFileInput = styled('input')({
   // display: 'none',
  });
- 
+
 
 
  const useStyles = makeStyles((theme) => ({
@@ -187,9 +195,11 @@ const theme = createTheme({
     secondary: {
       main: '#f48fb1',
     },
+
     // ... other palette settings
   },
 });
+
 // const StyledButton = styled(Button)({
 //   backgroundColor: '#1976D2',
 //   color: '#fff',
@@ -223,7 +233,8 @@ const formatDateAndTime = (dateString) => {
     second: 'numeric',
     hour12: true, // Use 24-hour clock
   };
-  return new Date(dateString).toLocaleString('en-US', options);
+
+return new Date(dateString).toLocaleString('en-US', options);
 };
 
 const FormLayoutsGuarantor  =  inboxId  => {
@@ -252,8 +263,10 @@ const FormLayoutsGuarantor  =  inboxId  => {
   const [editDialogOpen, setEditDialogOpen] = useState(false) // Initially set to false
   const [openPreviewDialog, setOpenPreviewDialog] = useState(false);
   const [open, setOpen] = useState(false)
+
     // const [amount, setAmount] = useState('')
     const [overdue_in_past_loan, setOverdue] = useState('')
+
     //const [outstanding_loan, setRunningloan] = useState('')
     const [ongoing_loan, setOngoingloan] = useState('')
     const [outstanding_loan, setOustandingloan] = useState('')
@@ -281,7 +294,7 @@ const FormLayoutsGuarantor  =  inboxId  => {
     const [excelData, setExcelData] = useState([]);
     const [filePreview, setFilePreview] = useState(null);
 
-    
+
   // console.log('jjjjjjjjjjjj',apiData)
   // console.log('ttttttttttttttt',apiDataa)
    console.log('pppppppppppppp',apiDat)
@@ -289,12 +302,14 @@ const FormLayoutsGuarantor  =  inboxId  => {
    console.log('check dataatatatatat',apiDatas)
    console.log('documents yapaaaaaaaaaaa',apiDoc)
   console.log('Na my file data be this o o o', fileDataa);
+
   // console.log(typeof fileData);
   // console.log('file Data forgetttttt', fileDataa?.[0]);
   // console.log('my filedata type is shown:', typeof fileDataa?.[0]);
 
    // Ensure fileDataa is always an array
    const filesArray = Array.isArray(fileData) ? fileData : [fileData];
+
   //  console.log('filesArray', filesArray)
   //  console.log('filesArraytypeppppppppppppppppppppp', typeof filesArray)
   //  console.log('comeeeeeeeeeeeeeeeeeeeeeeeee', typeof comment)
@@ -384,7 +399,7 @@ const FormLayoutsGuarantor  =  inboxId  => {
 
   const handleInputChange = (e, setterFunction) => {
     const value = e.target.value;
-  
+
     // Ensure only numeric characters are accepted
     if (/^\d*$/.test(value)) {
       setterFunction(value);
@@ -393,14 +408,14 @@ const FormLayoutsGuarantor  =  inboxId  => {
 
   const handleInputChange2 = (e, setValue) => {
     const value = e.target.value;
-  
+
     // Ensure only numeric characters and at most one decimal point are accepted
     if (/^\d*\.?\d*$/.test(value)) {
       setApprovedIntRate(value);
     }
   };
-  
-  
+
+
 
 
   // Create a state variable to track form submission
@@ -414,8 +429,10 @@ const FormLayoutsGuarantor  =  inboxId  => {
   }
 
   const { user } = authContext
+
   //console.log(user.role)
   const approvalHandler = user.role
+
   //console.log('approvalHandlerbbbbbbbbbbbbbbb',approvalHandler)
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
@@ -430,11 +447,14 @@ const FormLayoutsGuarantor  =  inboxId  => {
             'content-Type': 'application/json'
           }
         })
+
        // setApiData(response.data.data) // Update the state with the fetched data
         //console.log(typeof response.data.data);
         const loanArray = Object.values(response?.data?.data);
+
       // Now you can use map
       loanArray.map(item => item.data)
+
       // Set your state with the mapped data
         // setApiData(loanArray);
         // console.log('xxxxxxxxxxxx',apiData)
@@ -458,11 +478,13 @@ const FormLayoutsGuarantor  =  inboxId  => {
 
          // console.log(typeof response.data.repaymentt);
       const repaymentArray = Object.values(response?.data?.repaymentt);
+
       // Now you can use map
       repaymentArray.map(item => item.repaymentt)
+
       // Set your state with the mapped data
         setApiDataa(repaymentArray);
-    
+
 
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -474,7 +496,7 @@ const FormLayoutsGuarantor  =  inboxId  => {
   }, []) // Empty dependency array ensures this effect runs once after the component is mounted
 
 
- 
+
   const calculateLoanDetails = async e => {
     // Disable the button
     setButtonDisabled(true)
@@ -485,9 +507,10 @@ const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
   // You can access form values from the state (amount, tenor, etc.)
   const monthly_gross_pay = parseFloat(monthg);
   const monthly_net_pay = parseFloat(monthp);
-  
+
  // const loantype = loantype;
   const formData = { date_of_employment: empdate, monthly_gross_pay: monthg, monthly_net_pay: monthp}
+
    // Check if all fields in the formData are not empty or null
    const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
 
@@ -512,15 +535,15 @@ try {
       'content-Type': 'application/json',
     },
   })
-    
+
   console.log(response.status)
 
   if (response.status === 200 ) {
 
    // console.log('response checkingggggggggg', response.data)
 
-    setApiElg(response.data) 
-   
+    setApiElg(response.data)
+
 
   } else {
     console.error('Request not successful:', response.status)
@@ -541,16 +564,17 @@ try {
 const [modalData, setModalData] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  
+
   const [modalUrl, setModalUrl] = useState(null);
 const handleDialogToggle = () => setOpen(!open);
+
 //const openModal = () => setOpen(!open);
 
 const classes = useStyles();
 const [selectedFiles, setSelectedFiles] = useState([]);
 
 
-const number =selectedFiles.length - 1  
+const number =selectedFiles.length - 1
   console.log('lllsdfedre',number)
 
 const handleFileChange = (files) => {
@@ -559,9 +583,11 @@ const handleFileChange = (files) => {
   setFilePreview(null); // Reset the filePreview state
   //console.log('vvvvvvvvvvvvvvv', selectedFiles);
   setFileDataa(files);
+
   //setFileDataa(files.map(file => file.name));
 
   setFileData(files.map(file => file.name));
+
  // console.log('Na my file data be this o o o', fileData);
   files.forEach((file) => {
     const fileExtension = file.name.split('.').pop().toLowerCase();
@@ -576,6 +602,7 @@ const handleFileChange = (files) => {
      // console.log('Image file:', file.name);
       // Implement logic for image files
       handleImageFile(file);
+
      // await handleDocxFile(file);
     } else {
       // Unsupported file type
@@ -626,21 +653,25 @@ const handleFileChange = (files) => {
 
 const handlePdfFile = (file) => {
 console.log('PDF file:', file.name);
+
 // Implement logic for PDF files
 // Example: Open the PDF in a new tab
 // window.open(URL.createObjectURL(file));
 // For demonstration purposes, let's just set the preview to the file name
 setFilePreview(file.name);
+
 //setOpenPreviewDialog(true);
 handleDialogToggle(); // Open the dialog to display Excel data
 };
 
 const handleImageFile = (file) => {
 console.log('Image file:', file.name);
+
 // Implement logic for image files
 // Example: Display the image using an HTML img element
 // setFilePreview(URL.createObjectURL(file));
 setFilePreview(URL.createObjectURL(file));
+
 //setOpenPreviewDialog(true);
 handleDialogToggle(); // Open the dialog to display Excel data
 };
@@ -686,7 +717,7 @@ setFilePreview(null);
       comment: comment
 
     }
-    
+
 
       // Check if all fields in the formData are not empty or null
     const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
@@ -724,10 +755,11 @@ setFilePreview(null);
             } else {
               console.error('Form submission failed with status:', response.status)
             }
-      
+
             console.log('Form submitted successfully', response.data)
+
       // Redirect to another page after successful submission
-    
+
     } catch (error) {
       toast.error( error?.response?.data?.message)
       console.error('Error Approving Request', error)
@@ -735,7 +767,7 @@ setFilePreview(null);
     }
     finally {
         setButtonDisabled(false)
-    
+
     }
   }
 
@@ -761,6 +793,7 @@ setFilePreview(null);
     comment: comment,
     document: fileDataa
   }
+
   // const formData = new FormData();
   // formData.append('id', guarantor);
   // formData.append('approved', 1);
@@ -771,6 +804,7 @@ setFilePreview(null);
   // });
    console.log('formData',formData)
     console.log(formData)
+
      // Check if all fields in the formData are not empty or null
      const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
 
@@ -782,10 +816,10 @@ setFilePreview(null);
        // At least one field is empty or null, display an error message or handle it as needed.
        console.error('Oops!!! All fields are required')
        toast.error('Oops!!! All fields are required')
- 
+
        return
      } else {}
- 
+
     try {
       const response = await axios.post(`${BASE_URL}/autoloan/loan-approval/${guarantor}`, formData, {
         headers: {
@@ -815,13 +849,14 @@ setFilePreview(null);
     }
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
-   
+
     const formData = {
       id: guarantor,
       approved: 2,
       comment: comment,
       document: fileDataa
     }
+
     //console.log(formData)
     try {
       // Make an HTTP POST request to your endpoint
@@ -840,7 +875,7 @@ setFilePreview(null);
     } finally {
       setButtonDisabled(false)
     }
-  } 
+  }
 
      // Map through the array and extract the 'repayment' property
      const headerKeys = Object.keys(apiDat?.[0] ?? {});
@@ -848,6 +883,7 @@ setFilePreview(null);
   //console.log('table head',headerKeys)
 
   const headerKeyss = Object.keys(apiDoc[0] ?? {});
+
   //console.log('file upload preview head',headerKeyss)
 
 
@@ -863,19 +899,21 @@ setFilePreview(null);
 
   const showCustomModal = () => {
     setIsModalVisible(true);
+
     // Add any additional logic you need when showing the modal
   };
 
 
-  
+
   // Function to handle button click
   const handleButtonClick = (url) => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
-  
+
     fetch(url, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${storedToken}`,
+
         // Add other headers if required by the API
       },
     })
@@ -883,7 +921,7 @@ setFilePreview(null);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-  
+
         // Check if the response is a PDF, image, excel or other binary data
       const contentType = response.headers.get('content-type');
 
@@ -907,7 +945,7 @@ setFilePreview(null);
       })
       .then(data => {
         //console.log(data);
-  
+
         // Handle the response data or update state as needed
         if (typeof data === 'string') {
           // Handle text data
@@ -917,7 +955,7 @@ setFilePreview(null);
           const blobUrl = URL.createObjectURL(data);
           setModalUrl(blobUrl);
         }
-  
+
         setOpenModal(true);
       })
       .catch(error => {
@@ -925,7 +963,7 @@ setFilePreview(null);
         console.error('Error:', error.message);
       });
   }
-  
+
 
   // Function to handle file deletion
   const handleDeleteFile = (index) => {
@@ -936,7 +974,7 @@ setFilePreview(null);
     setSelectedFiles(updatedFiles); //  Update the setSelectedFiles state as well, case closed
   };
 
-  
+
   return (
     <Card>
       <TabContext value={value}>
@@ -1071,7 +1109,7 @@ setFilePreview(null);
                         <TableBody key={apiDataa}>
                             <TableRow >
                                 <TableCell >Amount</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiDataa?.total === 'number'
                                     ? apiDataa?.total.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1084,7 +1122,7 @@ setFilePreview(null);
                             </TableRow>
                             <TableRow >
                                 <TableCell >sum capital</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiDataa?.amount === 'number'
                                     ? apiDataa?.amount?.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1093,7 +1131,7 @@ setFilePreview(null);
                                     : apiDataa?.amount}
                                 </TableCell>
                                 <TableCell >sum interests</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiDataa?.sum_interests === 'number'
                                     ? apiDataa?.sum_interests?.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1104,7 +1142,7 @@ setFilePreview(null);
                             </TableRow>
                             <TableRow >
                                 <TableCell >installment</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiDataa?.installment === 'number'
                                     ? apiDataa?.installment?.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1128,7 +1166,7 @@ setFilePreview(null);
                         <TableCell key={index}>{header}(&#8358;)</TableCell>
                       ))}
                     </TableRow>
-                  </TableHead> 
+                  </TableHead>
                         <TableBody>
                           {apiDat?.slice(0)?.map((row, rowIndex) => (
                             <TableRow key={rowIndex}>
@@ -1140,7 +1178,7 @@ setFilePreview(null);
                                     maximumFractionDigits: 2,
                                   })
                                 : cell}
-                            </TableCell>                            
+                            </TableCell>
                             ))}
                           </TableRow>
                           ))}
@@ -1174,6 +1212,7 @@ setFilePreview(null);
                               helperText={!isValidDate ? 'Invalid date format (yyyy-mm-dd)' : ''}
                               value={empdate}
                               maxDate={dayjs()}
+
                               // filterDate={date => date.getDay() !== 6 && date.getDay() !== 0} // weekends cancel
                               // showYearDropdown // year show and scrolldown alos
                               // scrollableYearDropdown
@@ -1192,6 +1231,7 @@ setFilePreview(null);
                                // onChange={e => setMonthGross(e.target.value)}
                                 inputProps={{ pattern: '[0-9]*' }}
                                 onChange={(e) => handleInputChange(e, setMonthGross)}
+
                               // onChange={handleMonthGross}
                               />
                         </Grid>
@@ -1205,6 +1245,7 @@ setFilePreview(null);
                              // onChange={e => setMonthPay(e.target.value)}
                               inputProps={{ pattern: '[0-9]*' }}
                               onChange={(e) => handleInputChange(e, setMonthPay)}
+
                              // onChange={handleAmount}
                             />
                         </Grid>
@@ -1233,7 +1274,7 @@ setFilePreview(null);
                         <TableBody key={apiElg}>
                             <TableRow >
                                 <TableCell >Maximum Installment</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiElg?.maximum_installment === 'number'
                                     ? apiElg?.maximum_installment.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1248,7 +1289,7 @@ setFilePreview(null);
                             </TableRow>
                             <TableRow >
                                 <TableCell >Maximum Installment (60%)</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiElg?.maximum_installment_60 === 'number'
                                     ? apiElg?.maximum_installment_60.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1259,7 +1300,7 @@ setFilePreview(null);
                             </TableRow>
                             <TableRow >
                                 <TableCell >Maximum Installment (70%)</TableCell>
-                                <TableCell>&#8358;  
+                                <TableCell>&#8358;
                                   {typeof apiElg?.maximum_installment_70 === 'number'
                                     ? apiElg?.maximum_installment_70.toLocaleString('en-US', {
                                         minimumFractionDigits: 2,
@@ -1272,7 +1313,7 @@ setFilePreview(null);
                       </Table>
                   ) : null}
                   </StyledTableContainer>
-                
+
                 </fieldset>
                 )}
               </CardActions>
@@ -1282,8 +1323,8 @@ setFilePreview(null);
         ) : null}
 
         <Divider sx={{ m: '0 !important' }} />
-        
-        
+
+
         {approvalHandler == 'Hr' && apiData?.status == 0 && apiDatas?.stage == 2.00 && (
           <Accordion>
           <AccordionSummary sx={{ backgroundColor: '#71ace0', color: 'white' }}>
@@ -1298,7 +1339,7 @@ setFilePreview(null);
           </legend>
 
 
-    
+
 
           <form onSubmit={handleSubmitHr}>
             <CardContent>
@@ -1399,8 +1440,10 @@ setFilePreview(null);
                     fullWidth
                     label='Current Gross'
                     placeholder='Current Gross'
+
                     //type="number"
                     value={gross}
+
                    // onChange={(e) => setGross(e.target.value)}
                     type='text' // Input type as number
                      inputProps={{ pattern: '[0-9]*' }}
@@ -1413,6 +1456,7 @@ setFilePreview(null);
                       label='Avg. Net Bonus'
                       placeholder='Avg. Net Bonus'
                       value={bonus}
+
                       //onChange={e => setBonus(e.target.value)}
                       type='text' // Input type as number
                      inputProps={{ pattern: '[0-9]*' }}
@@ -1425,11 +1469,12 @@ setFilePreview(null);
                       label='Total Deductions'
                       placeholder='Total Deductions'
                       value={totalded}
+
                      // onChange={e => setTotalDeductions(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
                       onChange={(e) => handleInputChange(e, setTotalDeductions)}
-                      
+
                     />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -1438,6 +1483,7 @@ setFilePreview(null);
                       label='Total Net Income'
                       placeholder='Total Net Income'
                       value={totalnet}
+
                      // onChange={e => setTotalNet(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
@@ -1450,6 +1496,7 @@ setFilePreview(null);
                       label='Avg. Net Bonus'
                       placeholder='Avg. Net Bonus'
                       value={avgnet}
+
                       //onChange={e => setAverageNet(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
@@ -1462,6 +1509,7 @@ setFilePreview(null);
                       label='Max. Installment Value'
                       placeholder='Max. Installment Value'
                       value={installval}
+
                      // onChange={e => setInstallmentVal(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
@@ -1474,6 +1522,7 @@ setFilePreview(null);
                       label='Employment Tenor'
                       placeholder='Employment Tenor'
                       value={emptenor}
+
                      // onChange={e => setEmpTenor(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
@@ -1486,6 +1535,7 @@ setFilePreview(null);
                       label='Approved Amount'
                       placeholder='Approved Amount'
                       value={appamt}
+
                      // onChange={e => setApprovedAmt(e.target.value)}
                      type='text' // Input type as number
                      inputProps={{ pattern: '[0-9]*' }}
@@ -1498,11 +1548,12 @@ setFilePreview(null);
                       label='Approved Maturity'
                       placeholder='Approved Maturity'
                       value={appmaturity}
+
                      // onChange={e => setApprovedMaturity(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
                       onChange={(e) => handleInputChange(e, setApprovedMaturity)}
-                   
+
                     />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -1511,6 +1562,7 @@ setFilePreview(null);
                       label='Approved Interest Rate'
                       placeholder='Approved Interest Rate'
                       value={appintrate}
+
                       //onChange={e => setApprovedIntRate(e.target.value)}
                       type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
@@ -1523,7 +1575,8 @@ setFilePreview(null);
                       label='Approved Installment'
                       placeholder='Approved Installment'
                       value={appinstall}
-                     // onChange={e => setApprovedInstallment(e.target.value)} 
+
+                     // onChange={e => setApprovedInstallment(e.target.value)}
                      type='text' // Input type as number
                       inputProps={{ pattern: '[0-9]*' }}
                       onChange={(e) => handleInputChange(e, setApprovedInstallment)}
@@ -1542,6 +1595,7 @@ setFilePreview(null);
                           helperText={!isValidDate ? 'Invalid date format (yyyy-mm-dd)' : ''}
                           value={firstinst}
                           minDate={dayjs()}
+
                           // filterDate={date => date.getDay() !== 6 && date.getDay() !== 0} // weekends cancel
                          // maxDate={dayjs()}
                           // showYearDropdown // year show and scrolldown alos
@@ -1549,8 +1603,8 @@ setFilePreview(null);
                         />
                          </LocalizationProvider>
                       </DatePickerWrapper>
-                     
-                  
+
+
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -1577,22 +1631,22 @@ setFilePreview(null);
                       label='observation'
                       placeholder='Enter your observation here'
                       value={observation}
-                      onChange={e => setObservation(e.target.value)} 
+                      onChange={e => setObservation(e.target.value)}
                     />
                   </Grid>
-                 
-                 
+
+
                 </Grid>
               </TabPanel>
             </CardContent>
-           
+
           </form>
         </fieldset>
         </AccordionDetails>
           </Accordion>
         )}
 
-      
+
 
         <Divider sx={{ m: '0 !important' }} />
         {apiData?.status == 0 ? (
@@ -1615,6 +1669,7 @@ setFilePreview(null);
                 </Typography>
                 <div>
                 <DropzoneArea
+
                     // acceptedFiles={['image/*', '.pdf', '.xls', '.xlsx']}
                     acceptedFiles={[ '.pdf', '.docx']}
                     onChange={handleFileChange}
@@ -1625,7 +1680,7 @@ setFilePreview(null);
                     filesLimit={10} // Set your preferred limit
                   />
                 </div>
-             
+
                 <Dialog fullWidth maxWidth="md" onClose={handleDialogToggle} open={open}>
               <DialogTitle>File Preview: {filePreview}</DialogTitle>
               <Divider />
@@ -1695,13 +1750,14 @@ setFilePreview(null);
                       </TableCell>
                     ))}
                     </TableRow>
-                  </TableHead> 
+                  </TableHead>
                     <TableBody>
                         {apiDoc?.slice(0)?.map((row, rowIndex) => (
                           <TableRow key={rowIndex}>
                             {Object.values(row).map((cell, cellIndex) => (
                               <TableCell key={cellIndex}>
                               {cellIndex === 0 ? (
+
                                  // If it's the first cell, render a clickable button with a PDF icon
                                 <Button
                                 style={{ padding: 0, minWidth: 0 }} // Customize the inline styles as needed
@@ -1710,9 +1766,11 @@ setFilePreview(null);
                                 <PictureAsPdfIcon />
                               </Button>
                               ) : cellIndex === 2 ? (
+
                                 // If it's the third cell (index 2), format the date
                                 <>{formatDateAndTime(cell)}</>
                               ) : (
+
                                 // If it's not the first cell, render the cell content
                                 typeof cell === 'number'
                                   ? cell.toLocaleString('en-US', {
@@ -1722,7 +1780,7 @@ setFilePreview(null);
                                   : cell
                               )}
                             </TableCell>
-                                                    
+
                             ))}
                           </TableRow>
                           ))}
@@ -1736,7 +1794,7 @@ setFilePreview(null);
                    {/* Your modal code... */}
                      <Modal
                             title="File Attached"
-                            visible={isModalVisible} open={openModal} 
+                            visible={isModalVisible} open={openModal}
                             onCancel={handleModalClose}
                             style={{ width: '300%', }}
                       >

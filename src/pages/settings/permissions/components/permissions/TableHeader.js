@@ -8,7 +8,7 @@ import { AuthContext } from 'src/context/AuthContext'
 
 // ** Axios
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Next Import
@@ -94,6 +94,7 @@ const TableHeader = props => {
     setOpen(false)
     e.preventDefault()
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
     //console.log(storedToken)
 
     // Gather the data to be sent

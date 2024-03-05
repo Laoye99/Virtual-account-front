@@ -27,7 +27,7 @@ import Icon from 'src/@core/components/icon'
 // ** Config
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Custom Components Imports

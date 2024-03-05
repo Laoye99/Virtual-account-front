@@ -38,7 +38,7 @@ import IconButton from '@mui/material/IconButton'
 // ** Config
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Custom Components Imports
@@ -161,7 +161,7 @@ const Notifications = props => {
           'content-Type': 'application/json',
         },
       });
-  
+
       // Check if the response data is an array before updating the state
       if (Array.isArray(response.data)) {
         setApiDataa(response.data) // Update the state with the fetched data
@@ -172,7 +172,7 @@ const Notifications = props => {
       console.error('Error fetching data:', error)
       setIsLoading(false)
     }
-  }  
+  }
 
   useEffect(() => {
     fetchData() // Invoke the function to fetch data
@@ -227,7 +227,7 @@ const Notifications = props => {
                 </MenuItem>
               )
             })}
-         
+
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
               <Pagination count={Math.ceil(apiDataa?.length / itemsPerPage)} page={page} onChange={handleChange} />
             </Box>

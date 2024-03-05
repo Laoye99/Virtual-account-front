@@ -2,7 +2,7 @@
 import { useState, Fragment, useContext } from 'react'
 import { BASE_URL } from 'src/configs/constanst'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Next Import
@@ -202,7 +202,6 @@ const UserDropdown = props => {
           </Box>
         </MenuItemStyled>
       </Menu>
-      <ToastContainer />
     </Fragment>
   )
 }

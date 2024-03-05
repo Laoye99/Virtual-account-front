@@ -13,7 +13,7 @@ import { AbilityContext } from 'src/layouts/components/acl/Can'
 // ** Config
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** MUI Imports

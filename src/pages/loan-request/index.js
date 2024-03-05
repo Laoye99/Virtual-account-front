@@ -19,7 +19,7 @@ import CardStatsWithAreaChart from 'src/@core/components/card-statistics/card-st
 import { forwardRef, useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { BASE_URL } from 'src/configs/constanst'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Config
@@ -229,14 +229,16 @@ const LoanRequestPage = () => {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [filePreview, setFilePreview] = useState(null)
   const [excelData, setExcelData] = useState([])
+
   //console.log('nowwwwwwwwwwwwwwwwwwwww', showUpload)
 
-   const number =selectedFiles.length - 1  
+   const number =selectedFiles.length - 1
   console.log('lllsdfedre',number)
 
   const handleDialogToggle = () => setOpen(!open)
   console.log('Na my file data be this o o o', fileDataa);
   console.log('Checking my file data nanannanannananna', fileData);
+
   // Ensure fileDataa is always an array
   // const filesArray = Array.isArray(fileData) ? fileData : [fileData]
   // console.log('filesArray', filesArray)
@@ -342,14 +344,14 @@ const LoanRequestPage = () => {
 
         // Implement logic for PDF files
         handlePdfFile(file)
-      } 
+      }
       else if (['docx'].includes(fileExtension)) {
         // Handle image file logic
         console.log('Image file:', file.name)
 
         // Implement logic for image files
         handleImageFile(file)
-      } 
+      }
        else {
         // Unsupported file type
         console.log('Unsupported file type:', file.name)
@@ -468,6 +470,7 @@ const LoanRequestPage = () => {
     setButtonDisabled(true)
     e.preventDefault()
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
     //console.log(storedToken)
 
     // You can access form values from the state (values, months, etc.)
@@ -515,6 +518,7 @@ const LoanRequestPage = () => {
 
       // Handle the response as needed
       toast.success(response.data.message)
+
      // console.log('Form submitted successfully', response.data)
 
       // Clear user inputs after successful submission
@@ -566,7 +570,7 @@ const LoanRequestPage = () => {
     }
   }, [fetchCount])
 
-  
+
   // Function to handle file deletion
   const handleDeleteFile = (index) => {
     const updatedFiles = [...fileDataa];
@@ -614,7 +618,7 @@ const LoanRequestPage = () => {
                             fullWidth
                             label='Applied amount'
                             placeholder='Applied amount'
-                            inputProps={{ pattern: '[0-9]*' }} 
+                            inputProps={{ pattern: '[0-9]*' }}
                             //type="number"
                             value={amount}
                             onChange={e => {
@@ -748,6 +752,7 @@ const LoanRequestPage = () => {
                                       </Typography>
                                       <div>
                                         <DropzoneArea
+
                                           // acceptedFiles={['image/*', '.pdf', '.xls', '.xlsx']}
                                           acceptedFiles={[ '.pdf', '.docx']}
                                           onChange={handleFileChange}
@@ -758,7 +763,7 @@ const LoanRequestPage = () => {
                                           filesLimit={10} // Set your preferred limit
                                         />
                                       </div>
-                                    
+
                                       <Dialog fullWidth maxWidth='md' onClose={handleDialogToggle} open={open}>
                                         <DialogTitle>File Preview: {filePreview}</DialogTitle>
                                         <Divider />

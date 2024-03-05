@@ -8,7 +8,7 @@ import { AuthContext } from 'src/context/AuthContext'
 
 // ** Axios
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 // ** Next Import
@@ -18,6 +18,7 @@ import { BASE_URL } from 'src/configs/constanst'
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 import { styled } from '@mui/material/styles';
+
 // ** Config
 
 import authConfig from 'src/configs/auth'
@@ -35,6 +36,7 @@ import DialogContent from '@mui/material/DialogContent'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Divider from '@mui/material/Divider'
 import InputLabel from '@mui/material/InputLabel'
+
 // ** Custom Components Imports
 import { ExcelRenderer } from 'react-excel-renderer'; // Used for Excel rendering
 
@@ -83,6 +85,7 @@ const TableHeader = props => {
 
   // ** State
   const [open, setOpen] = useState(false)
+
   //const handleDialogToggle = () => setOpen(!open)
   const [name, setName] = useState('')
   const [displayname, setDisplayname] = useState('')
@@ -97,7 +100,7 @@ const TableHeader = props => {
   const authContext = useContext(AuthContext)
   const ability = useContext(AbilityContext)
 
-  
+
 const StyledFileInput = styled('input')({
   display: 'none', // Hide the original file input
 })
@@ -159,14 +162,15 @@ const handleDialogToggle = () => setEditDialogOpen(!editDialogOpen)
 
   //  const handleFileChange = (e) => {
   //   const file = e.target.files[0]
-  
+
   //   // Do something with the selected file, for example, store it in state
   //   setFile(file)
   // }
-  
+
 
   const onSubmit = async e => {
     setOpen(false)
+
   //   e.preventDefault()
   //   const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
   //   console.log(storedToken)
@@ -277,7 +281,7 @@ const handleDialogToggle = () => setEditDialogOpen(!editDialogOpen)
                     accept=".xls, .xlsx"
                     onChange={handleFileChange}
                     id="excel-file-input"
-               
+
                   />
                   <FileInputLabel htmlFor="excel-file-input">
                     {fileName ? `Selected: ${fileName}` : 'Browse File'}
@@ -303,7 +307,7 @@ const handleDialogToggle = () => setEditDialogOpen(!editDialogOpen)
                   </div>
                 </label>
 
-        
+
           </Box>
             {excelData.length > 0 ? (
           <StyledTableContainer component={Paper}>

@@ -11,7 +11,7 @@ import NProgress from 'nprogress'
 
 // ** Emotion Imports
 import { CacheProvider } from '@emotion/react'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 
 // ** Config Imports
 import 'src/configs/i18n'

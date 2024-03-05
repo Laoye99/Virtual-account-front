@@ -3,7 +3,7 @@ import { forwardRef, useState, useEffect } from 'react'
 
 // ** Axios
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -93,7 +93,7 @@ const FormLayoutsGuarantor = loanId => {
 
   // Create a state variable to track form submission
   const [isFormSubmitted, setIsFormSubmitted] = useState(false)
-  
+
   console.log('nnnnnnnnnnnnnnnnnnnnnnn', apiData)
 
   // ** Hooks
@@ -200,6 +200,7 @@ const FormLayoutsGuarantor = loanId => {
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
     // console.log(storedToken)
     // console.log(guarantor)
 
@@ -226,6 +227,7 @@ const FormLayoutsGuarantor = loanId => {
   const handleDelete = async id => {
     setButtonDisabled(true)
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
     //console.log(storedToken)
 
     try {
@@ -258,6 +260,7 @@ const FormLayoutsGuarantor = loanId => {
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
    // console.log(storedToken)
 
     if (fetchCount === 3) {

@@ -8,7 +8,7 @@ import Link from 'next/link'
 // ** Config
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import Icon from 'src/@core/components/icon'

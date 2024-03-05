@@ -7,13 +7,6 @@ const navigation = () => {
       action: 'user',
       subject: 'user'
     },
-    // {
-    //   title: 'Excel Table',
-    //   icon: 'tabler:smart-home',
-    //   path: '/exceltab',
-    //   action: 'user',
-    //   subject: 'user'
-    // },
     {
       title: 'Approval Request',
       icon: 'tabler:mail',
