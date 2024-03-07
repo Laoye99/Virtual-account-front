@@ -112,8 +112,8 @@ const columns = [
 const GuarantorRequestDetails = () => {
   // ** State
   const [data, setData] = useState([])
-  const [filteredData, setFilteredData] = useState([]) // Add state for filtered data
-  const [searchValue, setSearchValue] = useState('') // Add state for search value
+  const [filteredData, setFilteredData] = useState([])
+  const [searchValue, setSearchValue] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
   const [exportCSVClicked, setExportCSVClicked] = useState(false)
   const [atLeastOneCheckboxChecked, setAtLeastOneCheckboxChecked] = useState(false)
@@ -121,7 +121,7 @@ const GuarantorRequestDetails = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const [value, setValue] = useState('')
- 
+
 const [paginationModel, setPaginationModel] = useState({
   page: 1, // Initial page number
   pageSize: 5, // Initial page size
@@ -129,7 +129,7 @@ const [paginationModel, setPaginationModel] = useState({
 });
 
 
-  
+
   const fetchData = async (page) => {
     try {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
@@ -146,7 +146,8 @@ const [paginationModel, setPaginationModel] = useState({
       setPaginationModel((prev) => ({
         ...prev,
         total: response.data.total,
-      //  page: response.data.per_page,
+
+
         per_page: response.data.per_page,
         next_page_url: response.data.next_page_url,
         prev_page_url: response.data.prev_page_url,
@@ -162,38 +163,34 @@ const [paginationModel, setPaginationModel] = useState({
 
   useEffect(() => {
     fetchData();
-  }, [searchValue, paginationModel.page]); // Include paginationModel.page in dependencies
+  }, [searchValue, paginationModel.page]);
 
-    // console.log('page size',paginationModel.pageSize)
-    // console.log('page',paginationModel.page)
-    // console.log('total rows',paginationModel.total)
-    // console.log('rows per page',paginationModel.per_page)
-    // console.log('next page url',paginationModel.next_page_url)
-    // console.log('prev page url',paginationModel.prev_page_url)
+
 
     const handlePageChange = (newPage) => {
       const nextPageUrl = paginationLinks.next_page_url;
       const prevPageUrl = paginationLinks.prev_page_url;
-     // console.log('next page url',paginationModel.next_page_url)
+
+
       if (newPage > currentPage && nextPageUrl) {
-        // Handle next page
+
         fetchDataFromUrl(nextPageUrl);
       } else if (newPage < currentPage && prevPageUrl) {
-        // Handle previous page
+
         fetchDataFromUrl(prevPageUrl);
       }
-    
+
       setCurrentPage(newPage);
-      // console.log('CCCCCCCCCCCCCCCCCCCCCCCC')
-      // console.log('h New PAGE LAH',newPage)
-      // console.log('h New PAGE LAH',page)
+
+
     }
+
   const handleFilter = val => {
-    setSearchValue(val) // Update the search value
+    setSearchValue(val)
   }
 
   useEffect(() => {
-    // Filter the original data based on the searchValue
+
     const searchString = searchValue.toLowerCase()
 
     const filtered = data.filter(row => {
@@ -202,16 +199,17 @@ const [paginationModel, setPaginationModel] = useState({
       return (
         row.id.toString().toLowerCase().includes(searchString) ||
         statusText.toLowerCase().includes(searchString) ||
-        // row.loan.loan_owner.full_name.toString().includes(searchString) ||
+
+
         row.created_at.toLowerCase().includes(searchString)
       )
     })
 
-    setFilteredData(filtered) // Update the filtered data
+    setFilteredData(filtered)
   }, [searchValue, data])
 
   useEffect(() => {
-    // Filter the original data based on the searchValue
+
     const searchString = searchValue.toLowerCase()
 
     const selected = data.filter(row => {
@@ -220,28 +218,28 @@ const [paginationModel, setPaginationModel] = useState({
       return (
         row.id.toString().toLowerCase().includes(searchString) ||
         statusText.toLowerCase().includes(searchString) ||
-        // row.loan.loan_owner.full_name.toString().includes(searchString) ||
+
+
         row.created_at.toLowerCase().includes(searchString)
       )
     })
 
-    setSelectedRows(selected) // Update the filtered data
+    setSelectedRows(selected)
   }, [searchValue, data])
 
   const onRowsSelectionHandler = ids => {
     const selectedRowsData = ids.map(id => {
       const rowData = filteredData.find(row => row.id === id)
 
-      // Extract additional data from `rowData`
       const additionalData = {
-        LoanRequestor: rowData?.loan?.loan_owner?.full_name, // Extract loan_owner data from `rowData`
+        LoanRequestor: rowData?.loan?.loan_owner?.full_name,
         status: rowData?.loan?.status,
 
         // Date: rowData.created_at,
         Date: new Date(rowData?.created_at).toLocaleDateString()
       }
 
-      // Combine `id` and additional data into a new object
+
       return {
         id: rowData?.id,
         ...additionalData
@@ -249,16 +247,16 @@ const [paginationModel, setPaginationModel] = useState({
     })
 
     console.log(selectedRowsData)
-    setAtLeastOneCheckboxChecked(selectedRowsData.length > 0) // Update the atLeastOneCheckboxChecked state
-    setSelectedRows(selectedRowsData) // Update the setSelectedRows data
-    //setSelectedRows(selectedRowsData); // Update the setSelectedRows data
+    setAtLeastOneCheckboxChecked(selectedRowsData.length > 0)
+    setSelectedRows(selectedRowsData)
+
   }
 
   const formatSelectedDataForCSVExport = selectedRows => {
-    //console.log('Selected Data:', selectedRows)
+
 
     if (exportCSVClicked) {
-      // Data generation logic here
+
       const selectedData = selectedRows.map(rowId => {
         const row = data.find(item => item.id === rowId)
 
@@ -270,15 +268,15 @@ const [paginationModel, setPaginationModel] = useState({
         }
       })
 
-      //console.log('New Data:', selectedData)
+
 
       return selectedData
     } else {
-      return [] // Return an empty array if the button hasn't been clicked
+      return []
     }
   }
 
-  // Create a function to format the data for CSV export
+
   const formatDataForCSVExport = data => {
     return data.map(row => ({
       'Loan ID': `#${row?.loan_id}`,
@@ -299,7 +297,7 @@ const [paginationModel, setPaginationModel] = useState({
     return parsedLinks;
   }
 
-  
+
 
   return (
     <Card>
@@ -308,10 +306,10 @@ const [paginationModel, setPaginationModel] = useState({
       >
         <Typography variant='h6'>ALL GUARANTOR REQUEST</Typography>
         <Box sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          {/* Use the formatDataForCSVExport and formatSelectedDataForCSVExport functions */}
+
           <CSVLink
-            data={formatDataForCSVExport(filteredData)} // Use selectedRows data
-            //data={[...formatDataForCSVExport(filteredData), ...formatSelectedDataForCSVExport(selectedRows)]}
+            data={formatDataForCSVExport(filteredData)}
+
             headers={[
               { label: 'Loan ID', key: 'Loan ID' },
               { label: 'Loan Requestor', key: 'Loan Requestor' },
@@ -319,11 +317,11 @@ const [paginationModel, setPaginationModel] = useState({
               { label: 'Date', key: 'Date' }
             ]}
             filename={'guarantors_requests.csv'}
-            onClick={() => setExportCSVClicked(true)} // Set the flag when the button is clicked
+            onClick={() => setExportCSVClicked(true)}
           >
             <p
               style={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 color: '#ffffff',
                 padding: '10px 15px',
                 borderRadius: '5px',
@@ -336,12 +334,12 @@ const [paginationModel, setPaginationModel] = useState({
           </CSVLink>
           {atLeastOneCheckboxChecked && (
             <CSVLink
-              data={selectedRows} // Use selectedRows data
+              data={selectedRows}
               filename={'guarantors_requests.csv'}
             >
               <p
                 style={{
-                  backgroundColor: '#71ace0',
+                  backgroundColor: '#f50606',
                   color: '#ffffff',
                   padding: '10px 15px',
                   borderRadius: '5px',
@@ -367,7 +365,6 @@ const [paginationModel, setPaginationModel] = useState({
         columns={columns}
         checkboxSelection
         selectionModel={selectedRows}
-        //  pageSizeOptions={[5, 10]}
         onRowSelectionModelChange={onRowsSelectionHandler}
         pageSize={paginationModel.per_page}
         rowCount={paginationModel.total}

@@ -529,7 +529,7 @@ const UserViewLeft = ({ users }) => {
               variant='contained'
               onClick={handleSubmit}
               sx={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: '#22668D'
@@ -620,7 +620,7 @@ const UserViewLeft = ({ users }) => {
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#71ace0', // Background color
+                  backgroundColor: '#f50606', // Background color
                   color: '#fff', // Text color
                   '&:hover': {
                     backgroundColor: '#0056b3' // Hover background color

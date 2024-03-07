@@ -80,7 +80,7 @@ const RightWrapper = styled(Box)(({ theme }) => ({
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: '#71ace0'
+  color: '#f50606'
 }))
 
 const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
@@ -90,7 +90,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 const schema = yup.object().shape({
-  no_: yup.string().required(),
+  username: yup.string().required(),
   password: yup.string().min(5).required()
 })
 
@@ -128,7 +128,7 @@ const LoginPage = () => {
   //   console.log(err)
 
   const defaultValues = {
-    no_: email ? email : storedStaffID ? storedStaffID : '',
+    username : email ? email : storedStaffID ? storedStaffID : '',
     password: ''
   }
 
@@ -148,27 +148,27 @@ const LoginPage = () => {
   })
 
   const onSubmit = data => {
-    toast.error('The source code has been copied to your clipboard.')
+    // toast.error('The source code has been copied to your clipboard.')
 
     // Disable the button
-    // setButtonDisabled(true)
-    // const { no_, password } = data
+    setButtonDisabled(true)
+    const {username, password } = data
 
-    // setTimeout(() => {
-    //   // Re-enable the button
-    //   setButtonDisabled(false)
-    // }, 2000) // Adjust the time (in milliseconds) to your desired delay
-    // auth.login({ no_, password }, () => {
-    //   setError('no_', {
-    //     type: 'manual',
-    //     message: 'Email or Password is invalid'
-    //   })
-    // })
-    // if (rememberMe) {
-    //   window.localStorage.setItem('staffID', no_)
-    // } else {
-    //   window.localStorage.removeItem('staffID')
-    // }
+    setTimeout(() => {
+      // Re-enable the button
+      setButtonDisabled(false)
+    }, 2000) // Adjust the time (in milliseconds) to your desired delay
+    auth.login({ username, password }, () => {
+      setError('username', {
+        type: 'manual',
+        message: 'Email or Password is invalid'
+      })
+    })
+    if (rememberMe) {
+      window.localStorage.setItem('staffID', username)
+    } else {
+      window.localStorage.removeItem('staffID')
+    }
   }
   const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
@@ -218,7 +218,7 @@ const LoginPage = () => {
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <Box sx={{ mb: 4 }}>
                 <Controller
-                  name='no_'
+                  name='username'
                   control={control}
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (

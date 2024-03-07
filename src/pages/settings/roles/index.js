@@ -17,19 +17,12 @@ const RolesComponent = () => {
             Roles List
           </Typography>
         }
-        // subtitle={
-        //   <Typography sx={{ color: 'text.secondary' }}>
-        //     A role provided access to predefined menus and features so that depending on <br /> assigned role an
-        //     administrator can have access to what he need
-        //   </Typography>
-        // }
+
       />
       <Grid item xs={12}>
         <RoleCards />
       </Grid>
-      {/* <Grid item xs={12}>
-        <Table />
-      </Grid> */}
+
     </Grid>
   )
 }

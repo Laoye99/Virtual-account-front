@@ -47,11 +47,18 @@ const AuthProvider = ({ children }) => {
     setLoading(false)
 
     const initAuth = async () => {
+
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      const usernew = window.localStorage.getItem("userData")
+
+      const param = {
+        username : usernew?.username,
+        'refresh-token': storedToken,
+      }
       if (storedToken) {
         setLoading(true)
         await axios
-          .get(authConfig.meEndpoint, {
+          .post(authConfig.meEndpoint, param, {
             headers: {
               Authorization: `Bearer ${storedToken}`,
               'content-Type': 'application/json'
@@ -60,8 +67,9 @@ const AuthProvider = ({ children }) => {
           .then(async response => {
             console.log('aaaaaaaaaaaaaaaaa')
             setLoading(false)
-            setUser({ ...response.data.userData })
-            setAbl([...response.data.userAbilities])
+            setUser({ ...response.data.details })
+
+            // setAbl([...response.data.userAbilities])
           })
           .catch(() => {
             localStorage.removeItem('userData')
@@ -88,38 +96,32 @@ const AuthProvider = ({ children }) => {
     console.log(params)
 
     // // First, request the CSRF cookie
-    axios
-      .get(authConfig.csrfEndpoint)
-      .then(async res => {
-        console.log(res)
+
 
         // Once the CSRF cookie is set, proceed with the login request
         axios
-          .post(authConfig.loginEndpoint, params, {
-            headers: {
-              'Access-Control-Allow-Origin': '*'
-            }
-          })
+          .post(authConfig.loginEndpoint, params)
           .then(async response => {
-            if (response.data.password_request == 1) {
-              toast.success('Login Successful, please update your password for security purposes.')
-            } else {
+            // if (response.data.password_request == 1) {
+            //   toast.success('Login Successful, please update your password for security purposes.')
+            // } else {
               toast.success('Login Successful')
-            }
+              console.log(response)
 
-            const encryptedToken = CryptoJS.AES.encrypt(response.data.accessToken, 'your_secret_key').toString()
-            window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
-            setNeedToken(response.data.accessToken)
+            // }
+
+            const encryptedToken = CryptoJS.AES.encrypt(response.data.token, 'your_secret_key').toString()
+            window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.token)
+            setNeedToken(response.data.token)
             const returnUrl = router.query.returnUrl
-            setUser({ ...response.data.userData })
-            setAbl([...response.data.userAbilities])
-            setNewUser(response.data.password_request)
-            window.localStorage.setItem('ablData', JSON.stringify(response.data.userAbilities))
-            window.localStorage.setItem('userData', JSON.stringify(response.data.userData))
+            setUser({ ...response.data.details })
+
+            // setAbl([...response.data.userAbilities])
+            // setNewUser(response.data.password_request)
+            // window.localStorage.setItem('ablData', JSON.stringify(response.data.userAbilities))
+            window.localStorage.setItem('userData', JSON.stringify(response.data.details))
             const redirectURL = returnUrl && returnUrl !== '/dashboards' ? returnUrl : '/dashboards'
-            if (response.data.password_request == 1) {
-              router.push('/update-password')
-            } else router.push('/dashboards')
+           router.push('/dashboards')
           })
           .catch(err => {
             console.log(err)
@@ -132,11 +134,8 @@ const AuthProvider = ({ children }) => {
               setError('An unexpected error occurred')
             }
           })
-      })
-      .catch(error => {
-        // Handle errors in requesting the CSRF cookie
-        console.error('Error requesting CSRF cookie', error)
-      })
+
+
   }
 
   const handleLogout = async () => {

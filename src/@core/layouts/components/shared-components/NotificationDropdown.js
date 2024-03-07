@@ -135,7 +135,7 @@ const NotificationDropdown = props => {
           'content-Type': 'application/json',
         },
       });
-  
+
       // Check if the response data is an array before updating the state
       if (Array.isArray(response.data)) {
         setApiDataa(response.data) // Update the state with the fetched data
@@ -147,7 +147,7 @@ const NotificationDropdown = props => {
       setIsLoading(false)
     }
   }
-  
+
 
   useEffect(() => {
     fetchData() // Invoke the function to fetch data
@@ -162,17 +162,23 @@ const NotificationDropdown = props => {
 
     const handleDropdownClose = (event) => {
       console.log('oooooooo')
+
+
       // Check if the clicked element is the "Read All Notifications" button
+
       const isReadAllButton =
         event.target.tagName === 'BUTTON' &&
         event.target.textContent === 'Read All Notifications';
-  
+
       if (isReadAllButton) {
+
         // Navigate to the "/notifications" route
+
         router.push('/notifications')
       }
-  
+
       // Always close the dropdown
+
       setAnchorEl(null);
     }
 
@@ -231,15 +237,19 @@ const NotificationDropdown = props => {
         <ScrollWrapper hidden={hidden}>
         {console.log('apiDataa type:', typeof apiDataa)}
             {apiDataa?.map((item, index) => {
+
               // Parse the ISO date string into a JavaScript Date object
+
               const createdAtDate = new Date(item?.created_at)
 
               // Format the date as a string
+
               const formattedDate = new Intl.DateTimeFormat('en-GB', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
               }).format(createdAtDate)
+
                 // Log the message to identify the issue
            // console.log('Message:', item?.data?.message)
 
@@ -271,7 +281,7 @@ const NotificationDropdown = props => {
           }}
         >
           <Button fullWidth variant='contained'  sx={{
-          backgroundColor: '#71ace0'}} onClick={handleDropdownClose}>
+          backgroundColor: '#f50606'}} onClick={handleDropdownClose}>
             Read All Notifications
           </Button>
         </MenuItem>

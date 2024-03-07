@@ -36,7 +36,7 @@ const Statistics = () => {
     const fetchData = async () => {
       try {
         const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-       // console.log(storedToken)
+
 
         const response = await axios.get(`${BASE_URL}/helper/stats`, {
           headers: {
@@ -45,9 +45,7 @@ const Statistics = () => {
           }
         })
 
-        //  const responseData = response.data[0]; // Assuming the response is an array with one object
 
-        // Map the API response data to the dataa array
         if (response.data.length > 0) {
           const responseData = response.data[0]
 
@@ -72,13 +70,13 @@ const Statistics = () => {
             }
           ]
           setDataa(dataa)
-          //console.log(dataa)
+
         }
       }catch (error) {
         if (error.code == "ERR_NETWORK"){
           window.location.reload()
         }
-       
+
         console.error('An error occurred:', error.code)
       }
     }

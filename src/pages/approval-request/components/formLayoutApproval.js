@@ -984,7 +984,7 @@ setFilePreview(null);
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Loan Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Details</span>} />
         </TabList>
 
         <fieldset sx={{ marginBottom: '1200px' }}>
@@ -1092,7 +1092,7 @@ setFilePreview(null);
         <Divider sx={{ m: '0 !important' }} />
         {apiData?.status == 0 ? (
           <Accordion>
-            <AccordionSummary sx={{ backgroundColor: '#71ace0', color: 'white' }}>
+            <AccordionSummary sx={{ backgroundColor: '#f50606', color: 'white' }}>
               <Typography style={{ color: '#fff' }}>View Repayment Schedule</Typography>
             </AccordionSummary>
             <AccordionDetails >
@@ -1253,7 +1253,7 @@ setFilePreview(null);
                         <CardActions sx={{  mb: 2, mt: 2 }}>
                             <Button
                               type='submit'
-                              sx={{ mr: 2, backgroundColor: '#71ace0' }}
+                              sx={{ mr: 2, backgroundColor: '#f50606' }}
                               variant='contained'
                               onClick={calculateLoanDetails}
                               disabled={isButtonDisabled}
@@ -1327,7 +1327,7 @@ setFilePreview(null);
 
         {approvalHandler == 'Hr' && apiData?.status == 0 && apiDatas?.stage == 2.00 && (
           <Accordion>
-          <AccordionSummary sx={{ backgroundColor: '#71ace0', color: 'white' }}>
+          <AccordionSummary sx={{ backgroundColor: '#f50606', color: 'white' }}>
             <Typography style={{ color: '#fff' }}>View HR Approval Form</Typography>
           </AccordionSummary>
           <AccordionDetails >
@@ -1651,7 +1651,7 @@ setFilePreview(null);
         <Divider sx={{ m: '0 !important' }} />
         {apiData?.status == 0 ? (
           <Accordion>
-            <AccordionSummary sx={{ backgroundColor: '#71ace0', color: 'white' }}>
+            <AccordionSummary sx={{ backgroundColor: '#f50606', color: 'white' }}>
               <Typography style={{ color: '#fff' }}>Approval History/Justification</Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -1839,7 +1839,7 @@ setFilePreview(null);
                   {approvalHandler == 'Hr' && apiData?.status == 0 && (
                   <Button
                       type='submit'
-                      sx={{ backgroundColor: '#71ace0', color: '#fff', marginRight: '10px' }}
+                      sx={{ backgroundColor: '#f50606', color: '#fff', marginRight: '10px' }}
                       disabled={isButtonDisabled}
                       variant='contained'
                       onClick={e => {
@@ -1863,7 +1863,7 @@ setFilePreview(null);
                   {approvalHandler !== 'Hr' && apiData?.status == 0 && (
                     <Button
                       type='submit'
-                      sx={{ backgroundColor: '#71ace0', color: '#fff', marginRight: '10px' }}
+                      sx={{ backgroundColor: '#f50606', color: '#fff', marginRight: '10px' }}
                       disabled={isButtonDisabled}
                       variant='contained'
                       onClick={e => {

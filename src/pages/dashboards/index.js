@@ -20,12 +20,12 @@ const Dashboard = () => {
         <Grid item xs={12} md={8}>
           <Statistics />
         </Grid>
-        <Grid item xs={12} lg={6}>
+        {/* <Grid item xs={12} lg={6}>
           <GuarantorsList />
-        </Grid>
-        <Grid item xs={12} lg={6}>
+        </Grid> */}
+        {/* <Grid item xs={12} lg={6}>
           <LoanList />
-        </Grid>
+        </Grid> */}
       </Grid>
     </ApexChartWrapper>
   )

@@ -299,7 +299,7 @@ const FormLayoutsGuarantor = loanId => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Loan Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Details</span>} />
         </TabList>
 
         <fieldset sx={{ marginBottom: '1200px' }}>
@@ -444,7 +444,7 @@ const FormLayoutsGuarantor = loanId => {
                   <Card>
                     <TabContext value={value2}>
                       <TabList aria-label='card navigation example' sx={{ '& .MuiTab-root': { py: 3.5 } }}>
-                        <Tab value='1' label={<span style={{ color: '#71ace0' }}>Guarantor One</span>} />
+                        <Tab value='1' label={<span style={{ color: '#f50606' }}>Guarantor One</span>} />
                       </TabList>
                       <CardContent>
                         <TabPanel value='1' sx={{ p: 0 }}>
@@ -521,7 +521,7 @@ const FormLayoutsGuarantor = loanId => {
                   <Card>
                     <TabContext value={value2}>
                       <TabList aria-label='card navigation example' sx={{ '& .MuiTab-root': { py: 3.5 } }}>
-                        <Tab value='1' label={<span style={{ color: '#71ace0' }}>Guarantor Two</span>} />
+                        <Tab value='1' label={<span style={{ color: '#f50606' }}>Guarantor Two</span>} />
                       </TabList>
                       <CardContent>
                         <TabPanel value='1' sx={{ p: 0 }}>
@@ -600,7 +600,7 @@ const FormLayoutsGuarantor = loanId => {
         <Divider sx={{ m: '0 !important' }} />
         {/* {apiDataa?.approved == 1 ? ( */}
         <Accordion>
-          <AccordionSummary sx={{ backgroundColor: '#71ace0', color: 'white' }}>
+          <AccordionSummary sx={{ backgroundColor: '#f50606', color: 'white' }}>
             <Typography style={{ color: '#fff' }}>Loan Traking</Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -628,7 +628,7 @@ const FormLayoutsGuarantor = loanId => {
                       </TableCell>
                       <TableCell>{item.updated_at ? new Date(item.updated_at).toLocaleString() : ''}</TableCell>
                     </TableRow>
-                    <TableRow sx={{ backgroundColor: '#71ace0',  color: '#040D12'}}>
+                    <TableRow sx={{ backgroundColor: '#f50606',  color: '#040D12'}}>
                       <TableCell colSpan={3} sx={{ borderBottom: 'none' }}>
                         <details>
                         <summary sx={{ cursor: 'pointer', outline: 'none', textDecoration: 'underline', color: 'black', fontWeight: 'bold' }}>
@@ -713,7 +713,7 @@ const FormLayoutsGuarantor = loanId => {
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#71ace0', // Background color
+                  backgroundColor: '#f50606', // Background color
                   color: '#fff', // Text color
                   '&:hover': {
                     backgroundColor: '#0056b3' // Hover background color

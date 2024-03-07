@@ -150,7 +150,7 @@ const TableHeader = props => {
           placeholder='Search Permission'
           onChange={e => handleFilter(e.target.value)}
         />
-        <Button sx={{ mb: 2, backgroundColor: '#71ace0' }} variant='contained' onClick={handleDialogToggle}>
+        <Button sx={{ mb: 2, backgroundColor: '#f50606' }} variant='contained' onClick={handleDialogToggle}>
           Add Permission
         </Button>
       </Box>
@@ -259,7 +259,7 @@ const TableHeader = props => {
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#71ace0', // Background color
+                  backgroundColor: '#f50606', // Background color
                   color: '#fff', // Text color
                   '&:hover': {
                     backgroundColor: '#0056b3' // Hover background color

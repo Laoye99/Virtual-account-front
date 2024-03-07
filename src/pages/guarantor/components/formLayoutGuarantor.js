@@ -331,7 +331,7 @@ const FormLayoutsGuarantor = guarantorId => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Loan Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Details</span>} />
         </TabList>
 
         <fieldset sx={{ marginBottom: '1200px' }}>
@@ -402,7 +402,7 @@ const FormLayoutsGuarantor = guarantorId => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Guarantor's Form</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Guarantor's Form</span>} />
         </TabList>
          ): null}
           {apiData?.data?.status == 0 ? (
@@ -584,7 +584,7 @@ const FormLayoutsGuarantor = guarantorId => {
             <CardActions>
               <Button
                 type='submit'
-                sx={{ mr: 2, backgroundColor: '#71ace0' }}
+                sx={{ mr: 2, backgroundColor: '#f50606' }}
                 variant='contained'
                 disabled={isButtonDisabled}
               >

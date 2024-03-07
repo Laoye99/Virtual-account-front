@@ -442,7 +442,7 @@ const RolesCards = () => {
                   <Box sx={{ textAlign: 'right' }}>
                     <Button
                       variant='contained'
-                      sx={{ mb: 3, whiteSpace: 'nowrap', backgroundColor: '#71ace0' }}
+                      sx={{ mb: 3, whiteSpace: 'nowrap', backgroundColor: '#f50606' }}
                       onClick={() => {
                         handleClickOpen()
                         setDialogTitle('Add')
@@ -630,7 +630,7 @@ const RolesCards = () => {
               variant='contained'
               onClick={handleSubmit}
               sx={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: '#22668D'

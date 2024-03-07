@@ -14,7 +14,7 @@ import FormLayoutsGuarantor from 'src/pages/loan-request/components/formLoanDeta
 const Guarantors = () => {
   const router = useRouter()
   const { loanId } = router.query
-  //console.log('nnnnnnnnnnnnnnnn', loanId)
+
 
   return (
     <DatePickerWrapper>

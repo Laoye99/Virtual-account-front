@@ -13,10 +13,16 @@ import authConfig from 'src/configs/auth'
  */
 //const storedToken = localStorage.getItem(authConfig.storageTokenKeyName)
 //console.log('xxxxxxxxxx',storedToken)
-const defineRulesFor = (role, subject) => {
+
+const ablData = ["admin", "guest", "approver", "initiator"]
+
+const DefineRulesFor = (role, subject) => {
   const auth = useAuth()
   console.log('ffffffffff', auth.abl)
-  const ablData = auth.abl.map(item => item.action)
+
+
+
+  // const ablData = auth?.abl?.map(item => item.action)
 
   console.log('ddddddddddddd', ablData)
   console.log('aaaaaaaaa', role)
@@ -38,7 +44,7 @@ const defineRulesFor = (role, subject) => {
 }
 
 export const buildAbilityFor = (role, subject) => {
-  return new AppAbility(defineRulesFor(role, subject), {
+  return new AppAbility(DefineRulesFor(role, subject), {
     // https://casl.js.org/v5/en/guide/subject-type-detection
     // @ts-ignore
     detectSubjectType: object => object.type
@@ -50,4 +56,4 @@ export const defaultACLObj = {
   subject: 'all'
 }
 
-export default defineRulesFor
+export default DefineRulesFor

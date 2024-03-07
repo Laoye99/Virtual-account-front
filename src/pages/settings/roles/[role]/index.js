@@ -190,7 +190,7 @@ const Guarantors = () => {
               type='submit'
               variant='contained'
               sx={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 color: 'white',
                 mb: 4,
                 '&:hover': {

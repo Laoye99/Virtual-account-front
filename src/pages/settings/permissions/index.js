@@ -381,7 +381,7 @@ const PermissionsTable = () => {
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#71ace0', // Background color
+                  backgroundColor: '#f50606', // Background color
                   color: '#fff', // Text color
                   marginRight: '10px', // Right margin
                   padding: '10px 20px' // Padding

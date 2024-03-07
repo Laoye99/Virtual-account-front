@@ -109,13 +109,13 @@ const columns = [
     headerName: 'Actions',
     renderCell: ({ row }) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-   
+
         <Tooltip title='View'>
           <IconButton size='small' component={Link} href={`/loan-request/${row.id}`}>
             <Icon icon='tabler:eye' />
           </IconButton>
         </Tooltip>
-      
+
       </Box>
     )
   }
@@ -131,7 +131,8 @@ const LoanRequestTable = () => {
   const [submitLoading, setSubmitLoading] = useState(false)
   const [value, setValue] = useState('')
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 5 })
-  ///console.log('lllllllllllllllllllllllllll', selectedRows)
+
+
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
@@ -147,7 +148,7 @@ const LoanRequestTable = () => {
         setData(response.data.data)
       })
       .catch(error => {
-   
+
         if (error.code == "ERR_NETWORK"){
           window.location.reload()
         }
@@ -170,21 +171,21 @@ const LoanRequestTable = () => {
         Date: rowData.created_at
       }
 
-      // Combine `id` and additional data into a new object
+
       return {
         id: rowData.id,
         ...additionalData
       }
     })
 
-    //console.log(selectedRowsData)
+
     setAtLeastOneCheckboxChecked(selectedRowsData.length > 0) // Update the atLeastOneCheckboxChecked state
     setSelectedRows(selectedRowsData) // Update the setSelectedRows data
-    //setSelectedRows(selectedRowsData); // Update the setSelectedRows data
+
   }
 
   useEffect(() => {
-    // Filter the original data based on the searchValue
+
     const searchString = searchValue.toLowerCase()
 
     const filtered = data.filter(row => {
@@ -213,7 +214,7 @@ const LoanRequestTable = () => {
           <CSVLink data={filteredData} filename={'exported-data.csv'}>
             <p
               style={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 color: '#ffffff',
                 padding: '10px 15px',
                 borderRadius: '5px',
@@ -230,7 +231,7 @@ const LoanRequestTable = () => {
             >
               <p
                 style={{
-                  backgroundColor: '#71ace0',
+                  backgroundColor: '#f50606',
                   color: '#ffffff',
                   padding: '10px 15px',
                   borderRadius: '5px',
@@ -261,12 +262,6 @@ const LoanRequestTable = () => {
         onRowSelectionModelChange={ids => onRowsSelectionHandler(ids)}
         selectionModel={selectedRows}
       />
-
-      {/* <Box sx={{ padding: 2 }}>
-        <Button variant='contained' color='primary' onClick={handleProcessSelectedRows}>
-          Process Selected Rows
-        </Button>
-      </Box> */}
     </Card>
   )
 }

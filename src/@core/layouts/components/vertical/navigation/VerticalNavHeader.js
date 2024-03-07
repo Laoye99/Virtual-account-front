@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import abLogo from '../../../../../assets/abn_logo.png'
+import abLogo from '../../../../../assets/UBA-Logo.svg'
 import Image from 'next/image'
 
 // ** Custom Icon Import
@@ -34,7 +34,9 @@ const HeaderTitle = styled(Typography)({
 const LinkStyled = styled(Link)({
   display: 'flex',
   alignItems: 'center',
-  textDecoration: 'none'
+  textDecoration: 'none',
+  marginBottom: "2rem",
+  marginTop: "1rem",
 })
 
 const VerticalNavHeader = props => {
@@ -77,7 +79,7 @@ const VerticalNavHeader = props => {
         userNavMenuBranding(props)
       ) : (
         <LinkStyled href='/dashboards'>
-          <Image src={abLogo} alt='ablogo' width={150} />
+          <Image src={abLogo} alt='ablogo' width={120} />
         </LinkStyled>
       )}
 

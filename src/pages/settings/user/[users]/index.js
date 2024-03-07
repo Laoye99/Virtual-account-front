@@ -1,5 +1,4 @@
 import React from 'react'
-// import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router'
 import AnalyticsDashboard from 'src/pages/guarantor/index'
@@ -17,20 +16,7 @@ const Guarantors = () => {
   console.log("router", router)
   console.log("userrrrr", users)
 
-  // const [componentPath, setComponentPath] = useState("demo/main");
-  // const [Component, setComponent] = useState();
 
-  // useEffect(() => {
-  //   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  //   const load = (path) => {
-  //     if (path) {
-  //       router.push('/login')
-  //       setComponent(dynamic(() => import(`src/context/AuthContext`)));
-  //     }
-  //   };
-
-  //   load(componentPath);
-  // }, [componentPath]);
 
   return (
 
@@ -42,7 +28,7 @@ const Guarantors = () => {
         <UserViewRight users={users} />
       </Grid>
     </Grid>
-   
+
   )
 }
 

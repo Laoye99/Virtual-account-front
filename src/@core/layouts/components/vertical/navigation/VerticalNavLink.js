@@ -36,7 +36,7 @@ const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
   '&.active': {
     '&, &:hover': {
       boxShadow: `0px 2px 6px ${hexToRGBA(theme.palette.primary.main, 0.48)}`,
-      background: '#71ace0',
+      background: '#f50606',
       '&.Mui-focusVisible': {
         background: `linear-gradient(72.47deg, ${theme.palette.primary.dark} 22.16%, ${hexToRGBA(
           theme.palette.primary.dark,

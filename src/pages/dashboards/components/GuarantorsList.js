@@ -24,7 +24,7 @@ import TabList from '@mui/lab/TabList'
 import Tab from '@mui/material/Tab'
 import Divider from '@mui/material/Divider'
 import TabContext from '@mui/lab/TabContext'
-// ** Icon Imports
+
 import Icon from 'src/@core/components/icon'
 
 // ** Custom Component Import
@@ -123,8 +123,8 @@ const columns = [
 const GuarantorsList = () => {
   // ** State
   const [data, setData] = useState([])
-  const [filteredData, setFilteredData] = useState([]) // Add state for filtered data
-  const [searchValue, setSearchValue] = useState('') // Add state for search value
+  const [filteredData, setFilteredData] = useState([])
+  const [searchValue, setSearchValue] = useState('')
 
   const [value, setValue] = useState('')
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 5 })
@@ -132,7 +132,7 @@ const GuarantorsList = () => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
       .get(`${BASE_URL}/autoloan/loan/guarantor?page=1`, {
-        params: { q: searchValue }, // Use searchValue for filtering
+        params: { q: searchValue },
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json'
@@ -142,17 +142,17 @@ const GuarantorsList = () => {
         setData(response.data.data)
       })
       .catch(error => {
-        // Handle the error here, e.g., show an error message or log the error
+
         console.error('Error fetching data:', error)
       })
   }, [searchValue])
 
   const handleFilter = val => {
-    setSearchValue(val) // Update the search value
+    setSearchValue(val)
   }
 
   useEffect(() => {
-    // Filter the original data based on the searchValue
+
     const searchString = searchValue.toLowerCase()
 
     const filtered = data.filter(row => {
@@ -175,14 +175,7 @@ const GuarantorsList = () => {
   return data ? (
     <Card>
        <TabContext value={value}>
-      {/* <TabList
-          variant='scrollable'
-          scrollButtons={false}
-          onChange={handleTabsChange}
-          sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
-        >
-          <Tab value='personal-info' label={<span style={{ color: '' }}>Guarantor Requests</span>} />
-        </TabList> */}
+
      <TabList
   variant='scrollable'
   scrollButtons={false}

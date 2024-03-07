@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 // ** MUI Imports
-import ablogo from 'src/assets/abn_logo.png'
+import ablogo from 'src/assets/UBA-Logo.svg'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
@@ -417,7 +417,7 @@ const AutocompleteComponent = ({ hidden, settings }) => {
     return (
       <Box ref={wrapper} sx={{ display: 'flex', cursor: 'pointer', alignItems: 'center' }}>
         <LinkStyled href='/dashboards'>
-          <Image src={ablogo} alt='logo-ab' width={150} />
+          <Image src={ablogo} alt='logo-ab' width={110} />
         </LinkStyled>
         {/* <IconButton color='inherit' sx={!hidden && layout === 'vertical' ? { mr: 0.5, ml: -2.75 } : {}}>
           <Icon fontSize='1.625rem' icon='tabler:search' />

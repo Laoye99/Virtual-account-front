@@ -64,7 +64,7 @@ const StyledFileInput = styled('input')({
 });
 
 const FileInputLabel = styled('label')({
-  backgroundColor: '#71ace0',
+  backgroundColor: '#f50606',
   color: '#ffffff',
   padding: '10px 15px',
   borderRadius: '5px',
@@ -229,7 +229,7 @@ const handleDialogToggle = () => setEditDialogOpen(!editDialogOpen)
           placeholder='Search Data'
           onChange={e => handleFilter(e.target.value)}
         />
-        <Button sx={{ mb: 2, backgroundColor: '#71ace0' }} variant='contained' onClick={handleDialogToggle}>
+        <Button sx={{ mb: 2, backgroundColor: '#f50606' }} variant='contained' onClick={handleDialogToggle}>
           Upload Excel
         </Button>
       </Box>
@@ -295,7 +295,7 @@ const handleDialogToggle = () => setEditDialogOpen(!editDialogOpen)
                   {/* Styled label to mimic the appearance of a button */}
                   <div
                     sx={{
-                      backgroundColor: '#71ace0',
+                      backgroundColor: '#f50606',
                       color: '#ffffff',
                       padding: '10px 15px',
                       borderRadius: '5px',
@@ -343,7 +343,7 @@ const handleDialogToggle = () => setEditDialogOpen(!editDialogOpen)
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#71ace0', // Background color
+                  backgroundColor: '#f50606', // Background color
                   color: '#fff', // Text color
                   '&:hover': {
                     backgroundColor: '#0056b3' // Hover background color

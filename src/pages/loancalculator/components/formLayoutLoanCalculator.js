@@ -105,7 +105,7 @@ const FormLayoutLoanCalculator = () => {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
     & .MuiTableHead-root {
-      background-color: #71ace0;
+      background-color: #f50606;
       color: #fff;
     }
 
@@ -277,7 +277,7 @@ const FormLayoutLoanCalculator = () => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Loan Calculator</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Calculator</span>} />
         </TabList>
         <form onSubmit={calculateLoanDetails}>
           <CardContent>
@@ -333,7 +333,7 @@ const FormLayoutLoanCalculator = () => {
                   <CardActions sx={{ mb: 2, mt: 2 }}>
                     <Button
                       type='submit'
-                      sx={{ mr: 2, backgroundColor: '#71ace0' }}
+                      sx={{ mr: 2, backgroundColor: '#f50606' }}
                       variant='contained'
                       onClick={calculateLoanDetails}
                       disabled={isButtonDisabled}
@@ -351,7 +351,7 @@ const FormLayoutLoanCalculator = () => {
           {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
             <Button
               type='submit'
-              sx={{ mr: 2, backgroundColor: '#71ace0' }}
+              sx={{ mr: 2, backgroundColor: '#f50606' }}
               variant='contained'
               onClick={calculateLoanDetails}
               disabled={isButtonDisabled}

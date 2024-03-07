@@ -95,7 +95,7 @@ const StyledTableContainer = styled(TableContainer)`
   width: 100%; /* Set the width to 100% */
 
   & .MuiTableHead-root {
-    background-color: #71ace0;
+    background-color: #f50606;
     color: #fff;
   }
 
@@ -597,7 +597,7 @@ const LoanRequestPage = () => {
                   onChange={handleTabsChange}
                   sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
                 >
-                  <Tab value='personal-info' label={<span style={{ color: '#71ace0' }}>Loan Request Form</span>} />
+                  <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Request Form</span>} />
                 </TabList>
                 <form onSubmit={handleSubmit}>
                   <CardContent>
@@ -822,7 +822,7 @@ const LoanRequestPage = () => {
                   <CardActions>
                     <Button
                       type='submit'
-                      sx={{ mr: 2, backgroundColor: '#71ace0' }}
+                      sx={{ mr: 2, backgroundColor: '#f50606' }}
                       variant='contained'
                       disabled={isButtonDisabled}
                     >
@@ -852,7 +852,7 @@ const LoanRequestPage = () => {
               href='/loan-request'
               startIcon={<Icon icon='tabler:plus' />}
               sx={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 '&:hover': {
                   backgroundColor: '#4f7ea9' // Change the background color on hover
                 }

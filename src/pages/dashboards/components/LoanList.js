@@ -175,7 +175,7 @@ const LoanList = () => {
           href='/loan-request'
           startIcon={<Icon icon='tabler:plus' />}
           sx={{
-            backgroundColor: '#71ace0',
+            backgroundColor: '#f50606',
             '&:hover': {
               backgroundColor: '#4f7ea9' // Change the background color on hover
             }

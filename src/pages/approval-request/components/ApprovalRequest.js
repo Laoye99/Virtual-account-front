@@ -89,7 +89,7 @@ const columns = [
         ₦{row?.loan?.amount?.toLocaleString('en-US', {
         minimumFractionDigits: 2, maximumFractionDigits: 2,}) || 0}
       </Typography>
-    )    
+    )
   },
   {
     flex: 0.1,
@@ -127,19 +127,19 @@ const columns = [
 const ApprovalRequest = () => {
   // ** State
   const [data, setData] = useState([])
-  const [filteredData, setFilteredData] = useState([]) // Add state for filtered data
-  const [searchValue, setSearchValue] = useState('') // Add state for search value
+  const [filteredData, setFilteredData] = useState([])
+  const [searchValue, setSearchValue] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
   const [exportCSVClicked, setExportCSVClicked] = useState(false)
   const [atLeastOneCheckboxChecked, setAtLeastOneCheckboxChecked] = useState(false)
-  const [userRole, setUserRole] = useState('') // Add state for search value
+  const [userRole, setUserRole] = useState('')
 
   const ability = useContext(AbilityContext)
 
   const [value, setValue] = useState('')
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 5 })
-  
-  
+
+
 useEffect(() => {
   const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
   axios
@@ -154,37 +154,34 @@ useEffect(() => {
       const approvalsData = response.data.approvals || [];
       const hrApprovalData = response.data.hr_approval || [];
       const ceoApprovalData = response.data.ceo_approval || [];
+
      // const approvalsDatas = response.data.approvals && response.data.hr_approval || [];
      // const approvalsDatas = [...response.data.approvals, ...response.data.hr_approval]  || [];
+
       const approvalsDatas = [...approvalsData, ...hrApprovalData, ...ceoApprovalData];
       console.log('new datasssssssss',approvalsDatas)
+
       // If approvalsDatas is empty, use data from ceo_approval
+
      if (approvalsDatas.length) {
         setData(approvalsDatas);
         setFilteredData(approvalsDatas);
+
         //console.log(hrApprovalData)
-      } 
+
+      }
       else {
         setData(ceoApprovalData);
         setFilteredData(ceoApprovalData)
+
         //console.log('ceo nlaaaaa',ceoApprovalData)
+
       }
 
-      // else if (!hrApprovalData.length && ceoApprovalData.length) {
-      //   setData(ceoApprovalData);
-      //   setFilteredData(ceoApprovalData)
-      //   //console.log('ceo nlaaaaa',ceoApprovalData)
-      // }
-      //else if (!approvalsData.length && !hrApprovalData.length && ceoApprovalData.length) {
-     
-      //  else {
-      //   setData(approvalsData);
-      //   setFilteredData(approvalsData)
-      //   //console.log('approval',approvalsData)
-      // }
+
     })
     .catch(error => {
-   
+
         if (error.code == "ERR_NETWORK"){
           window.location.reload()
         }
@@ -194,11 +191,11 @@ useEffect(() => {
 
 
   const handleFilter = val => {
-    setSearchValue(val) // Update the search value
+    setSearchValue(val)
   }
 
   useEffect(() => {
-    // Filter the original data based on the searchValue
+
     const searchString = searchValue.toLowerCase()
 
     const filtered = data.filter(row => {
@@ -212,23 +209,23 @@ useEffect(() => {
       )
     })
 
-    setFilteredData(filtered) // Update the filtered data
+    setFilteredData(filtered)
   }, [searchValue, data])
 
   const onRowsSelectionHandler = ids => {
     const selectedRowsData = ids.map(id => {
       const rowData = filteredData.find(row => row?.id === id)
 
-      // Extract additional data from `rowData`
+
       const additionalData = {
         status: rowData?.approved,
         amount: rowData?.loan?.amount,
 
-        //  Date: rowData.created_at,
+
         Date: new Date(rowData?.created_at).toLocaleDateString()
       }
 
-      // Combine `id` and additional data into a new object
+
       return {
         id: rowData.id,
 
@@ -237,10 +234,10 @@ useEffect(() => {
     })
 
     console.log(selectedRowsData)
-    setAtLeastOneCheckboxChecked(selectedRowsData.length > 0) // Update the atLeastOneCheckboxChecked state
-    setSelectedRows(selectedRowsData) // Update the setSelectedRows data
+    setAtLeastOneCheckboxChecked(selectedRowsData.length > 0)
+    setSelectedRows(selectedRowsData)
 
-    //setSelectedRows(selectedRowsData); // Update the setSelectedRows data
+
   }
 
   const formatDataForCSVExport = data => {
@@ -259,7 +256,7 @@ useEffect(() => {
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
         <Typography variant='h5'>ALL LOAN REQUEST</Typography>
-        {/* {ability.can('user', 'user') && ( */}
+
           <Box sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
             <CSVLink
               data={formatDataForCSVExport(filteredData)}
@@ -273,7 +270,7 @@ useEffect(() => {
             >
               <p
                 style={{
-                  backgroundColor: '#71ace0',
+                  backgroundColor: '#f50606',
                   color: '#ffffff',
                   padding: '10px 15px',
                   borderRadius: '5px',
@@ -287,12 +284,12 @@ useEffect(() => {
 
             {atLeastOneCheckboxChecked && (
               <CSVLink
-                data={selectedRows} // Use selectedRows data
+                data={selectedRows}
                 filename={'loan-approvaldetails.csv'}
               >
                 <p
                   style={{
-                    backgroundColor: '#71ace0',
+                    backgroundColor: '#f50606',
                     color: '#ffffff',
                     padding: '10px 15px',
                     borderRadius: '5px',
@@ -309,16 +306,16 @@ useEffect(() => {
               <CustomTextField value={searchValue} placeholder='Search' onChange={e => handleFilter(e.target.value)} />
             </Box>
           </Box>
-        {/* )} */}
+
       </CardContent>
       <DataGrid
         autoHeight
         pagination
-        rows={filteredData || []} 
+        rows={filteredData || []}
         rowHeight={62}
         columns={columns}
         checkboxSelection
-        selectionModel={selectedRows} // Use selectedRows state
+        selectionModel={selectedRows}
         onRowSelectionModelChange={ids => onRowsSelectionHandler(ids)}
         pageSizeOptions={[5, 10]}
         disableRowSelectionOnClick
