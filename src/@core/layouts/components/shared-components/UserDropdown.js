@@ -87,45 +87,17 @@ const UserDropdown = props => {
   }
 
   const handleLogout = async () => {
-    setLoading(false)
-    try {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-      console.log(storedToken)
-
-      const formData = {
-        no_: user.username
-      }
-      console.log(formData)
-
-      // Make a POST request to the logout endpoint
-      const response = await axios.post(`${BASE_URL}/logout`, formData, {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json'
-        }
-      })
-
-      // Remove user data
-      setLoading(false)
+    setLoading(true)
       window.localStorage.removeItem('userData')
       window.localStorage.removeItem(authConfig.storageTokenKeyName)
       handleDropdownClose()
-
-      console.log(response)
-
-      // Run these two actions concurrently
-      await Promise.all([toast.success(response.data.message), router.push('/login')])
-    } catch (error) {
-      // Handle errors
-      console.error('Error logging out', error)
       router.push('/login')
       setLoading(false)
-    } finally {
-      setTimeout(() => {
-        window.location.reload()
-      }, 1500)
     }
-  }
+
+
+
+
 
   return (
     <Fragment>

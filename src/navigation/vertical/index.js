@@ -8,14 +8,14 @@ const navigation = () => {
       subject: 'user'
     },
     {
-      title: 'Approval Request',
+      title: 'NIP and UPSL transactions',
       icon: 'tabler:mail',
       path: '/approval-request',
       action: 'user',
       subject: 'user'
     },
     {
-      title: 'Loan Request',
+      title: 'Switch provider configuration',
       icon: 'tabler:messages',
       path: '/loan-request',
       action: 'user',
@@ -23,7 +23,7 @@ const navigation = () => {
     },
 
     {
-      title: "Guarantor's Request",
+      title: "Financial institution profile",
       icon: 'tabler:credit-card',
       path: '/guarantor',
       action: 'user',
@@ -31,7 +31,7 @@ const navigation = () => {
     },
 
     {
-      title: 'Loan Calculator',
+      title: 'Transaction router',
       icon: 'tabler:calendar',
       path: '/loancalculator',
       action: 'user',

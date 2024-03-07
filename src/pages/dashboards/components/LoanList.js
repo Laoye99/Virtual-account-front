@@ -150,7 +150,7 @@ const LoanList = () => {
     // Filter the original data based on the searchValue
     const searchString = searchValue.toLowerCase()
 
-    const filtered = data.filter(row => {
+    const filtered = data?.filter(row => {
       const statusText = row.status === 0 ? 'in-progress' : row.status === 1 ? 'approved' : 'declined'
 
       return (
