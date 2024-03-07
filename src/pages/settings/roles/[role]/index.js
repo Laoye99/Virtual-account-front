@@ -33,15 +33,6 @@ import {
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-// ** Styled Component
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-
-import FormLayoutsGuarantor from 'src/views/forms/form-layouts/formLoanDetails'
-import user from 'src/store/apps/user'
-
-// ** Demo Components Imports
-
-import UserViewRight from 'src/views/apps/user/view/UserViewRight'
 
 const Guarantors = () => {
   // ** States
