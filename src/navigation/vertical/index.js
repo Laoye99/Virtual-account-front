@@ -37,6 +37,42 @@ const navigation = () => {
       action: 'user',
       subject: 'user'
     },
+
+    {
+      title: 'Response Code Configuration',
+      path: '/forms/form-validation',
+      icon: 'tabler:checkbox',
+      action: 'user',
+      subject: 'user'
+    },
+    {
+      title: 'Balance Inquiry',
+      path: '/forms/form-wizard',
+      icon: 'tabler:text-wrap-disabled',
+      action: 'user',
+      subject: 'user'
+    },
+    {
+      title: 'NIP and UPSL statistics',
+      icon: 'tabler:table',
+      path: '/tables/mui',
+      action: 'user',
+      subject: 'user'
+    },
+    {
+      title: 'Fee configuration',
+      icon: 'tabler:layout-grid',
+      path: '/tables/data-grid',
+      action: 'user',
+      subject: 'user'
+    },
+    {
+      title: 'Account information',
+      icon: 'tabler:typography',
+      path: '/ui/typography',
+      action: 'user',
+      subject: 'user'
+    },
     {
       title: 'Settings',
       icon: 'tabler:settings',
