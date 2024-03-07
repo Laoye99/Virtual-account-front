@@ -87,12 +87,11 @@ const UserDropdown = props => {
   }
 
   const handleLogout = async () => {
-    setLoading(true)
-      window.localStorage.removeItem('userData')
-      window.localStorage.removeItem(authConfig.storageTokenKeyName)
       handleDropdownClose()
       router.push('/login')
-      setLoading(false)
+      window.localStorage.removeItem('userData')
+      window.localStorage.removeItem(authConfig.storageTokenKeyName)
+      window.location.reload()
     }
 
 
@@ -159,12 +158,13 @@ const UserDropdown = props => {
         </MenuItemStyled> */}
 
         {/* <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} /> */}
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/update-password')}>
+
+        {/* <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/update-password')}>
           <Box sx={styles}>
             <Icon icon='tabler:lifebuoy' />
             Update Password
           </Box>
-        </MenuItemStyled>
+        </MenuItemStyled> */}
 
         {/* <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} /> */}
         <MenuItemStyled sx={{ p: 0 }} onClick={handleLogout}>
