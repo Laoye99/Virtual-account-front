@@ -17,9 +17,9 @@ const Dashboard = () => {
         <Grid item xs={12} md={4}>
           <Welcome />
         </Grid>
-        <Grid item xs={12} md={8}>
+        {/* <Grid item xs={12} md={8}>
           <Statistics />
-        </Grid>
+        </Grid> */}
         {/* <Grid item xs={12} lg={6}>
           <GuarantorsList />
         </Grid> */}
