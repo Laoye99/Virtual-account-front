@@ -146,7 +146,6 @@ const UserList = ({ apiData }) => {
   // ** Hooks
   const dispatch = useDispatch()
   const store = useSelector(state => state.user)
-  //console.log('yyyyyyyyyyyyyyyyyyyyyyy', store.data)
   useEffect(() => {
 console.log("i can get here")
   }, [])
