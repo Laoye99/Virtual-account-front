@@ -28,8 +28,8 @@ const RolesComponent = () => {
 }
 
 RolesComponent.acl = {
-  action: 'sla:sla-settings-permissions-group:view',
-  subject: 'sla:sla-settings-permissions-group:view'
+  action: 'ADMIN',
+  subject: 'ADMIN'
 }
 
 export default RolesComponent

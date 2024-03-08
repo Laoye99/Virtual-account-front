@@ -80,25 +80,25 @@ const navigation = () => {
         {
           title: 'Permissions',
           path: '/settings/permissions',
-          action: 'sla:sla-settings-permissions:view',
-          subject: 'sla:sla-settings-permissions:view'
+          action: 'ADMIN',
+          subject: 'ADMIN'
         },
         {
           title: 'Permission Group',
           path: '/settings/roles',
-          action: 'sla:sla-settings-permissions-group:view',
-          subject: 'sla:sla-settings-permissions-group:view'
+          action: 'ADMIN',
+          subject: 'ADMIN'
         },
         {
           title: 'Manage Users',
           path: '/settings/user/list',
-          action: 'sla:sla-settings-manage-users:view',
-          subject: 'sla:sla-settings-manage-users:view'
+          action: 'ADMIN',
+          subject: 'ADMIN'
         }
       ],
 
-      action: 'sla:sla-settings:view',
-      subject: 'sla:sla-settings:view'
+      action: 'ADMIN',
+      subject: 'ADMIN'
     }
   ]
 }

@@ -33,8 +33,8 @@ const Guarantors = () => {
 }
 
 Guarantors.acl = {
-  action: 'sla:sla-settings-manage-users:view',
-  subject: 'sla:sla-settings-manage-users:view'
+  action: 'ADMIN',
+  subject: 'ADMIN'
 }
 
 export default Guarantors

@@ -14,11 +14,12 @@ import authConfig from 'src/configs/auth'
 //const storedToken = localStorage.getItem(authConfig.storageTokenKeyName)
 //console.log('xxxxxxxxxx',storedToken)
 
-const ablData = ["admin", "guest", "approver", "initiator"]
+
 
 const DefineRulesFor = (role, subject) => {
   const auth = useAuth()
-  console.log('ffffffffff', auth.abl)
+  console.log('ffffffffff', auth.user.role)
+  const ablData = auth.user.role
 
 
 
@@ -30,9 +31,9 @@ const DefineRulesFor = (role, subject) => {
   const { can, rules } = new AbilityBuilder(AppAbility)
   can('user', 'user')
 
-  for (let i of ablData) {
-    can(i, i)
-  }
+
+    can(`${auth.user.role}`, "ADMIN")
+
 
   // if (role === 'admin') {
   //   can('manage', 'all')

@@ -163,7 +163,7 @@ console.log("i can get here")
 
   return (
     <Grid container spacing={6.5}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         {apiData && (
           <Grid container spacing={6}>
             {apiData.statsHorizontalWithDetails.map((item, index) => {
@@ -175,7 +175,7 @@ console.log("i can get here")
             })}
           </Grid>
         )}
-      </Grid>
+      </Grid> */}
       <Grid item xs={12}>
         <Card>
           <CardContent
@@ -183,7 +183,7 @@ console.log("i can get here")
           >
             <Typography variant='h5'>MANAGE USERS</Typography>
           </CardContent>
-          <DataGrid
+          {/* <DataGrid
             autoHeight
             rowHeight={62}
             rows={store.data}
@@ -192,7 +192,7 @@ console.log("i can get here")
             pageSizeOptions={[10, 25, 50]}
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
-          />
+          /> */}
         </Card>
       </Grid>
     </Grid>
@@ -200,8 +200,8 @@ console.log("i can get here")
 }
 
 UserList.acl = {
-  action: 'sla:sla-settings-manage-users:view',
-  subject: 'sla:sla-settings-manage-users:view'
+  action: 'ADMIN',
+  subject: 'ADMIN'
 }
 
 export default UserList

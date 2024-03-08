@@ -419,8 +419,8 @@ const PermissionsTable = () => {
 }
 
 PermissionsTable.acl = {
-  action: 'sla:sla-settings-permissions:view',
-  subject: 'sla:sla-settings-permissions:view'
+  action: 'ADMIN',
+  subject: 'ADMIN'
 }
 
 export default PermissionsTable
