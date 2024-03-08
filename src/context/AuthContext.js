@@ -49,12 +49,16 @@ const AuthProvider = ({ children }) => {
     const initAuth = async () => {
 
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-      const usernew = window.localStorage.getItem("userData")
+      const usernew = window.localStorage.getItem("userRefresh")
+      const userName = window.localStorage.getItem("userName")
+      console.log("lllll", userName)
+
 
       const param = {
-        username : usernew?.username,
-        'refresh-token': storedToken,
+        username : userName,
+        "refresh-token" : usernew,
       }
+      console.log(param)
       if (storedToken) {
         setLoading(true)
         await axios
@@ -65,9 +69,16 @@ const AuthProvider = ({ children }) => {
             }
           })
           .then(async response => {
-            console.log('aaaaaaaaaaaaaaaaa')
+            console.log('aaaaaaaaaaaaaaaaa', response)
             setLoading(false)
             setUser({ ...response.data.details })
+
+            // if(response?.data?.status?.code == "401"){
+            //   window.localStorage.removeItem('userData')
+            //   window.localStorage.removeItem(authConfig.storageTokenKeyName)
+            //   router.push('/login')
+            //   window.location.reload()
+            // }
 
             // setAbl([...response.data.userAbilities])
           })
@@ -120,6 +131,8 @@ const AuthProvider = ({ children }) => {
             // setNewUser(response.data.password_request)
             // window.localStorage.setItem('ablData', JSON.stringify(response.data.userAbilities))
             window.localStorage.setItem('userData', JSON.stringify(response.data.details))
+            window.localStorage.setItem('userRefresh', JSON.stringify(response.data.details["refresh-token"]))
+            window.localStorage.setItem('userName', JSON.stringify(response.data.details["username"]))
             const redirectURL = returnUrl && returnUrl !== '/dashboards' ? returnUrl : '/dashboards'
            router.push('/dashboards')
           })

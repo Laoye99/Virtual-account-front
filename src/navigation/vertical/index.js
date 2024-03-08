@@ -10,7 +10,7 @@ const navigation = () => {
     {
       title: 'NIP and UPSL transactions',
       icon: 'tabler:mail',
-      path: '/approval-request',
+      path: '/nip-transactions',
       action: 'user',
       subject: 'user'
     },
