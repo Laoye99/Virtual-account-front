@@ -51,13 +51,20 @@ const AuthProvider = ({ children }) => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       const usernew = window.localStorage.getItem("userRefresh")
       const userName = window.localStorage.getItem("userName")
-      console.log("lllll", userName)
+      const userdata = window.localStorage.getItem("userData")
+
+      console.log("lllll", userdata)
 
 
-      const param = {
-        username : userName,
+      let param = {
+        "username" : userName,
         "refresh-token" : usernew,
       }
+
+      // Remove unnecessary quotes
+      param.username = param.username.replace(/\"/g, '');
+      param["refresh-token"] = param["refresh-token"].replace(/\"/g, '');
+
       console.log(param)
       if (storedToken) {
         setLoading(true)
@@ -72,13 +79,16 @@ const AuthProvider = ({ children }) => {
             console.log('aaaaaaaaaaaaaaaaa', response)
             setLoading(false)
             setUser({ ...response.data.details })
+            window.localStorage.setItem('userData', JSON.stringify(response.data.details))
+            window.localStorage.setItem('userRefresh', JSON.stringify(response.data.details['refresh-token']))
+            window.localStorage.setItem('userName', JSON.stringify(response.data.details.username))
 
-            // if(response?.data?.status?.code == "401"){
-            //   window.localStorage.removeItem('userData')
-            //   window.localStorage.removeItem(authConfig.storageTokenKeyName)
-            //   router.push('/login')
-            //   window.location.reload()
-            // }
+            if(response?.data?.status?.code == "401"){
+              window.localStorage.removeItem('userData')
+              window.localStorage.removeItem(authConfig.storageTokenKeyName)
+              router.push('/login')
+              window.location.reload()
+            }
 
             // setAbl([...response.data.userAbilities])
           })
@@ -131,8 +141,8 @@ const AuthProvider = ({ children }) => {
             // setNewUser(response.data.password_request)
             // window.localStorage.setItem('ablData', JSON.stringify(response.data.userAbilities))
             window.localStorage.setItem('userData', JSON.stringify(response.data.details))
-            window.localStorage.setItem('userRefresh', JSON.stringify(response.data.details["refresh-token"]))
-            window.localStorage.setItem('userName', JSON.stringify(response.data.details["username"]))
+            window.localStorage.setItem('userRefresh', JSON.stringify(response.data.details['refresh-token']))
+            window.localStorage.setItem('userName', JSON.stringify(response.data.details.username))
             const redirectURL = returnUrl && returnUrl !== '/dashboards' ? returnUrl : '/dashboards'
            router.push('/dashboards')
           })
