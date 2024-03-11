@@ -159,9 +159,20 @@ const LoanList = () => {
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
         <TableHeader toggle={toggleAddUserDrawer} />
-        {/* <Box sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          <CustomTextField value={searchValue} placeholder='Search' onChange={e => handleFilter(e.target.value)} />
-        </Box> */}
+        <Button
+          component={Link}
+          variant='contained'
+          href='/switch-service/approved-switch'
+          startIcon={<Icon icon='tabler:eye' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
+          Veiw Approved Provider
+        </Button>
       </CardContent>
 
       <DataGrid

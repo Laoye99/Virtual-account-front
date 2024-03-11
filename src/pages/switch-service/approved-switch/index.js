@@ -4,9 +4,7 @@ import Typography from '@mui/material/Typography'
 
 // ** Demo Component Imports
 import LoanList from './components/LoanList'
-import GuarantorsList from 'src/pages/dashboards/components/GuarantorsList'
-import Statistics from 'src/pages/dashboards/components/Statistics'
-import Welcome from 'src/pages/dashboards/components/Welcome'
+
 
 // ** Custom Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'

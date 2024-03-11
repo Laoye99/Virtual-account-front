@@ -8,8 +8,7 @@ import Typography from '@mui/material/Typography'
 
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-
-import FormLayoutsGuarantor from 'src/pages/loan-request/components/formLoanDetails'
+import FormLayoutsGuarantor from './components/formLoanDetails'
 
 const Guarantors = () => {
   const router = useRouter()
@@ -23,7 +22,7 @@ const Guarantors = () => {
           <Typography variant='h5'>SWITCH PROVIDER DETAILS</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-          {/* <FormLayoutsGuarantor switchID={switchID} /> */}
+          <FormLayoutsGuarantor switchID={switchID} />
         </Grid>
       </Grid>
     </DatePickerWrapper>

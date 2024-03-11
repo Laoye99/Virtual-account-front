@@ -19,6 +19,8 @@ import authConfig from 'src/configs/auth'
 import { styled } from '@mui/material/styles'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
+import TableHeader from './TableHeader'
+
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -26,6 +28,8 @@ import Icon from 'src/@core/components/icon'
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
 import CustomChip from 'src/@core/components/mui/chip'
+import SidebarAddUser from './AddUserDrawer'
+
 
 // ** Third Party Imports
 import axios from 'axios'
@@ -55,47 +59,31 @@ const columns = [
   {
     flex: 0.1,
     field: 'id',
-    minWidth: 90,
-    headerName: 'Loan ID',
-    renderCell: ({ row }) => <LinkStyled href={`/loan-request/${row.id}`}>{`#${row.id}`}</LinkStyled>
-  },
-  {
-    flex: 0.1,
-    minWidth: 110,
-    field: 'status',
-    headerName: 'Status',
-    renderCell: ({ row }) => {
-      return (
-        <CustomChip
-          rounded
-          skin='light'
-          size='small'
-          label={row.status == 0 ? 'In Progress' : row.status == 1 ? 'Approved' : 'Declined'}
-          color={userStatusObj[row.status]}
-          sx={{ textTransform: 'capitalize' }}
-        />
-      )
-    }
-  },
-
-  {
-    flex: 0.1,
-    field: 'amount',
-    minWidth: 120,
-    headerName: 'Amount',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>₦{row.amount || 0}</Typography>
-  },
-  {
-    flex: 0.1,
     minWidth: 150,
-    field: 'created_at',
-    headerName: 'Date',
-    renderCell: ({ row }) => {
-      const originalDate = new Date(row.created_at)
-      const formattedDate = originalDate.toLocaleDateString()
+    headerName: 'ID',
+    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.id}`}>{`#${row.id}`}</LinkStyled>
+  },
+  {
+    flex: 0.1,
+    field: 'name',
+    minWidth: 120,
+    headerName: 'Name',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.name || 0}</Typography>
+  },
 
-      return <Typography sx={{ color: 'text.secondary' }}>{formattedDate}</Typography>
-    }
+  {
+    flex: 0.1,
+    field: 'code',
+    minWidth: 120,
+    headerName: 'Code',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.code || 0}</Typography>
+  },
+  {
+    flex: 0.1,
+    field: 'created-by',
+    minWidth: 120,
+    headerName: 'Created by',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created-by"] || 0}</Typography>
   },
   {
     flex: 0.1,
@@ -106,7 +94,7 @@ const columns = [
     renderCell: ({ row }) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title='View'>
-          <IconButton size='small' component={Link} href={`/loan-request/${row.id}`}>
+          <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
             <Icon icon='tabler:eye' />
           </IconButton>
         </Tooltip>
@@ -118,19 +106,18 @@ const columns = [
 const LoanList = () => {
   // ** State
   const [data, setData] = useState([])
+  const [addUserOpen, setAddUserOpen] = useState(false)
   const [filteredData, setFilteredData] = useState([]) // Add state for filtered data
-  const [searchValue, setSearchValue] = useState('') // Add state for search value
-
   const [value, setValue] = useState('')
-  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 5 })
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/autoloan/loan/allloans?page=1`, {
-        params: { q: searchValue }, // Use searchValue for filtering
+      .get(`${BASE_URL}/switch/switch?approval-status=approved`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
       })
       .then(response => {
@@ -140,40 +127,43 @@ const LoanList = () => {
         // Handle the error here, e.g., show an error message or log the error
         console.error('Error fetching data:', error)
       })
-  }, [searchValue])
+  }, [])
 
-  const handleFilter = val => {
-    setSearchValue(val) // Update the search value
-  }
+  // const handleFilter = val => {
+  //   setSearchValue(val) // Update the search value
+  // }
 
-  useEffect(() => {
-    // Filter the original data based on the searchValue
-    const searchString = searchValue.toLowerCase()
+  // useEffect(() => {
+  //   // Filter the original data based on the searchValue
+  //   const searchString = searchValue.toLowerCase()
 
-    const filtered = data?.filter(row => {
-      const statusText = row.status === 0 ? 'in-progress' : row.status === 1 ? 'approved' : 'declined'
+  //   const filtered = data?.filter(row => {
+  //     const statusText = row.status === 0 ? 'in-progress' : row.status === 1 ? 'approved' : 'declined'
 
-      return (
-        row.id.toString().toLowerCase().includes(searchString) ||
-        statusText.toLowerCase().includes(searchString) ||
-        row.amount.toString().includes(searchString) ||
-        row.created_at.toLowerCase().includes(searchString)
-      )
-    })
+  //     return (
+  //       row.id.toString().toLowerCase().includes(searchString) ||
+  //       statusText.toLowerCase().includes(searchString) ||
+  //       row.amount.toString().includes(searchString) ||
+  //       row.created_at.toLowerCase().includes(searchString)
+  //     )
+  //   })
 
-    setFilteredData(filtered) // Update the filtered data
-  }, [searchValue, data])
+  //   setFilteredData(filtered) // Update the filtered data
+  // }, [searchValue, data])
+
+  const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
   return data ? (
     <Card>
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        <Button
+        {/* <TableHeader toggle={toggleAddUserDrawer} /> */}
+        {/* <Button
           component={Link}
           variant='contained'
-          href='/loan-request'
-          startIcon={<Icon icon='tabler:plus' />}
+          href='/switch-service/approved-switch'
+          startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
             '&:hover': {
@@ -181,17 +171,14 @@ const LoanList = () => {
             }
           }}
         >
-          New Loan Request
-        </Button>
-        <Box sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          <CustomTextField value={searchValue} placeholder='Search' onChange={e => handleFilter(e.target.value)} />
-        </Box>
+          Veiw Approved Provider
+        </Button> */}
       </CardContent>
 
       <DataGrid
         autoHeight
         pagination
-        rows={filteredData}
+        rows={data}
         rowHeight={62}
         columns={columns}
         pageSizeOptions={[5, 10]}
@@ -199,6 +186,8 @@ const LoanList = () => {
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
       />
+
+{/* <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} /> */}
     </Card>
   ) : null
 }
