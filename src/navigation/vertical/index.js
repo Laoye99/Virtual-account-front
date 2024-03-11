@@ -17,7 +17,7 @@ const navigation = () => {
     {
       title: 'Switch provider configuration',
       icon: 'tabler:messages',
-      path: '/loan-request',
+      path: '/switch-service',
       action: 'user',
       subject: 'user'
     },

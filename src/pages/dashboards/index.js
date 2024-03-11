@@ -17,23 +17,6 @@ const Dashboard = () => {
 
 
   return (
-
-    // <ApexChartWrapper>
-    //   <Grid container spacing={6}>
-    //     <Grid item xs={12} md={4}>
-    //       <Welcome />
-    //     </Grid>
-    //     {/* <Grid item xs={12} md={8}>
-    //       <Statistics />
-    //     </Grid> */}
-    //     {/* <Grid item xs={12} lg={6}>
-    //       <GuarantorsList />
-    //     </Grid> */}
-    //     {/* <Grid item xs={12} lg={6}>
-    //       <LoanList />
-    //     </Grid> */}
-    //   </Grid>
-    // </ApexChartWrapper>
     <Fragment>
     <FaqHeader/>
     {/* {data !== null ? <FAQS data={data} activeTab={activeTab} handleChange={handleChange} /> : renderNoResult} */}
