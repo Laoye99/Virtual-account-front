@@ -59,15 +59,11 @@ const SidebarAddUser = props => {
     e.preventDefault()
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
-    //console.log(storedToken)
-
-    // You can access form values from the state (values, months, etc.)
     const formData = {
       "switch-name": name,
       "switch-code": code
 
     }
-
     const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
 
     if (!isFormDataValid) {
@@ -79,9 +75,6 @@ const SidebarAddUser = props => {
     } else {}
 
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
-
-
-
     try {
       // Make an HTTP POST request to your endpoint
       const response = await axios.post(`${BASE_URL}/switch/switch`, formData, {
