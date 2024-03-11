@@ -9,6 +9,11 @@ import { styled } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import axios from 'axios'
+import authConfig from 'src/configs/auth'
+import toast from 'react-hot-toast'
+import 'react-toastify/dist/ReactToastify.css'
+import { BASE_URL } from 'src/configs/constanst'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -21,21 +26,11 @@ import { useForm, Controller } from 'react-hook-form'
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
-// ** Store Imports
-import { useDispatch, useSelector } from 'react-redux'
 
-// ** Actions Imports
-import { addUser } from 'src/store/apps/user'
 
-const showErrors = (field, valueLen, min) => {
-  if (valueLen === 0) {
-    return `${field} field is required`
-  } else if (valueLen > 0 && valueLen < min) {
-    return `${field} must be at least ${min} characters`
-  } else {
-    return ''
-  }
-}
+
+
+
 
 const Header = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -44,88 +39,78 @@ const Header = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between'
 }))
 
-const schema = yup.object().shape({
-  company: yup.string().required(),
-  billing: yup.string().required(),
-  country: yup.string().required(),
-  email: yup.string().email().required(),
-  contact: yup
-    .number()
-    .typeError('Contact Number field is required')
-    .min(10, obj => showErrors('Contact Number', obj.value.length, obj.min))
-    .required(),
-  fullName: yup
-    .string()
-    .min(3, obj => showErrors('First Name', obj.value.length, obj.min))
-    .required(),
-  username: yup
-    .string()
-    .min(3, obj => showErrors('Username', obj.value.length, obj.min))
-    .required()
-})
 
-const defaultValues = {
-  email: '',
-  company: '',
-  country: '',
-  billing: '',
-  fullName: '',
-  username: '',
-  contact: Number('')
-}
+
+
 
 const SidebarAddUser = props => {
   // ** Props
   const { open, toggle } = props
+  const [name, setName] = useState("")
+  const [code, setCode] = useState("")
+  const [isButtonDisabled, setButtonDisabled] = useState(false)
 
-  // ** State
-  const [plan, setPlan] = useState('basic')
-  const [role, setRole] = useState('subscriber')
 
-  // ** Hooks
-  const dispatch = useDispatch()
-  const store = useSelector(state => state.user)
 
-  const {
-    reset,
-    control,
-    setValue,
-    setError,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    defaultValues,
-    mode: 'onChange',
-    resolver: yupResolver(schema)
-  })
 
-  const onSubmit = data => {
-    if (store.allData.some(u => u.email === data.email || u.username === data.username)) {
-      store.allData.forEach(u => {
-        if (u.email === data.email) {
-          setError('email', {
-            message: 'Email already exists!'
-          })
-        }
-        if (u.username === data.username) {
-          setError('username', {
-            message: 'Username already exists!'
-          })
+  const onSubmit = async e => {
+    // Disable the button
+    setButtonDisabled(true)
+    e.preventDefault()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+    //console.log(storedToken)
+
+    // You can access form values from the state (values, months, etc.)
+    const formData = {
+      "switch-name": name,
+      "switch-code": code
+
+    }
+
+    const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
+
+    if (!isFormDataValid) {
+        setButtonDisabled(false)
+      console.error('Oops!!! All fields are required')
+      toast.error('Oops!!! All fields are required')
+
+      return
+    } else {}
+
+    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
+
+
+
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.post(`${BASE_URL}/switch/switch`, formData, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
       })
-    } else {
-      dispatch(addUser({ ...data, role, currentPlan: plan }))
+      setButtonDisabled(false)
       toggle()
-      reset()
+      toast.success(response.data.message)
+      setName('')
+      setCode('')
+    } catch (error) {
+      // Handle errors
+      toast.error('Please try again')
+      console.error('Error submitting form', error)
+      setButtonDisabled(false)
+    } finally {
+      setTimeout(() => {
+        // Re-enable the button
+        window.location.reload()
+      }, 2000) // Adjust the time (in milliseconds) to your desired delay
     }
   }
 
   const handleClose = () => {
-    setPlan('basic')
-    setRole('subscriber')
-    setValue('contact', Number(''))
     toggle()
-    reset()
   }
 
   return (
@@ -156,44 +141,32 @@ const SidebarAddUser = props => {
         </IconButton>
       </Header>
       <Box sx={{ p: theme => theme.spacing(0, 6, 6) }}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name='fullName'
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { value, onChange } }) => (
+        <form onSubmit={onSubmit}>
+
               <CustomTextField
                 fullWidth
-                value={value}
+                value={name}
                 sx={{ mb: 4 }}
-                label='Full Name'
-                onChange={onChange}
-                placeholder='John Doe'
-                error={Boolean(errors.fullName)}
-                {...(errors.fullName && { helperText: errors.fullName.message })}
+                label='Switch name'
+                onChange={e => setName(e.target.value)}
+                placeholder='xxxxxx'
               />
-            )}
-          />
-          <Controller
-            name='username'
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { value, onChange } }) => (
+
+
               <CustomTextField
                 fullWidth
-                value={value}
+                value={code}
                 sx={{ mb: 4 }}
-                label='Username'
-                onChange={onChange}
-                placeholder='johndoe'
-                error={Boolean(errors.username)}
-                {...(errors.username && { helperText: errors.username.message })}
+                label='Switch code'
+                onChange={e => setCode(e.target.value)}
+                placeholder='xxxxxx'
               />
-            )}
-          />
+
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Button type='submit' variant='contained' sx={{ mr: 3 }}>
-              Submit
+            <Button  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+                    backgroundColor: '#f50606'
+                  } }}>
+           {isButtonDisabled ? 'Processing...' : 'Submit'}
             </Button>
             <Button variant='tonal' color='secondary' onClick={handleClose}>
               Cancel
