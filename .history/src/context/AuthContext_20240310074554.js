@@ -59,18 +59,11 @@ const AuthProvider = ({ children }) => {
       let param = {
         "username" : userName,
         "refresh-token" : usernew,
-      };
+      }
 
-
-      if (param.username && param["refresh-token"]) {
       // Remove unnecessary quotes
       param.username = param.username.replace(/\"/g, '');
       param["refresh-token"] = param["refresh-token"].replace(/\"/g, '');
-    } else {
-      // Handle the case where username or refresh-token is null or undefined
-      console.error("Username or refresh-token is null or undefined");
-      return; // Stop further execution
-    }
 
       console.log(param)
       if (storedToken) {
