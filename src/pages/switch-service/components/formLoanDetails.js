@@ -14,6 +14,7 @@ import { BASE_URL } from 'src/configs/constanst'
 
 // ** Config
 import authConfig from 'src/configs/auth'
+import InputLabel from '@mui/material/InputLabel'
 
 // ** MUI Imports
 import Dialog from '@mui/material/Dialog'
@@ -69,11 +70,12 @@ const FormLayoutsGuarantor = switchID => {
 
   // ** States
   const [open, setOpen] = useState(false)
+  const [message, setMessage] = useState('')
   const handleDialogToggle = () => setOpen(!open)
   const [apiData, setApiData] = useState([])
-  const [storedToken, setStoredToken] = useState('your-auth-token') // Replace with your actual auth token
   const [value, setValue] = useState('personal-info')
   const [isLoading, setIsLoading] = useState(false)
+  const [isButtonDisabled, setButtonDisabled] = useState(false)
 
 
   console.log('nnnnnnnnnnnnnnnnnnnnnnn', apiData)
@@ -97,7 +99,7 @@ const FormLayoutsGuarantor = switchID => {
           "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
       })
-      setApiData(response.data.data)
+      setApiData(response.data.data[0])
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -111,6 +113,71 @@ const FormLayoutsGuarantor = switchID => {
   useEffect(() => {
     fetchData() // Invoke the function to fetch data
   }, []) // Empty dependency array ensures this effect runs once after the component is mounted
+
+
+  const handleApprove = async e => {
+    // Disable the button
+    setButtonDisabled(true)
+    e.preventDefault()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+    const formData = {
+      "approval-status": true,
+      "message": message
+
+    }
+
+    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
+        }
+      })
+      setButtonDisabled(false)
+      toast.success(response.data.message)
+    } catch (error) {
+      // Handle errors
+      toast.error('Please try again')
+      console.error('Error submitting form', error)
+      setButtonDisabled(false)
+    }
+  }
+
+  const handleDecline = async e => {
+    // Disable the button
+    setButtonDisabled(true)
+    e.preventDefault()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+    const formData = {
+
+      "approval-status": false,
+      "message": message
+    }
+
+    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
+        }
+      })
+      setButtonDisabled(false)
+      toast.success(response.data.message)
+    } catch (error) {
+      // Handle errors
+      toast.error('Please try again')
+      console.error('Error submitting form', error)
+      setButtonDisabled(false)
+    }
+  }
 
 
   return  (
@@ -135,69 +202,83 @@ const FormLayoutsGuarantor = switchID => {
               marginBottom: '20px'
             }}
           >
-            {/* <Table sx={{ minWidth: 200 }}>
+            <Table sx={{ minWidth: 200 }}>
+{
+  apiData == [] ? (
+ null) : ( <TableBody>
+      <TableRow>
+        <TableCell>Provider Name:</TableCell>
+        <TableCell>
+          {apiData?.name}
+        </TableCell>
+      </TableRow>
+       <TableRow>
+        <TableCell>Provider Code:</TableCell>
+        <TableCell>
+          {apiData?.code}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Message:</TableCell>
+        <TableCell>
+          {apiData?.message}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Provider Code:</TableCell>
+        <TableCell>
+          {apiData['created-by']}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Provider Code:</TableCell>
+        <TableCell>
+          {apiData['approved-by']}
+        </TableCell>
+      </TableRow>
+      </TableBody>)
+}
 
-                <TableBody key={apiData.id}>
 
-
-                  <TableRow>
-                    <TableCell>Created At:</TableCell>
-                    <TableCell>
-                      {apiData[0]?.created_at ? new Date(apiData[0].created_at).toLocaleString() : ''}
-                    </TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell>Updated At:</TableCell>
-                    <TableCell>
-                      {apiData[0]?.updated_at ? new Date(apiData[0].updated_at).toLocaleString() : ''}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-
-            </Table> */}
-
-            <Grid container spacing={6}>
-              <Grid item xs={12} sx={{ pb: 4, mx: 5, pt: theme => `${theme.spacing(12.5)} !important` }}>
-                <Typography variant='h4'>Switch Provider Details</Typography>
-              </Grid>
-
-
-
-            </Grid>
+            </Table>
           </TableContainer>
         </fieldset>
 
 
       </TabContext>
-      <Dialog fullWidth maxWidth='sm' onClose={handleDialogToggle} open={open}>
 
-        <Divider sx={{ m: '0 !important' }} />
-        <DialogContent
-          sx={{
-            px: theme => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`],
-            pb: theme => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
-          }}
-        >
-          <Box
-            component='form'
-            onSubmit={e => onSubmit(e)}
-            sx={{
-              mt: 4,
-              mx: 'auto',
-              width: '100%',
-              maxWidth: 360,
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column'
-            }}
-          >
+      <Divider />
 
-
-
+<CardContent sx={{ px: [6, 10] }}>
+  <InputLabel
+    htmlFor='invoice-note'
+    sx={{ mb: 2, fontWeight: 500, fontSize: '1.5rem', lineHeight: 'normal' }}
+  >
+    Message:
+  </InputLabel>
+  <CustomTextField
+    rows={2}
+    value={message}
+    fullWidth
+    onChange={e => setMessage(e.target.value)}
+    multiline
+    id='invoice-note'
+    defaultValue=''
+  />
+</CardContent>
+<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], mb: '3rem' }}>
+            <Button onClick={handleApprove}  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#71ace0',  '&:hover': {
+                    backgroundColor: '#22668D'
+                  } }}>
+           {isButtonDisabled ? 'Processing...' : 'Approve'}
+            </Button>
+            <Button onClick={handleDecline} disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+                    backgroundColor: '#f50606'
+                  } }}>
+            {isButtonDisabled ? 'Processing...' : 'Decline'}
+            </Button>
           </Box>
-        </DialogContent>
-      </Dialog>
+
     </Card>
   )
 }
