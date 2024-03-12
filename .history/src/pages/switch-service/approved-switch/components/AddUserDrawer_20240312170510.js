@@ -87,9 +87,9 @@ const SidebarAddUser = props => {
       setButtonDisabled(false)
       toggle()
       toast.success(response.data.message)
+      console.log('eeee',response.data )
       setName('')
       setCode('')
-      console.log('eeee',response.data )
     } catch (error) {
       // Handle errors
       toast.error('Please try again')

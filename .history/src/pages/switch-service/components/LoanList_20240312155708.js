@@ -175,8 +175,7 @@ const LoanList = () => {
         </Button>
       </CardContent>
 
-      <DataGrid
-        autoHeight
+      <DataGrid 
         pagination
         rows={data}
         rowHeight={62}

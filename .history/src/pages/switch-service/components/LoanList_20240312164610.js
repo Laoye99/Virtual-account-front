@@ -122,6 +122,7 @@ const LoanList = () => {
       })
       .then(response => {
         setData(response.data.data)
+        log
       })
       .catch(error => {
         // Handle the error here, e.g., show an error message or log the error
@@ -176,7 +177,6 @@ const LoanList = () => {
       </CardContent>
 
       <DataGrid
-        autoHeight
         pagination
         rows={data}
         rowHeight={62}
