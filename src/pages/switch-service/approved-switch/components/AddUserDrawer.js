@@ -45,7 +45,7 @@ const Header = styled(Box)(({ theme }) => ({
 
 const SidebarAddUser = props => {
   // ** Props
-  const { open, toggle } = props
+  const { open, toggle, guarantor } = props
   const [name, setName] = useState("")
   const [code, setCode] = useState("")
   const [isButtonDisabled, setButtonDisabled] = useState(false)
@@ -77,7 +77,7 @@ const SidebarAddUser = props => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/switch`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/switch?action=update&id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ const SidebarAddUser = props => {
       sx={{ '& .MuiDrawer-paper': { width: { xs: 300, sm: 400 } } }}
     >
       <Header>
-        <Typography variant='h5'>Add Switch Provider</Typography>
+        <Typography variant='h5'>Update Switch Provider</Typography>
         <IconButton
           size='small'
           onClick={handleClose}

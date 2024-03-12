@@ -61,7 +61,7 @@ const columns = [
     field: 'id',
     minWidth: 150,
     headerName: 'ID',
-    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.id}`}>{`#${row.id}`}</LinkStyled>
+    renderCell: ({ row }) => <LinkStyled href={`/switch-service/approved-switch/${row.id}`}>{`#${row.id}`}</LinkStyled>
   },
   {
     flex: 0.1,
@@ -94,7 +94,7 @@ const columns = [
     renderCell: ({ row }) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title='View'>
-          <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
+          <IconButton size='small' component={Link} href={`/switch-service/approved-switch/${row.id}`}>
             <Icon icon='tabler:eye' />
           </IconButton>
         </Tooltip>
