@@ -14,7 +14,7 @@ const Dashboard = () => {
     <ApexChartWrapper>
   <Grid container spacing={6}>
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>UNAPPROVED SWITCH PROVIDER</Typography>
+          <Typography variant='h5'>APPROVED SWITCH PROVIDER</Typography>
         </Grid>
    <Grid item xs={12} lg={12}>
       <LoanList />
