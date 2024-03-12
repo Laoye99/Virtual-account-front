@@ -93,12 +93,12 @@ const AuthProvider = ({ children }) => {
             // setAbl([...response.data.userAbilities])
           })
           .catch(() => {
+            router.push('/login')
             localStorage.removeItem('userData')
             localStorage.removeItem('refreshToken')
             localStorage.removeItem('accessToken')
             setUser(null)
             toast.error('Oops! Something went wrong. Please check your connection and login.')
-            router.push('/login')
             window.location.reload()
             setLoading(false)
             if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {

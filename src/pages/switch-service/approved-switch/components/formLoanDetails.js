@@ -52,6 +52,8 @@ import CustomChip from 'src/@core/components/mui/chip'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import { Box, Collapse } from '@mui/material'
+import TableHeader from './TableHeader'
+import SidebarAddUser from './AddUserDrawer'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
@@ -76,6 +78,7 @@ const FormLayoutsGuarantor = switchID => {
   const [value, setValue] = useState('personal-info')
   const [isLoading, setIsLoading] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false)
+  const [addUserOpen, setAddUserOpen] = useState(false)
 
 
   console.log('nnnnnnnnnnnnnnnnnnnnnnn', apiData)
@@ -179,6 +182,8 @@ const FormLayoutsGuarantor = switchID => {
     }
   }
 
+  const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
+
 
   return  (
     <Card>
@@ -248,37 +253,11 @@ const FormLayoutsGuarantor = switchID => {
       </TabContext>
 
       <Divider />
+<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], my: '1rem' }}>
 
-<CardContent sx={{ px: [6, 10] }}>
-  <InputLabel
-    htmlFor='invoice-note'
-    sx={{ mb: 2, fontWeight: 500, fontSize: '1.5rem', lineHeight: 'normal' }}
-  >
-    Message:
-  </InputLabel>
-  <CustomTextField
-    rows={2}
-    value={message}
-    fullWidth
-    onChange={e => setMessage(e.target.value)}
-    multiline
-    id='invoice-note'
-    defaultValue=''
-  />
-</CardContent>
-<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], mb: '3rem' }}>
-            <Button onClick={handleApprove}  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#71ace0',  '&:hover': {
-                    backgroundColor: '#22668D'
-                  } }}>
-           {isButtonDisabled ? 'Processing...' : 'Approve'}
-            </Button>
-            <Button onClick={handleDecline} disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-                    backgroundColor: '#f50606'
-                  } }}>
-            {isButtonDisabled ? 'Processing...' : 'Decline'}
-            </Button>
           </Box>
-
+          <TableHeader toggle={toggleAddUserDrawer} />
+          <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} guarantor={guarantor} />
     </Card>
   )
 }

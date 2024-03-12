@@ -17,13 +17,15 @@ const TableHeader = props => {
     onClick={toggle} variant='contained'
     startIcon={<Icon icon='tabler:plus' />}
     sx={{
+      ml: "1rem",
+      mb: "1rem",
       backgroundColor: '#f50606',
       '&:hover': {
         backgroundColor: '#f50606'
       }
     }}
   >
-   New switch provider
+   Update switch provider
 
   </Button>
 
