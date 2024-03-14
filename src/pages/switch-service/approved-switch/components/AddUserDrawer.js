@@ -14,6 +14,7 @@ import authConfig from 'src/configs/auth'
 import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 import { BASE_URL } from 'src/configs/constanst'
+import { useRouter } from 'next/router'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -44,11 +45,14 @@ const Header = styled(Box)(({ theme }) => ({
 
 
 const SidebarAddUser = props => {
+  const router = useRouter()
+
   // ** Props
-  const { open, toggle, guarantor } = props
+  const { open, toggle, guarantor, apiData } = props
   const [name, setName] = useState("")
   const [code, setCode] = useState("")
   const [isButtonDisabled, setButtonDisabled] = useState(false)
+  console.log(apiData?.isactive)
 
 
 
@@ -77,7 +81,7 @@ const SidebarAddUser = props => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/switch?action=update&id=${guarantor}`, formData, {
+      const response = await axios.put(`${BASE_URL}/switch/switch?action=update&id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -89,16 +93,70 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
+      router.push('/switch-service/approved-switch')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
       console.error('Error submitting form', error)
       setButtonDisabled(false)
-    } finally {
-      setTimeout(() => {
-        // Re-enable the button
-        window.location.reload()
-      }, 2000) // Adjust the time (in milliseconds) to your desired delay
+    }
+  }
+
+  const handleActivate = async e => {
+    // Disable the button
+    setButtonDisabled(true)
+    e.preventDefault()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.put(`${BASE_URL}/switch/switch?action=activate&id=${guarantor}`, {}, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
+        }
+      })
+      setButtonDisabled(false)
+      toggle()
+      toast.success(response.data.message)
+      setName('')
+      setCode('')
+      router.push('/switch-service/approved-switch')
+    } catch (error) {
+      // Handle errors
+      toast.error('Please try again')
+      console.error('Error submitting form', error)
+      setButtonDisabled(false)
+    }
+  }
+
+  const handleDeactivate = async e => {
+    // Disable the button
+    setButtonDisabled(true)
+    e.preventDefault()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+    try {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.put(`${BASE_URL}/switch/switch?action=deactivate&id=${guarantor}`,{}, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
+        }
+      })
+      setButtonDisabled(false)
+      toggle()
+      toast.success(response.data.message)
+      setName('')
+      setCode('')
+      router.push('/switch-service/approved-switch')
+    } catch (error) {
+      // Handle errors
+      toast.error('Please try again')
+      console.error('Error submitting form', error)
+      setButtonDisabled(false)
     }
   }
 
@@ -156,14 +214,24 @@ const SidebarAddUser = props => {
               />
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Button  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-                    backgroundColor: '#f50606'
+            <Button  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#71ace0',  '&:hover': {
+                    backgroundColor: '#22668D'
                   } }}>
            {isButtonDisabled ? 'Processing...' : 'Submit'}
             </Button>
-            <Button variant='tonal' color='secondary' onClick={handleClose}>
-              Cancel
-            </Button>
+            {
+              apiData.isactive === true ? (<Button variant='contained'  onClick={handleActivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+                backgroundColor: '#f50606'
+              } }}>
+       {isButtonDisabled ? 'Processing...' : 'Activate'}
+        </Button>) : (   <Button variant='contained'  onClick={handleDeactivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+                    backgroundColor: '#f50606'
+                  } }}>
+           {isButtonDisabled ? 'Processing...' : 'Deactivate'}
+            </Button>)
+            }
+
+
           </Box>
         </form>
       </Box>
