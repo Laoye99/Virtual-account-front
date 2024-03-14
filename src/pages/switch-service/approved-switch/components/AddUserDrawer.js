@@ -52,7 +52,7 @@ const SidebarAddUser = props => {
   const [name, setName] = useState("")
   const [code, setCode] = useState("")
   const [isButtonDisabled, setButtonDisabled] = useState(false)
-  console.log(apiData?.isactive)
+  console.log(apiData)
 
 
 
@@ -64,19 +64,20 @@ const SidebarAddUser = props => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     const formData = {
-      "switch-name": name,
-      "switch-code": code
+      "switch-name": name === "" ? apiData.name : name,
+      "switch-code": code === "" ? apiData.code : code
 
     }
-    const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
 
-    if (!isFormDataValid) {
-        setButtonDisabled(false)
-      console.error('Oops!!! All fields are required')
-      toast.error('Oops!!! All fields are required')
+    // const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
 
-      return
-    } else {}
+    // if (!isFormDataValid) {
+    //     setButtonDisabled(false)
+    //   console.error('Oops!!! All fields are required')
+    //   toast.error('Oops!!! All fields are required')
+
+    //   return
+    // } else {}
 
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
