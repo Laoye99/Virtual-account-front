@@ -257,7 +257,7 @@ const FormLayoutsGuarantor = switchID => {
 
           </Box>
           <TableHeader toggle={toggleAddUserDrawer} />
-          <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} guarantor={guarantor} />
+          <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} guarantor={guarantor} apiData={apiData} />
     </Card>
   )
 }

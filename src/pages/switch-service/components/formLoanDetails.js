@@ -139,6 +139,9 @@ const FormLayoutsGuarantor = switchID => {
       })
       setButtonDisabled(false)
       toast.success(response.data.message)
+      setMessage("")
+      router.push('/switch-service')
+
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -171,6 +174,9 @@ const FormLayoutsGuarantor = switchID => {
       })
       setButtonDisabled(false)
       toast.success(response.data.message)
+      setMessage("")
+      router.push('/switch-service')
+
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
