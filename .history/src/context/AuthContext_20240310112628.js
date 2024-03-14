@@ -62,15 +62,10 @@ const AuthProvider = ({ children }) => {
       };
 
 
-      if (param.username && param["refresh-token"]) {
+      
       // Remove unnecessary quotes
       param.username = param.username.replace(/\"/g, '');
       param["refresh-token"] = param["refresh-token"].replace(/\"/g, '');
-    } else {
-      // Handle the case where username or refresh-token is null or undefined
-      console.error("Username or refresh-token is null or undefined");
-      return; // Stop further execution
-    }
 
       console.log(param)
       if (storedToken) {
@@ -100,12 +95,12 @@ const AuthProvider = ({ children }) => {
             // setAbl([...response.data.userAbilities])
           })
           .catch(() => {
-            router.push('/login')
             localStorage.removeItem('userData')
             localStorage.removeItem('refreshToken')
             localStorage.removeItem('accessToken')
             setUser(null)
             toast.error('Oops! Something went wrong. Please check your connection and login.')
+            router.push('/login')
             window.location.reload()
             setLoading(false)
             if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {

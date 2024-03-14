@@ -55,7 +55,7 @@ const navigation = () => {
     {
       title: 'NIP and UPSL statistics',
       icon: 'tabler:table',
-      path: '/statistics',
+      path: '/tables/mui',
       action: 'user',
       subject: 'user'
     },
