@@ -7,8 +7,6 @@ import { AbilityContext } from 'src/layouts/components/acl/Can'
 const CanViewNavLink = props => {
   // ** Props
   const { children, navLink } = props
-  console.log('ggggg', navLink)
-  console.log('jjjjjjjjjj', children)
 
   // ** Hook
   const ability = useContext(AbilityContext)

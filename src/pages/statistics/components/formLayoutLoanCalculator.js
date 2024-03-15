@@ -77,11 +77,9 @@ const FormLayoutLoanCalculator = () => {
   const [monthlyPaymentCopied, setMonthlyPaymentCopied] = useState(false)
   const [totalLoanAmountCopied, setTotalLoanAmountCopied] = useState(false)
 
-  // Create a state variable to track form submission
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false)
-
-  // Create a state variable to track form submission
-  const [isFormDataValid, setIsFormDataValid] = useState(false)
+  const formattedStartDate = issueDate.toISOString().split('T')[0]; // YYYY-MM-DD
+  const formattedEndDate = dueDate.toISOString().split('T')[0]; // Add one year and format
+  console.log(formattedStartDate, formattedEndDate)
 
   // ** Hooks
   const router = useRouter()
@@ -146,118 +144,34 @@ const FormLayoutLoanCalculator = () => {
    * specified endpoint with form data, retrieves the response data, and updates the state with the
    * fetched data.
    */
-  const calculateLoanDetails = async e => {
+  const onSubmit = async e => {
     // Disable the button
     setButtonDisabled(true)
-
     e.preventDefault()
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-    console.log(storedToken)
-
-    // You can access form values from the state (amount, tenor, etc.)
-    const principal = parseFloat(amountt)
-    const maturity = parseInt(tenor)
-
-    // const loantype = loantype;
-    const formData = { principal: amountt, maturity: tenor, loantype: loantype }
-    console.log(formData)
-
-     // Check if all fields in the formData are not empty or null
-     const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
-
-    if (!isFormDataValid) {
-      setTimeout(() => {
-        // Re-enable the button
-        setButtonDisabled(false)
-      }, 2000) // Adjust the time (in milliseconds) to your desired delay
-      // At least one field is empty or null, display an error message or handle it as needed.
-      console.error('Oops!!! All fields are required')
-      toast.error('Oops!!! All fields are required')
-
-      return
-    } else {}
 
     try {
-      // Make an HTTP PUT request to your endpoint
-
-      const response = await axios.post(`${BASE_URL}/autoloan/loan/calculator`, formData, {
+      // Make an HTTP POST request to your endpoint
+      const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}T00:00:00&end-date=${formattedEndDate}T00:00:00&endpoint=NIPINFLWV2&total_tat=3`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
-          'content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
       })
+      setButtonDisabled(false)
+      console.log(response)
+      toast.success(response.data.message)
 
-      console.log(response.status)
-
-      if (response.status === 200) {
-        console.log(response.data)
-        console.log('iiiiiiiiiiiii', response.data.repayment)
-
-        setApiData(response.data)
-
-        // Map through the array and extract the 'repayment' property
-        // const repaymentData = apiData.map(item => item.repayment);
-
-        // Set your state with the extracted 'repayment' data
-        //  setApiDataa(repaymentData);
-        // setApiDataa(response.data.repayment)
-        // console.log(response.data.repayment);
-        console.log(typeof response.data.repayment)
-        const repaymentArray = Object.values(response.data.repayment)
-
-        // Now you can use map
-        repaymentArray.map(item => item.repayment)
-
-        // Set your state with the mapped data
-        setApiDataa(repaymentArray)
-
-        // Extract the keys from the object
-
-        // const headerKeys = Object.keys(apiDataa);
-        console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', apiData)
-        console.log('Ammmmmmmmmm', response.data.amount)
-        console.log('Ammmmmmmmmm', response.data.interest_rate)
-        console.log('bbbbbbbbbbbbbfffffffffffffff', apiDataa)
-
-        // Update the states with the fetched data
-        setMonthlyPayment(response.data.installment.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-        setTotalLoanAmount(response.data.total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-        setInterestRate(response.data.interest_rate.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-        setNewAmount(response?.data?.amount)
-        setTotalInterest(response.data.sum_interests.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-
-        console.log('installment', response.data.installment.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-        console.log('total', response.data.total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-        console.log('interest_rate', response.data.interest_rate.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-        console.log('amount', response?.data?.amount)
-        console.log('sum_interests', response.data.sum_interests.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
-      } else {
-        console.error('Request not successful:', response.status)
-      }
-
-      // console.log('Form submitted successfully', response.data)
-    }
-    catch (error) {
-      if (error?.response?.data?.errors) {
-        const errorMessages = Object.values(error.response.data.errors).flatMap(messages => messages);
-        const errorMessage = errorMessages.join('and ');
-        toast.error(errorMessage);
-      } else {
-        toast.error(error?.response?.data?.message || 'An error occurred');
-      }
-      console.error('Error processing Request', error);
-      console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', error);
-    }
-
-    // catch (error) {
-    //   toast.error(error?.response?.data?.message)
-    //   console.error('Error processing Request', error)
-    // }
-
-    finally {
+    } catch (error) {
+      // Handle errors
+      toast.error('Please try again')
+      console.error('Error submitting form', error)
+      setButtonDisabled(false)
+    } finally {
       setTimeout(() => {
         // Re-enable the button
-        setButtonDisabled(false)
+        // window.location.reload()
       }, 2000) // Adjust the time (in milliseconds) to your desired delay
     }
   }
@@ -278,7 +192,7 @@ const FormLayoutLoanCalculator = () => {
         >
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
         </TabList>
-        <form onSubmit={calculateLoanDetails}>
+        <form onSubmit={onSubmit}>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='personal-info'>
               <Grid container spacing={5}>
@@ -352,7 +266,7 @@ const FormLayoutLoanCalculator = () => {
                       type='submit'
                       sx={{ mr: 2, backgroundColor: '#f50606' }}
                       variant='contained'
-                      onClick={calculateLoanDetails}
+                      onClick={onSubmit}
                       disabled={isButtonDisabled}
                     >
                       {isButtonDisabled ? 'Processing...' : 'Calculate'}
