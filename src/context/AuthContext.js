@@ -69,6 +69,7 @@ const AuthProvider = ({ children }) => {
     } else {
       // Handle the case where username or refresh-token is null or undefined
       console.error("Username or refresh-token is null or undefined");
+
       return; // Stop further execution
     }
 
