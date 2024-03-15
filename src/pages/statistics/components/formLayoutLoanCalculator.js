@@ -24,9 +24,12 @@ import MenuItem from '@mui/material/MenuItem'
 import Tab from '@mui/material/Tab'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import authConfig from 'src/configs/auth'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 
 import 'react-datepicker/dist/react-datepicker.css'
+import DatePicker from 'react-datepicker'
 
 // ** Icon Imports
 
@@ -34,7 +37,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { makeStyles } from '@material-ui/core/styles'
 
 const CustomInput = forwardRef((props, ref) => {
-  return <CustomTextField fullWidth {...props} inputRef={ref} label='Payment Start Date' autoComplete='off' />
+  return <CustomTextField fullWidth {...props} inputRef={ref} label='Click to select Date' autoComplete='off' />
 })
 
 const useStyles = makeStyles(theme => ({
@@ -54,6 +57,8 @@ const FormLayoutLoanCalculator = () => {
   const [apiData, setApiData] = useState([])
   const [apiDataa, setApiDataa] = useState([])
   const [data, setData] = useState([])
+  const [issueDate, setIssueDate] = useState(new Date())
+  const [dueDate, setDueDate] = useState(new Date())
 
   // const [frequency, setFrequency] = useState(null);
   const [tenor, setTenor] = useState('')
@@ -278,7 +283,16 @@ const FormLayoutLoanCalculator = () => {
             <TabPanel sx={{ p: 0 }} value='personal-info'>
               <Grid container spacing={5}>
                 <Grid item xs={12} sm={3}>
-                  <CustomTextField
+                <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
+                <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>Start Date:</Typography>
+                <DatePicker
+                  id='issue-date'
+                  selected={issueDate}
+                  customInput={<CustomInput />}
+                  onChange={date => setIssueDate(date)}
+                />
+              </Box>
+                  {/* <CustomTextField
                     fullWidth
                     label='Start Date'
                     placeholder='Loan amount'
@@ -287,10 +301,19 @@ const FormLayoutLoanCalculator = () => {
                     inputProps={{ pattern: '[0-9]*' }}
                     onChange={handleAmount}
                     required
-                  />
+                  /> */}
                 </Grid>
                 <Grid item xs={12} sm={3}>
-                  <CustomTextField
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>End Date:</Typography>
+                <DatePicker
+                  id='due-date'
+                  selected={dueDate}
+                  customInput={<CustomInput />}
+                  onChange={date => setDueDate(date)}
+                />
+              </Box>
+                  {/* <CustomTextField
                     fullWidth
                     label='End Date'
                     placeholder='Maturity'
@@ -301,7 +324,7 @@ const FormLayoutLoanCalculator = () => {
 
                    // onChange={e => setTenor(e.target.value)}
                    required
-                  />
+                  /> */}
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <CustomTextField
