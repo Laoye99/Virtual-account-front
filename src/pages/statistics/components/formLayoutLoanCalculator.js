@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useState } from 'react'
 // ** Next Import
 import { useRouter } from 'next/router'
 import { BASE_URL } from 'src/configs/constanst'
+import Link from 'next/link'
 
 import { styled } from '@mui/material/styles'
 import toast from 'react-hot-toast'
@@ -11,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css'
 
 // ** Config
 import TabContext from '@mui/lab/TabContext'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import { TableContainer } from '@mui/material'
@@ -25,20 +28,25 @@ import Tab from '@mui/material/Tab'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import authConfig from 'src/configs/auth'
 import Box from '@mui/material/Box'
+import { DataGrid } from '@mui/x-data-grid'
 import Typography from '@mui/material/Typography'
-
-
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
 
 // ** Icon Imports
+import Icon from 'src/@core/components/icon'
 
 // ** Icon CopyToClipboard
 import { makeStyles } from '@material-ui/core/styles'
+import CustomInput from './PickersCustomInput'
 
-const CustomInput = forwardRef((props, ref) => {
-  return <CustomTextField fullWidth {...props} inputRef={ref} label='Click to select Date' autoComplete='off' />
-})
+const LinkStyled = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.primary.main,
+  fontSize: theme.typography.body1.fontSize
+}))
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,35 +59,78 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const columns = [
+  {
+    flex: 0.1,
+    field: 'id',
+    minWidth: 150,
+    headerName: 'ID',
+    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.sessionid}`}>{`#${row.sessionid}`}</LinkStyled>
+  },
+  {
+    flex: 0.1,
+    field: 'name',
+    minWidth: 120,
+    headerName: 'Name',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.name || 0}</Typography>
+  },
+
+  {
+    flex: 0.1,
+    field: 'code',
+    minWidth: 120,
+    headerName: 'Code',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.code || 0}</Typography>
+  },
+  {
+    flex: 0.1,
+    field: 'created-by',
+    minWidth: 120,
+    headerName: 'Created by',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created-by"] || 0}</Typography>
+  },
+  {
+    flex: 0.1,
+    minWidth: 100,
+    sortable: false,
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: ({ row }) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip title='View'>
+          <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
+            <Icon icon='tabler:eye' />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    )
+  }
+]
+
 const FormLayoutLoanCalculator = () => {
   const classes = useStyles()
   const [value, setValue] = useState('personal-info')
   const [apiData, setApiData] = useState([])
   const [apiDataa, setApiDataa] = useState([])
-  const [data, setData] = useState([])
+  const [data, setData] = useState({})
   const [issueDate, setIssueDate] = useState(new Date())
   const [dueDate, setDueDate] = useState(new Date())
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
 
   // const [frequency, setFrequency] = useState(null);
   const [tenor, setTenor] = useState('')
   const [loantype, setLoanType] = useState('')
   const [amountt, setAmount] = useState('')
 
-  //const [selectedDate, setSelectedDate] = useState(null);
-  const [monthlyPayment, setMonthlyPayment] = useState(0) // State to store monthly payment
-  const [totalLoanAmount, setTotalLoanAmount] = useState(0) // State to store monthly payment
-  const [interestRate, setInterestRate] = useState(0) // State to store interest_rate
-  const [newAmount, setNewAmount] = useState(0) // State to store new amount
-  const [totalInterest, setTotalInterest] = useState(0) // State to store sum_interests
-  //const [endDate, setEndDate] = useState(null); // State to store end date
-  const [storedToken, setStoredToken] = useState('your-auth-token') // Replace with your actual auth token
-  const [isButtonDisabled, setButtonDisabled] = useState(false)
-  const [monthlyPaymentCopied, setMonthlyPaymentCopied] = useState(false)
-  const [totalLoanAmountCopied, setTotalLoanAmountCopied] = useState(false)
 
-  const formattedStartDate = issueDate.toISOString().split('T')[0]; // YYYY-MM-DD
-  const formattedEndDate = dueDate.toISOString().split('T')[0]; // Add one year and format
-  console.log(formattedStartDate, formattedEndDate)
+
+  const [isButtonDisabled, setButtonDisabled] = useState(false)
+  const formattedStartDate = issueDate.toISOString().slice(0, 19); // YYYY-MM-DD
+  const formattedEndDate = dueDate.toISOString().slice(0, 19); // Add one year and format
+console.log(formattedEndDate, formattedStartDate)
+  console.log(issueDate, dueDate)
+
+  console.log(data)
 
   // ** Hooks
   const router = useRouter()
@@ -152,7 +203,7 @@ const FormLayoutLoanCalculator = () => {
 
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}T00:00:00&end-date=${formattedEndDate}T00:00:00&endpoint=NIPINFLWV2&total_tat=3`, {
+      const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}&end-date=${formattedEndDate}&endpoint=${loantype}&total_tat=3`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -160,7 +211,8 @@ const FormLayoutLoanCalculator = () => {
         }
       })
       setButtonDisabled(false)
-      console.log(response)
+      console.log(response.data.data)
+      setData(response.data.data)
       toast.success(response.data.message)
 
     } catch (error) {
@@ -181,6 +233,9 @@ const FormLayoutLoanCalculator = () => {
   const headerKeys = Object.keys(apiDataa[0] || {})
   console.log('table head', headerKeys)
 
+
+
+
   return (
     <Card>
       <TabContext value={value}>
@@ -200,46 +255,33 @@ const FormLayoutLoanCalculator = () => {
                 <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
                 <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>Start Date:</Typography>
                 <DatePicker
-                  id='issue-date'
-                  selected={issueDate}
-                  customInput={<CustomInput />}
-                  onChange={date => setIssueDate(date)}
-                />
+          showTimeSelect
+          timeFormat='HH:mm'
+          timeIntervals={15}
+          selected={issueDate}
+          id='date-time-picker'
+          dateFormat='MM/dd/yyyy h:mm aa'
+          onChange={date => setIssueDate(date)}
+          customInput={<CustomInput label='Start Date & Time' />}
+        />
               </Box>
-                  {/* <CustomTextField
-                    fullWidth
-                    label='Start Date'
-                    placeholder='Loan amount'
-                    value={amountt}
-                    type='text' // Input type as number
-                    inputProps={{ pattern: '[0-9]*' }}
-                    onChange={handleAmount}
-                    required
-                  /> */}
                 </Grid>
                 <Grid item xs={12} sm={3}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>End Date:</Typography>
                 <DatePicker
-                  id='due-date'
-                  selected={dueDate}
-                  customInput={<CustomInput />}
-                  onChange={date => setDueDate(date)}
-                />
+          showTimeSelect
+          timeFormat='HH:mm'
+          timeIntervals={15}
+          selected={dueDate}
+          id='date-time-picker'
+          dateFormat='MM/dd/yyyy h:mm aa'
+          onChange={date => setDueDate(date)}
+          customInput={<CustomInput label='End Date & Time' />}
+        />
               </Box>
-                  {/* <CustomTextField
-                    fullWidth
-                    label='End Date'
-                    placeholder='Maturity'
-                    inputProps={{ pattern: '[0-9]*' }}
-                    type='text' // Input type as number
-                    value={tenor}
-                    onChange={handleTenor}
-
-                   // onChange={e => setTenor(e.target.value)}
-                   required
-                  /> */}
                 </Grid>
+
                 <Grid item xs={12} sm={3}>
                   <CustomTextField
                     select
@@ -255,10 +297,32 @@ const FormLayoutLoanCalculator = () => {
                     }}
                     required
                   >
-                    <MenuItem value='collaterteralized'>Collaterteralized</MenuItem>
-                    <MenuItem value='non-collaterteralized'>Non-Collaterteralized</MenuItem>
+                    <MenuItem value='summary'>summary</MenuItem>
                   </CustomTextField>
                 </Grid>
+
+                {
+                  data == [] ? (null) : (
+                  <Grid item xs={12} sm={3}>
+                    <Autocomplete
+                      placeholder='Select First Guarator'
+                      id='form-layouts-tabs-select'
+                      options={staffData}
+                      getOptionLabel={option => option.full_name}
+                      getOptionValue={option => option.no_}
+                      inputValue={inputValue}
+                      onInputChange={handleInputChange}
+                      value={garantor1}
+                      onChange={handleSelectChangeGarantorOne}
+                      renderInput={params => (
+                        <TextField {...params} label='Type First Guarantor Name Here' fullWidth />
+                      )}
+                    />
+                  </Grid>
+                  )
+                }
+
+
 
                 <Grid item xs={12} sm={3}>
                   <CardActions sx={{ mb: 2, mt: 2 }}>
@@ -294,6 +358,19 @@ const FormLayoutLoanCalculator = () => {
 
         </form>
       </TabContext>
+     {/* <DataGrid
+        getRowId={data.sessionid}
+          autoHeight
+          pagination
+          rows={data}
+          rowHeight={62}
+          columns={columns}
+          pageSizeOptions={[5, 10]}
+          disableRowSelectionOnClick
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+        /> */}
+
     </Card>
   )
 }
