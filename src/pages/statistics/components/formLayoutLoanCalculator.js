@@ -30,6 +30,7 @@ import authConfig from 'src/configs/auth'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import Typography from '@mui/material/Typography'
+
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
 import Autocomplete from '@mui/material/Autocomplete'
@@ -59,60 +60,87 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+
 const columns = [
   {
     flex: 0.1,
-    field: 'id',
-    minWidth: 150,
-    headerName: 'ID',
-    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.sessionid}`}>{`#${row.sessionid}`}</LinkStyled>
-  },
-  {
-    flex: 0.1,
-    field: 'name',
-    minWidth: 120,
-    headerName: 'Name',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.name || 0}</Typography>
+    field: 'credit_tat',
+    minWidth: 60,
+    headerName: 'credit_tat',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.credit_tat || ""}</Typography>
   },
 
   {
     flex: 0.1,
-    field: 'code',
-    minWidth: 120,
-    headerName: 'Code',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.code || 0}</Typography>
+    field: 'debit_tat',
+    minWidth: 60,
+    headerName: 'debit_tat',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.debit_tat || 0}</Typography>
   },
   {
     flex: 0.1,
-    field: 'created-by',
+    field: 'endpoint',
     minWidth: 120,
-    headerName: 'Created by',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created-by"] || 0}</Typography>
+    headerName: 'endpoint',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["endpoint"] || 0}</Typography>
   },
   {
     flex: 0.1,
-    minWidth: 100,
-    sortable: false,
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: ({ row }) => (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Tooltip title='View'>
-          <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
-            <Icon icon='tabler:eye' />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    )
-  }
+    field: 'msg_type',
+    minWidth: 120,
+    headerName: 'msg_type',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.msg_type || ""}</Typography>
+  },
+
+  {
+    flex: 0.1,
+    field: 'total_tat',
+    minWidth: 60,
+    headerName: 'total_tat',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.total_tat || 0}</Typography>
+  },
+  {
+    flex: 0.1,
+    field: 'val_tat',
+    minWidth: 60,
+    headerName: 'val_tat',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["val_tat"] || 0}</Typography>
+  },
+
+  {
+    flex: 0.1,
+    field: 'entrydate',
+    minWidth: 120,
+    headerName: 'entrydate',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["entrydate"] || 0}</Typography>
+  },
+
+
+  // {
+  //   flex: 0.1,
+  //   minWidth: 100,
+  //   sortable: false,
+  //   field: 'actions',
+  //   headerName: 'Actions',
+  //   renderCell: ({ row }) => (
+  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
+  //       <Tooltip title='View'>
+  //         <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
+  //           <Icon icon='tabler:eye' />
+  //         </IconButton>
+  //       </Tooltip>
+  //     </Box>
+  //   )
+  // }
 ]
 
 const FormLayoutLoanCalculator = () => {
   const classes = useStyles()
   const [value, setValue] = useState('personal-info')
+  const [months, setMonths] = useState('')
   const [apiData, setApiData] = useState([])
   const [apiDataa, setApiDataa] = useState([])
-  const [data, setData] = useState({})
+  const [data, setData] = useState([])
   const [issueDate, setIssueDate] = useState(new Date())
   const [dueDate, setDueDate] = useState(new Date())
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
@@ -132,6 +160,10 @@ console.log(formattedEndDate, formattedStartDate)
 
   console.log(data)
 
+  const newData = data.map((item, index) => {
+    return { ...item, id: index + 1 };
+});
+
   // ** Hooks
   const router = useRouter()
 
@@ -142,6 +174,13 @@ console.log(formattedEndDate, formattedStartDate)
   const handleTabsChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  const handleSelectChange = event => {
+    setMonths(event.target.value)
+    setLoanType(event.target.value)
+  }
+
+
 
   // Define a custom styled component for the table container
 
@@ -213,7 +252,14 @@ console.log(formattedEndDate, formattedStartDate)
       setButtonDisabled(false)
       console.log(response.data.data)
       setData(response.data.data)
-      toast.success(response.data.message)
+
+      if (response.data.data[0] && response.data.data[0].hasOwnProperty('sessionid')) {
+        toast.success(response.data.message)
+    } else {
+      toast.success("Please select endpoint to view Performance statistics")
+    }
+
+
 
     } catch (error) {
       // Handle errors
@@ -236,9 +282,13 @@ console.log(formattedEndDate, formattedStartDate)
 
 
 
+
   return (
     <Card>
       <TabContext value={value}>
+      <CardContent
+        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
+      >
         <TabList
           variant='scrollable'
           scrollButtons={false}
@@ -246,7 +296,24 @@ console.log(formattedEndDate, formattedStartDate)
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
+
         </TabList>
+        <Button
+          component={Link}
+          variant='contained'
+          href='/statistics/unapproved-statistics'
+          startIcon={<Icon icon='tabler:eye' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
+          Veiw Unapproved Statistics
+        </Button>
+        </CardContent>
+
         <form onSubmit={onSubmit}>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='personal-info'>
@@ -282,43 +349,50 @@ console.log(formattedEndDate, formattedStartDate)
               </Box>
                 </Grid>
 
-                <Grid item xs={12} sm={3}>
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue=''
-                    label='Endpoint'
-                    placeholder='Loan Type?'
-                    id='form-layouts-tabs-multiple-select'
-                    SelectProps={{
-                      multiple: false,
-                      value: loantype,
-                      onChange: e => setLoanType(e.target.value)
-                    }}
-                    required
-                  >
-                    <MenuItem value='summary'>summary</MenuItem>
-                  </CustomTextField>
-                </Grid>
+{
+  data[0] ? (null) : ( <Grid item xs={12} sm={3}>
+    <CustomTextField
+      select
+      fullWidth
+      defaultValue=''
+      label='Endpoint'
+      placeholder='Loan Type?'
+      id='form-layouts-tabs-multiple-select'
+      SelectProps={{
+        multiple: false,
+        value: loantype,
+        onChange: e => setLoanType(e.target.value)
+      }}
+      required
+    >
+      <MenuItem value='summary'>summary</MenuItem>
+    </CustomTextField>
+  </Grid>)
+}
+
 
                 {
-                  data == [] ? (null) : (
-                  <Grid item xs={12} sm={3}>
-                    <Autocomplete
-                      placeholder='Select First Guarator'
-                      id='form-layouts-tabs-select'
-                      options={staffData}
-                      getOptionLabel={option => option.full_name}
-                      getOptionValue={option => option.no_}
-                      inputValue={inputValue}
-                      onInputChange={handleInputChange}
-                      value={garantor1}
-                      onChange={handleSelectChangeGarantorOne}
-                      renderInput={params => (
-                        <TextField {...params} label='Type First Guarantor Name Here' fullWidth />
-                      )}
-                    />
-                  </Grid>
+                  data[0] ? (<Grid item xs={12} sm={3}>
+                    <CustomTextField
+                                               select
+                                               fullWidth
+                                               defaultValue=''
+                                               label='select endpoint'
+                                               id='form-layouts-tabs-multiple-select'
+                                               SelectProps={{
+                                                 multiple: false,
+                                                 value: months,
+                                                 onChange: handleSelectChange
+                                               }}
+                                             >
+                                               {newData.map(month => (
+                                                 <MenuItem key={month.id} value={month.endpoint}>
+                                                   {month.endpoint}, count-{month.count}
+                                                 </MenuItem>
+                                               ))}
+                                             </CustomTextField>
+                                     </Grid>) : (
+                  null
                   )
                 }
 
@@ -328,12 +402,14 @@ console.log(formattedEndDate, formattedStartDate)
                   <CardActions sx={{ mb: 2, mt: 2 }}>
                     <Button
                       type='submit'
-                      sx={{ mr: 2, backgroundColor: '#f50606' }}
+                      sx={{ mr: 2, backgroundColor: '#f50606',  '&:hover': {
+                        backgroundColor: '#f50606'
+                      } }}
                       variant='contained'
                       onClick={onSubmit}
                       disabled={isButtonDisabled}
                     >
-                      {isButtonDisabled ? 'Processing...' : 'Calculate'}
+                      {isButtonDisabled ? 'Processing...' : 'Submit'}
                     </Button>
                   </CardActions>
                 </Grid>
@@ -358,18 +434,24 @@ console.log(formattedEndDate, formattedStartDate)
 
         </form>
       </TabContext>
-     {/* <DataGrid
+
+      {
+        (data[0] && data[0].hasOwnProperty('sessionid')) &&
+        <DataGrid
         getRowId={data.sessionid}
           autoHeight
           pagination
-          rows={data}
+          rows={newData}
           rowHeight={62}
           columns={columns}
           pageSizeOptions={[5, 10]}
           disableRowSelectionOnClick
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}
-        /> */}
+        />
+      }
+
+
 
     </Card>
   )
