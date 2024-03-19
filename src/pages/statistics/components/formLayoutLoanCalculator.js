@@ -125,7 +125,7 @@ const columns = [
   //   renderCell: ({ row }) => (
   //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
   //       <Tooltip title='View'>
-  //         <IconButton size='small' component={Link} href={/switch-service/${row.id}}>
+  //         <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
   //           <Icon icon='tabler:eye' />
   //         </IconButton>
   //       </Tooltip>
@@ -242,7 +242,7 @@ console.log(formattedEndDate, formattedStartDate)
 
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.get(${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}&end-date=${formattedEndDate}&endpoint=${loantype}&total_tat=3, {
+      const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}&end-date=${formattedEndDate}&endpoint=${loantype}&total_tat=3`, {
         headers: {
           Authorization: Bearer ${storedToken},
           'Content-Type': 'application/json',
@@ -286,14 +286,22 @@ console.log(formattedEndDate, formattedStartDate)
   return (
     <Card>
       <TabContext value={value}>
+      <CardContent
+        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
+      >
+      <CardContent
+        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
+      >
         <TabList
           variant='scrollable'
           scrollButtons={false}
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }} >
-          
+
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
-          <Button
+
+        </TabList>
+        <Button
           component={Link}
           variant='contained'
           href='/statistics/unapproved-statistics'
@@ -307,7 +315,7 @@ console.log(formattedEndDate, formattedStartDate)
         >
           Veiw Unapproved Statistics
         </Button>
-        </TabList>
+        </CardContent>
 
         <form onSubmit={onSubmit}>
           <CardContent>
