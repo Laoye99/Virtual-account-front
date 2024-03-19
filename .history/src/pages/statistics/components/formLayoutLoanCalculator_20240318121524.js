@@ -206,7 +206,7 @@ const FormLayoutLoanCalculator = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/statistics/unapproved-statistics'
+          href='/statistics/approved-statistics'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -215,7 +215,7 @@ const FormLayoutLoanCalculator = () => {
             }
           }}
         >
-          Veiw Unapproved Statistics
+          Veiw Unapproved Endpoints
         </Button>
         </CardContent>
         <form onSubmit={onSubmit}>

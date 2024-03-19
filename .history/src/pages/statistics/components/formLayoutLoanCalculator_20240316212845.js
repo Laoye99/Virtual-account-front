@@ -27,7 +27,6 @@ import authConfig from 'src/configs/auth'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
-import Icon from 'src/@core/components/icon'
 
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -37,12 +36,6 @@ import DatePicker from 'react-datepicker'
 
 // ** Icon CopyToClipboard
 import { makeStyles } from '@material-ui/core/styles'
-
-const LinkStyled = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  color: theme.palette.primary.main,
-  fontSize: theme.typography.body1.fontSize
-}))
 
 const CustomInput = forwardRef((props, ref) => {
   return <CustomTextField fullWidth {...props} inputRef={ref} label='Click to select Date' autoComplete='off' />
@@ -192,9 +185,6 @@ const FormLayoutLoanCalculator = () => {
   return (
     <Card>
       <TabContext value={value}>
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
         <TabList
           variant='scrollable'
           scrollButtons={false}
@@ -204,10 +194,10 @@ const FormLayoutLoanCalculator = () => {
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
         </TabList>
         <Button
-          component={Link}
+          // component={Link}
           variant='contained'
-          href='/statistics/unapproved-statistics'
-          startIcon={<Icon icon='tabler:eye' />}
+          // href='/switch-service/approved-switch'
+          // startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
             '&:hover': {
@@ -215,9 +205,8 @@ const FormLayoutLoanCalculator = () => {
             }
           }}
         >
-          Veiw Unapproved Statistics
+          Veiw Approved Provider
         </Button>
-        </CardContent>
         <form onSubmit={onSubmit}>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='personal-info'>

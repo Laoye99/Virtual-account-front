@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 // ** Demo Components Imports
-import LoanList from './unapproved-statistics/components/LoanList'
+import LoanList from './components/LoanList'
 import FormLayoutLoanCalculator from 'src/pages/statistics/components/formLayoutLoanCalculator'
 
 const LoanCalculator = () => {
@@ -17,7 +17,7 @@ const LoanCalculator = () => {
           <Typography variant='h6'>NIP and UPSL Statistics</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-        <FormLayoutLoanCalculator/>
+        <FormLayoutLoanCalculator />
         </Grid>
       </Grid>
     </DatePickerWrapper>

@@ -26,8 +26,6 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import authConfig from 'src/configs/auth'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Link from 'next/link'
-import Icon from 'src/@core/components/icon'
 
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -37,12 +35,6 @@ import DatePicker from 'react-datepicker'
 
 // ** Icon CopyToClipboard
 import { makeStyles } from '@material-ui/core/styles'
-
-const LinkStyled = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  color: theme.palette.primary.main,
-  fontSize: theme.typography.body1.fontSize
-}))
 
 const CustomInput = forwardRef((props, ref) => {
   return <CustomTextField fullWidth {...props} inputRef={ref} label='Click to select Date' autoComplete='off' />
@@ -192,9 +184,6 @@ const FormLayoutLoanCalculator = () => {
   return (
     <Card>
       <TabContext value={value}>
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
         <TabList
           variant='scrollable'
           scrollButtons={false}
@@ -203,21 +192,6 @@ const FormLayoutLoanCalculator = () => {
         >
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
         </TabList>
-        <Button
-          component={Link}
-          variant='contained'
-          href='/statistics/unapproved-statistics'
-          startIcon={<Icon icon='tabler:eye' />}
-          sx={{
-            backgroundColor: '#f50606',
-            '&:hover': {
-              backgroundColor: '#f50606' // Change the background color on hover
-            }
-          }}
-        >
-          Veiw Unapproved Statistics
-        </Button>
-        </CardContent>
         <form onSubmit={onSubmit}>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='personal-info'>
@@ -230,7 +204,11 @@ const FormLayoutLoanCalculator = () => {
                   selected={issueDate}
                   customInput={<CustomInput />}
                   onChange={date => setIssueDate(date)}
-                />
+                /><TimePicker
+                label="Controlled picker"
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+              />
               </Box>
                   {/* <CustomTextField
                     fullWidth
