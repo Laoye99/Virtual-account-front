@@ -290,8 +290,8 @@ console.log(formattedEndDate, formattedStartDate)
           variant='scrollable'
           scrollButtons={false}
           onChange={handleTabsChange}
-          sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }} >
-          
+          sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }}
+        >
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
           <Button
           component={Link}
@@ -452,4 +452,4 @@ console.log(formattedEndDate, formattedStartDate)
   )
 }
 
-export default FormLayoutLoanCalculator;
+export default FormLayoutLoanCalculator

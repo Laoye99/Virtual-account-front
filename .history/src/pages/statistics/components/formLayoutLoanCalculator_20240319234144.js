@@ -291,7 +291,6 @@ console.log(formattedEndDate, formattedStartDate)
           scrollButtons={false}
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }} >
-          
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
           <Button
           component={Link}

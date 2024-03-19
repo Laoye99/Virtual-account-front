@@ -290,10 +290,11 @@ console.log(formattedEndDate, formattedStartDate)
           variant='scrollable'
           scrollButtons={false}
           onChange={handleTabsChange}
-          sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }} >
-          
+          sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }}
+        >
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
-          <Button
+        </TabList>
+        <Button
           component={Link}
           variant='contained'
           href='/statistics/unapproved-statistics'
@@ -307,8 +308,6 @@ console.log(formattedEndDate, formattedStartDate)
         >
           Veiw Unapproved Statistics
         </Button>
-        </TabList>
-
         <form onSubmit={onSubmit}>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='personal-info'>
@@ -452,4 +451,4 @@ console.log(formattedEndDate, formattedStartDate)
   )
 }
 
-export default FormLayoutLoanCalculator;
+export default FormLayoutLoanCalculator
