@@ -4,7 +4,6 @@ import { forwardRef, useEffect, useState } from 'react'
 // ** Next Import
 import { useRouter } from 'next/router'
 import { BASE_URL } from 'src/configs/constanst'
-import Link from 'next/link'
 
 import { styled } from '@mui/material/styles'
 import toast from 'react-hot-toast'
@@ -12,8 +11,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 // ** Config
 import TabContext from '@mui/lab/TabContext'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import { TableContainer } from '@mui/material'
@@ -28,26 +25,27 @@ import Tab from '@mui/material/Tab'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import authConfig from 'src/configs/auth'
 import Box from '@mui/material/Box'
-import { DataGrid } from '@mui/x-data-grid'
 import Typography from '@mui/material/Typography'
+import Link from 'next/link'
+
 
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 // ** Icon CopyToClipboard
 import { makeStyles } from '@material-ui/core/styles'
-import CustomInput from './PickersCustomInput'
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   color: theme.palette.primary.main,
   fontSize: theme.typography.body1.fontSize
 }))
+
+const CustomInput = forwardRef((props, ref) => {
+  return <CustomTextField fullWidth {...props} inputRef={ref} label='Click to select Date' autoComplete='off' />
+})
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,109 +58,35 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-
-const columns = [
-  {
-    flex: 0.1,
-    field: 'credit_tat',
-    minWidth: 60,
-    headerName: 'credit_tat',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.credit_tat || ""}</Typography>
-  },
-
-  {
-    flex: 0.1,
-    field: 'debit_tat',
-    minWidth: 60,
-    headerName: 'debit_tat',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.debit_tat || 0}</Typography>
-  },
-  {
-    flex: 0.1,
-    field: 'endpoint',
-    minWidth: 120,
-    headerName: 'endpoint',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["endpoint"] || 0}</Typography>
-  },
-  {
-    flex: 0.1,
-    field: 'msg_type',
-    minWidth: 120,
-    headerName: 'msg_type',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.msg_type || ""}</Typography>
-  },
-
-  {
-    flex: 0.1,
-    field: 'total_tat',
-    minWidth: 60,
-    headerName: 'total_tat',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.total_tat || 0}</Typography>
-  },
-  {
-    flex: 0.1,
-    field: 'val_tat',
-    minWidth: 60,
-    headerName: 'val_tat',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["val_tat"] || 0}</Typography>
-  },
-
-  {
-    flex: 0.1,
-    field: 'entrydate',
-    minWidth: 120,
-    headerName: 'entrydate',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["entrydate"] || 0}</Typography>
-  },
-
-
-  // {
-  //   flex: 0.1,
-  //   minWidth: 100,
-  //   sortable: false,
-  //   field: 'actions',
-  //   headerName: 'Actions',
-  //   renderCell: ({ row }) => (
-  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-  //       <Tooltip title='View'>
-  //         <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
-  //           <Icon icon='tabler:eye' />
-  //         </IconButton>
-  //       </Tooltip>
-  //     </Box>
-  //   )
-  // }
-]
-
 const FormLayoutLoanCalculator = () => {
   const classes = useStyles()
   const [value, setValue] = useState('personal-info')
-  const [months, setMonths] = useState('')
   const [apiData, setApiData] = useState([])
   const [apiDataa, setApiDataa] = useState([])
   const [data, setData] = useState([])
   const [issueDate, setIssueDate] = useState(new Date())
   const [dueDate, setDueDate] = useState(new Date())
-  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
 
   // const [frequency, setFrequency] = useState(null);
   const [tenor, setTenor] = useState('')
   const [loantype, setLoanType] = useState('')
   const [amountt, setAmount] = useState('')
 
-
-
+  //const [selectedDate, setSelectedDate] = useState(null);
+  const [monthlyPayment, setMonthlyPayment] = useState(0) // State to store monthly payment
+  const [totalLoanAmount, setTotalLoanAmount] = useState(0) // State to store monthly payment
+  const [interestRate, setInterestRate] = useState(0) // State to store interest_rate
+  const [newAmount, setNewAmount] = useState(0) // State to store new amount
+  const [totalInterest, setTotalInterest] = useState(0) // State to store sum_interests
+  //const [endDate, setEndDate] = useState(null); // State to store end date
+  const [storedToken, setStoredToken] = useState('your-auth-token') // Replace with your actual auth token
   const [isButtonDisabled, setButtonDisabled] = useState(false)
-  const formattedStartDate = issueDate.toISOString().slice(0, 19); // YYYY-MM-DD
-  const formattedEndDate = dueDate.toISOString().slice(0, 19); // Add one year and format
-console.log(formattedEndDate, formattedStartDate)
-  console.log(issueDate, dueDate)
+  const [monthlyPaymentCopied, setMonthlyPaymentCopied] = useState(false)
+  const [totalLoanAmountCopied, setTotalLoanAmountCopied] = useState(false)
 
-  console.log(data)
-
-  const newData = data.map((item, index) => {
-    return { ...item, id: index + 1 };
-});
+  const formattedStartDate = issueDate.toISOString().split('T')[0]; // YYYY-MM-DD
+  const formattedEndDate = dueDate.toISOString().split('T')[0]; // Add one year and format
+  console.log(formattedStartDate, formattedEndDate)
 
   // ** Hooks
   const router = useRouter()
@@ -174,13 +98,6 @@ console.log(formattedEndDate, formattedStartDate)
   const handleTabsChange = (event, newValue) => {
     setValue(newValue)
   }
-
-  const handleSelectChange = event => {
-    setMonths(event.target.value)
-    setLoanType(event.target.value)
-  }
-
-
 
   // Define a custom styled component for the table container
 
@@ -242,7 +159,7 @@ console.log(formattedEndDate, formattedStartDate)
 
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}&end-date=${formattedEndDate}&endpoint=${loantype}&total_tat=3`, {
+      const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}T00:00:00&end-date=${formattedEndDate}T00:00:00&endpoint=NIPINFLWV2&total_tat=3`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -250,16 +167,8 @@ console.log(formattedEndDate, formattedStartDate)
         }
       })
       setButtonDisabled(false)
-      console.log(response.data.data)
-      setData(response.data.data)
-
-      if (response.data.data[0] && response.data.data[0].hasOwnProperty('sessionid')) {
-        toast.success(response.data.message)
-    } else {
-      toast.success("Please select endpoint to view Performance statistics")
-    }
-
-
+      console.log(response)
+      toast.success(response.data.message)
 
     } catch (error) {
       // Handle errors
@@ -279,19 +188,9 @@ console.log(formattedEndDate, formattedStartDate)
   const headerKeys = Object.keys(apiDataa[0] || {})
   console.log('table head', headerKeys)
 
-
-
-
-
   return (
     <Card>
       <TabContext value={value}>
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
         <TabList
           variant='scrollable'
           scrollButtons={false}
@@ -299,13 +198,12 @@ console.log(formattedEndDate, formattedStartDate)
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
-
         </TabList>
         <Button
           component={Link}
           variant='contained'
-          href='/statistics/unapproved-statistics'
-          startIcon={<Icon icon='tabler:eye' />}
+          // href='/switch-service/approved-switch'
+          // startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
             '&:hover': {
@@ -313,10 +211,8 @@ console.log(formattedEndDate, formattedStartDate)
             }
           }}
         >
-          Veiw Unapproved Statistics
+          Veiw Approved Provider
         </Button>
-        </CardContent>
-
         <form onSubmit={onSubmit}>
           <CardContent>
             <TabPanel sx={{ p: 0 }} value='personal-info'>
@@ -325,94 +221,76 @@ console.log(formattedEndDate, formattedStartDate)
                 <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
                 <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>Start Date:</Typography>
                 <DatePicker
-          showTimeSelect
-          timeFormat='HH:mm'
-          timeIntervals={15}
-          selected={issueDate}
-          id='date-time-picker'
-          dateFormat='MM/dd/yyyy h:mm aa'
-          onChange={date => setIssueDate(date)}
-          customInput={<CustomInput label='Start Date & Time' />}
-        />
+                  id='issue-date'
+                  selected={issueDate}
+                  customInput={<CustomInput />}
+                  onChange={date => setIssueDate(date)}
+                />
               </Box>
+                  {/* <CustomTextField
+                    fullWidth
+                    label='Start Date'
+                    placeholder='Loan amount'
+                    value={amountt}
+                    type='text' // Input type as number
+                    inputProps={{ pattern: '[0-9]*' }}
+                    onChange={handleAmount}
+                    required
+                  /> */}
                 </Grid>
                 <Grid item xs={12} sm={3}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>End Date:</Typography>
                 <DatePicker
-          showTimeSelect
-          timeFormat='HH:mm'
-          timeIntervals={15}
-          selected={dueDate}
-          id='date-time-picker'
-          dateFormat='MM/dd/yyyy h:mm aa'
-          onChange={date => setDueDate(date)}
-          customInput={<CustomInput label='End Date & Time' />}
-        />
+                  id='due-date'
+                  selected={dueDate}
+                  customInput={<CustomInput />}
+                  onChange={date => setDueDate(date)}
+                />
               </Box>
+                  {/* <CustomTextField
+                    fullWidth
+                    label='End Date'
+                    placeholder='Maturity'
+                    inputProps={{ pattern: '[0-9]*' }}
+                    type='text' // Input type as number
+                    value={tenor}
+                    onChange={handleTenor}
+
+                   // onChange={e => setTenor(e.target.value)}
+                   required
+                  /> */}
                 </Grid>
-
-{
-  data[0] ? (null) : ( <Grid item xs={12} sm={3}>
-    <CustomTextField
-      select
-      fullWidth
-      defaultValue=''
-      label='Endpoint'
-      placeholder='Loan Type?'
-      id='form-layouts-tabs-multiple-select'
-      SelectProps={{
-        multiple: false,
-        value: loantype,
-        onChange: e => setLoanType(e.target.value)
-      }}
-      required
-    >
-      <MenuItem value='summary'>summary</MenuItem>
-    </CustomTextField>
-  </Grid>)
-}
-
-
-                {
-                  data[0] ? (<Grid item xs={12} sm={3}>
-                    <CustomTextField
-                                               select
-                                               fullWidth
-                                               defaultValue=''
-                                               label='select endpoint'
-                                               id='form-layouts-tabs-multiple-select'
-                                               SelectProps={{
-                                                 multiple: false,
-                                                 value: months,
-                                                 onChange: handleSelectChange
-                                               }}
-                                             >
-                                               {newData.map(month => (
-                                                 <MenuItem key={month.id} value={month.endpoint}>
-                                                   {month.endpoint}, count-{month.count}
-                                                 </MenuItem>
-                                               ))}
-                                             </CustomTextField>
-                                     </Grid>) : (
-                  null
-                  )
-                }
-
-
+                <Grid item xs={12} sm={3}>
+                  <CustomTextField
+                    select
+                    fullWidth
+                    defaultValue=''
+                    label='Endpoint'
+                    placeholder='Loan Type?'
+                    id='form-layouts-tabs-multiple-select'
+                    SelectProps={{
+                      multiple: false,
+                      value: loantype,
+                      onChange: e => setLoanType(e.target.value)
+                    }}
+                    required
+                  >
+                    <MenuItem value='collaterteralized'>Collaterteralized</MenuItem>
+                    <MenuItem value='non-collaterteralized'>Non-Collaterteralized</MenuItem>
+                  </CustomTextField>
+                </Grid>
 
                 <Grid item xs={12} sm={3}>
                   <CardActions sx={{ mb: 2, mt: 2 }}>
                     <Button
                       type='submit'
-                      sx={{ mr: 2, backgroundColor: '#f50606',  '&:hover': {
-                        backgroundColor: '#f50606'
-                      } }}
+                      sx={{ mr: 2, backgroundColor: '#f50606' }}
                       variant='contained'
                       onClick={onSubmit}
                       disabled={isButtonDisabled}
                     >
-                      {isButtonDisabled ? 'Processing...' : 'Submit'}
+                      {isButtonDisabled ? 'Processing...' : 'Calculate'}
                     </Button>
                   </CardActions>
                 </Grid>
@@ -437,25 +315,6 @@ console.log(formattedEndDate, formattedStartDate)
 
         </form>
       </TabContext>
-
-      {
-        (data[0] && data[0].hasOwnProperty('sessionid')) &&
-        <DataGrid
-        getRowId={data.sessionid}
-          autoHeight
-          pagination
-          rows={newData}
-          rowHeight={62}
-          columns={columns}
-          pageSizeOptions={[5, 10]}
-          disableRowSelectionOnClick
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
-        />
-      }
-
-
-
     </Card>
   )
 }
