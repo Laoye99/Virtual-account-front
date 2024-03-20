@@ -94,7 +94,7 @@ const columns = [
     renderCell: ({ row }) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title='View'>
-          <IconButton size='small' component={Link} href={`/statistics/approved-statistics/${row.id}`}>
+          <IconButton size='small' component={Link} href={`/switch-service/approved-switch/${row.id}`}>
             <Icon icon='tabler:eye' />
           </IconButton>
         </Tooltip>

@@ -123,7 +123,7 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
-      router.push('/statistics/approved-statistics')
+      router.push('/switch-service/approved-switch')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -152,7 +152,7 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
-      router.push('/statistics/approved-statistics')
+      router.push('/switch-service/approved-switch')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')

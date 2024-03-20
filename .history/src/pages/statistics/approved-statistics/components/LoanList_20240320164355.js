@@ -94,7 +94,7 @@ const columns = [
     renderCell: ({ row }) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title='View'>
-          <IconButton size='small' component={Link} href={`/statistics/approved-statistics/${row.id}`}>
+          <IconButton size='small' component={Link} href={`/switch-service/approved-switch/${row.id}`}>
             <Icon icon='tabler:eye' />
           </IconButton>
         </Tooltip>
@@ -158,7 +158,7 @@ const LoanList = () => {
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-         {/*<TableHeader toggle={toggleAddUserDrawer} />*/}
+         {<TableHeader toggle={toggleAddUserDrawer} />
         {/* <Button
           component={Link}
           variant='contained'

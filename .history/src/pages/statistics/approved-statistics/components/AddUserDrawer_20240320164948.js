@@ -64,8 +64,8 @@ const SidebarAddUser = props => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     const formData = {
-      "endpoint-name": name === "" ? apiData.name : name,
-      "endpoint-code": code === "" ? apiData.code : code
+      "switch-name": name === "" ? apiData.name : name,
+      "switch-code": code === "" ? apiData.code : code
 
     }
 
@@ -94,7 +94,7 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
-      router.push('/statistics/approved-statistics')
+      router.push('/switch-service/approved-switch')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -123,7 +123,7 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
-      router.push('/statistics/approved-statistics')
+      router.push('/switch-service/approved-switch')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -152,7 +152,7 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
-      router.push('/statistics/approved-statistics')
+      router.push('/switch-service/approved-switch')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -199,7 +199,7 @@ const SidebarAddUser = props => {
                 fullWidth
                 value={name}
                 sx={{ mb: 4 }}
-                label='Statistics name'
+                label='St name'
                 onChange={e => setName(e.target.value)}
                 placeholder='xxxxxx'
               />
