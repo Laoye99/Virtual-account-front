@@ -33,7 +33,7 @@ const navigation = () => {
     {
       title: 'Transaction router',
       icon: 'tabler:calendar',
-      path: '/transaction',
+      path: '/Transaction',
       action: 'user',
       subject: 'user'
     },
