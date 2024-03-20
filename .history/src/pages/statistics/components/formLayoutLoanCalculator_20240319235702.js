@@ -230,7 +230,7 @@ console.log(formattedEndDate, formattedStartDate)
   }
 
   /**
-   * The function `calculateLoanDetails` is an asynchronous function that makes an HTTP POST request to a
+   * The function calculateLoanDetails is an asynchronous function that makes an HTTP POST request to a
    * specified endpoint with form data, retrieves the response data, and updates the state with the
    * fetched data.
    */
@@ -244,7 +244,7 @@ console.log(formattedEndDate, formattedStartDate)
       // Make an HTTP POST request to your endpoint
       const response = await axios.get(`${BASE_URL}/switch/perf-stat?start-date=${formattedStartDate}&end-date=${formattedEndDate}&endpoint=${loantype}&total_tat=3`, {
         headers: {
-          Authorization: `Bearer ${storedToken}`,
+          Authorization: Bearer ${storedToken},
           'Content-Type': 'application/json',
           "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
@@ -293,8 +293,9 @@ console.log(formattedEndDate, formattedStartDate)
           variant='scrollable'
           scrollButtons={false}
           onChange={handleTabsChange}
-          sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
-        >
+          sx={{ borderBottom: theme => 1px solid ${theme.palette.divider}, '& .MuiTab-root': { py: 3.5 } }}
+          >
+
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
 
         </TabList>
@@ -457,4 +458,4 @@ console.log(formattedEndDate, formattedStartDate)
   )
 }
 
-export default FormLayoutLoanCalculator
+export default FormLayoutLoanCalculator;

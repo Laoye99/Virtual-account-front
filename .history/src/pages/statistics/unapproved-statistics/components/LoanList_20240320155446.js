@@ -19,7 +19,7 @@ import authConfig from 'src/configs/auth'
 import { styled } from '@mui/material/styles'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import TableHeader from './TableHeader'
+import TableHeader from '../../components/TableHeader'
 
 
 // ** Icon Imports
