@@ -289,9 +289,6 @@ console.log(formattedEndDate, formattedStartDate)
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
         <TabList
           variant='scrollable'
           scrollButtons={false}

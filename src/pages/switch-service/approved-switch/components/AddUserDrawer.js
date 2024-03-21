@@ -221,7 +221,7 @@ const SidebarAddUser = props => {
            {isButtonDisabled ? 'Processing...' : 'Submit'}
             </Button>
             {
-              apiData.isactive === true ? (<Button variant='contained'  onClick={handleActivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+              apiData?.isactive === true ? (<Button variant='contained'  onClick={handleActivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
                 backgroundColor: '#f50606'
               } }}>
        {isButtonDisabled ? 'Processing...' : 'Activate'}

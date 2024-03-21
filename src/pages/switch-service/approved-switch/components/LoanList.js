@@ -187,7 +187,7 @@ const LoanList = () => {
         onPaginationModelChange={setPaginationModel}
       />
 
-{/* <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} /> */}
+<SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} />
     </Card>
   ) : null
 }
