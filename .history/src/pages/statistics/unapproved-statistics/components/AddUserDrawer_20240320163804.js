@@ -14,7 +14,6 @@ import authConfig from 'src/configs/auth'
 import toast from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 import { BASE_URL } from 'src/configs/constanst'
-import { useRouter } from 'next/router'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -45,14 +44,11 @@ const Header = styled(Box)(({ theme }) => ({
 
 
 const SidebarAddUser = props => {
-  const router = useRouter()
-
   // ** Props
-  const { open, toggle, guarantor, apiData } = props
+  const { open, toggle } = props
   const [name, setName] = useState("")
   const [code, setCode] = useState("")
   const [isButtonDisabled, setButtonDisabled] = useState(false)
-  console.log(apiData)
 
 
 
@@ -64,25 +60,24 @@ const SidebarAddUser = props => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     const formData = {
-      "endpoint-name": name === "" ? apiData.name : name,
-      "endpoint-code": code === "" ? apiData.code : code
+      "endpoint-name": name,
+      "endpoint-code": code
 
     }
+    const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
 
-    // const isFormDataValid = Object.values(formData).every(value => value !== '' && value !== null)
+    if (!isFormDataValid) {
+        setButtonDisabled(false)
+      console.error('Oops!!! All fields are required')
+      toast.error('Oops!!! All fields are required')
 
-    // if (!isFormDataValid) {
-    //     setButtonDisabled(false)
-    //   console.error('Oops!!! All fields are required')
-    //   toast.error('Oops!!! All fields are required')
-
-    //   return
-    // } else {}
+      return
+    } else {}
 
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`${BASE_URL}/switch/endpoint?action=update&id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/endpoint`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -94,71 +89,18 @@ const SidebarAddUser = props => {
       toast.success(response.data.message)
       setName('')
       setCode('')
-      router.push('/statistics/approved-statistics')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
       console.error('Error submitting form', error)
       setButtonDisabled(false)
     }
-  }
-
-  const handleActivate = async e => {
-    // Disable the button
-    setButtonDisabled(true)
-    e.preventDefault()
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-
-    try {
-      // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`${BASE_URL}/switch/endpoint?action=activate&id=${guarantor}`, {}, {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json',
-          "ngrok-skip-browser-warning": "http://localhost:3000/"
-        }
-      })
-      setButtonDisabled(false)
-      toggle()
-      toast.success(response.data.message)
-      setName('')
-      setCode('')
-      router.push('/statistics/approved-statistics')
-    } catch (error) {
-      // Handle errors
-      toast.error('Please try again')
-      console.error('Error submitting form', error)
-      setButtonDisabled(false)
-    }
-  }
-
-  const handleDeactivate = async e => {
-    // Disable the button
-    setButtonDisabled(true)
-    e.preventDefault()
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-
-    try {
-      // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`${BASE_URL}/switch/endpoint?action=deactivate&id=${guarantor}`,{}, {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json',
-          "ngrok-skip-browser-warning": "http://localhost:3000/"
-        }
-      })
-      setButtonDisabled(false)
-      toggle()
-      toast.success(response.data.message)
-      setName('')
-      setCode('')
-      router.push('/statistics/approved-statistics')
-    } catch (error) {
-      // Handle errors
-      toast.error('Please try again')
-      console.error('Error submitting form', error)
-      setButtonDisabled(false)
-    }
+    finally {
+      setTimeout(() => {
+        // Re-enable the button
+        window.location.reload()
+      }, 2000) // Adjust the time (in milliseconds) to your desired delay
+    } */}
   }
 
   const handleClose = () => {
@@ -175,7 +117,7 @@ const SidebarAddUser = props => {
       sx={{ '& .MuiDrawer-paper': { width: { xs: 300, sm: 400 } } }}
     >
       <Header>
-        <Typography variant='h5'>Update Statistics</Typography>
+        <Typography variant='h5'>Add Statistics</Typography>
         <IconButton
           size='small'
           onClick={handleClose}
@@ -209,30 +151,20 @@ const SidebarAddUser = props => {
                 fullWidth
                 value={code}
                 sx={{ mb: 4 }}
-                label='Statistcs code'
+                label='Statistics code'
                 onChange={e => setCode(e.target.value)}
                 placeholder='xxxxxx'
               />
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Button  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#71ace0',  '&:hover': {
-                    backgroundColor: '#22668D'
+            <Button  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+                    backgroundColor: '#f50606'
                   } }}>
            {isButtonDisabled ? 'Processing...' : 'Submit'}
             </Button>
-            {
-              apiData.isactive === true ? (<Button variant='contained'  onClick={handleActivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-                backgroundColor: '#f50606'
-              } }}>
-       {isButtonDisabled ? 'Processing...' : 'Activate'}
-        </Button>) : (   <Button variant='contained'  onClick={handleDeactivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-                    backgroundColor: '#f50606'
-                  } }}>
-           {isButtonDisabled ? 'Processing...' : 'Deactivate'}
-            </Button>)
-            }
-
-
+            <Button variant='tonal' color='secondary' onClick={handleClose}>
+              Cancel
+            </Button>
           </Box>
         </form>
       </Box>

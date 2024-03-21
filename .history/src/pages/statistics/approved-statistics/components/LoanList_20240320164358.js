@@ -61,7 +61,7 @@ const columns = [
     field: 'id',
     minWidth: 150,
     headerName: 'ID',
-    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.id}`}>{`#${row.id}`}</LinkStyled>
+    renderCell: ({ row }) => <LinkStyled href={`/switch-service/approved-switch/${row.id}`}>{`#${row.id}`}</LinkStyled>
   },
   {
     flex: 0.1,
@@ -94,7 +94,7 @@ const columns = [
     renderCell: ({ row }) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Tooltip title='View'>
-          <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
+          <IconButton size='small' component={Link} href={`/switch-service/approved-switch/${row.id}`}>
             <Icon icon='tabler:eye' />
           </IconButton>
         </Tooltip>
@@ -113,7 +113,7 @@ const LoanList = () => {
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/switch/endpoint?approval-status=unapproved`, {
+      .get(`${BASE_URL}/switch/endpoint?approval-status=approved`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -158,11 +158,11 @@ const LoanList = () => {
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        <TableHeader toggle={toggleAddUserDrawer} />
-        <Button
+         {/*<TableHeader toggle={toggleAddUserDrawer} />
+        {/* <Button
           component={Link}
           variant='contained'
-          href='/statistics/approved-statistics'
+          href='/switch-service/approved-switch'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -171,8 +171,8 @@ const LoanList = () => {
             }
           }}
         >
-          Veiw Approved Statistics
-        </Button>
+          Veiw Approved Provider
+        </Button> */}
       </CardContent>
 
       <DataGrid
@@ -187,7 +187,7 @@ const LoanList = () => {
         onPaginationModelChange={setPaginationModel}
       />
 
-<SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} />
+ {/* <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} /> */}
     </Card>
   ) : null
 }
