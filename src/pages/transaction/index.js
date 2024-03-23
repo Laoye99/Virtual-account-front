@@ -2,31 +2,30 @@
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-// ** Demo Component Imports
-// import LoanList from './components/LoanList'
+// ** Styled Component
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
+// ** Demo Components Imports
+import FormLayoutLoanCalculator from 'src/pages/transaction/components/formLayoutLoanCalculator'
 
-// ** Custom Component Import
-import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
-
-const Dashboard = () => {
+const LoanCalculator = () => {
   return (
-    <ApexChartWrapper>
-  <Grid container spacing={6}>
-  <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>TRANSACTION ROUTER</Typography>
+    <DatePickerWrapper>
+      <Grid container spacing={6}>
+        <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
+          <Typography variant='h6'>TRANSACTION ROUTER</Typography>
         </Grid>
-   <Grid item xs={12} lg={12}>
-          Welcome to the Transaction Router Page
-    </Grid>
-   </Grid>
-    </ApexChartWrapper>
+        <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
+        <FormLayoutLoanCalculator/>
+        </Grid>
+      </Grid>
+    </DatePickerWrapper>
   )
 }
 
-Dashboard.acl = {
+LoanCalculator.acl = {
   action: 'user',
   subject: 'user'
 }
 
-export default Dashboard
+export default LoanCalculator;
