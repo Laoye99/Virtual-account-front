@@ -68,7 +68,7 @@ const columns = [
     field: 'sessionid',
     minWidth: 60,
     headerName: 'sessionid',
-    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.sessionid}`}>{`#${row.sessionid}`}</LinkStyled>
+    renderCell: ({ row }) => <LinkStyled href={`/transaction/${row.sessionid}`}>{`#${row.sessionid}`}</LinkStyled>
   },
 
   {
@@ -268,7 +268,8 @@ console.log(formattedEndDate, formattedStartDate)
       console.log(response.data.data.transactions)
       setData(response.data.data.transactions)
       setTotalPage(parseInt(response.data.data["total-pages"]))
-        toast.success(response.data.message)
+      toast.success(response.data.message)
+      window.localStorage.setItem('loanType', loantype)
     } catch (error) {
       // Handle errors
       toast.error('Please try again')

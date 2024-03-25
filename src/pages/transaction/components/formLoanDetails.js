@@ -75,7 +75,6 @@ const FormLayoutsGuarantor = switchID => {
   const [apiData, setApiData] = useState([])
   const [value, setValue] = useState('personal-info')
   const [isLoading, setIsLoading] = useState(false)
-  const [isButtonDisabled, setButtonDisabled] = useState(false)
 
 
   console.log('nnnnnnnnnnnnnnnnnnnnnnn', apiData)
@@ -89,17 +88,19 @@ const FormLayoutsGuarantor = switchID => {
 
   const fetchData = async () => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    const loantype = window.localStorage.getItem('loanType')
+   console.log(loantype)
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`${BASE_URL}/switch/endpoint?approval-status=unapproved&id=${guarantor}`, {
+      const response = await axios.get(`${BASE_URL}/switch/transactions?switch-type=${loantype}&session-id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
           "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
       })
-      setApiData(response.data.data[0])
+      setApiData(response.data.data.transactions[0])
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -115,75 +116,8 @@ const FormLayoutsGuarantor = switchID => {
   }, []) // Empty dependency array ensures this effect runs once after the component is mounted
 
 
-  const handleApprove = async e => {
-    // Disable the button
-    setButtonDisabled(true)
-    e.preventDefault()
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
-    const formData = {
-      "approval-status": true,
-      "message": message
 
-    }
-
-    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
-    try {
-      // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-endpoint?id=${guarantor}`, formData, {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json',
-          "ngrok-skip-browser-warning": "http://localhost:3000/"
-        }
-      })
-      setButtonDisabled(false)
-      toast.success(response.data.message)
-      setMessage("")
-      router.push('/switch-service')
-
-    } catch (error) {
-      // Handle errors
-      toast.error('Please try again')
-      console.error('Error submitting form', error)
-      setButtonDisabled(false)
-    }
-  }
-
-  const handleDecline = async e => {
-    // Disable the button
-    setButtonDisabled(true)
-    e.preventDefault()
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-
-    const formData = {
-
-      "approval-status": false,
-      "message": message
-    }
-
-    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
-    try {
-      // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-endpoint?id=${guarantor}`, formData, {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json',
-          "ngrok-skip-browser-warning": "http://localhost:3000/"
-        }
-      })
-      setButtonDisabled(false)
-      toast.success(response.data.message)
-      setMessage("")
-      router.push('/statistics')
-
-    } catch (error) {
-      // Handle errors
-      toast.error('Please try again')
-      console.error('Error submitting form', error)
-      setButtonDisabled(false)
-    }
-  }
 
 
   return  (
@@ -198,7 +132,7 @@ const FormLayoutsGuarantor = switchID => {
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
-          <legend>Switch Provider Details</legend>
+          <legend>Transaction Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',
@@ -213,33 +147,117 @@ const FormLayoutsGuarantor = switchID => {
   apiData == [] ? (
  null) : ( <TableBody>
       <TableRow>
-        <TableCell>Provider Name:</TableCell>
+        <TableCell>Name Enquiry Ref:</TableCell>
         <TableCell>
-          {apiData?.name}
+          {apiData?.nameenquiryref}
         </TableCell>
       </TableRow>
        <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>c24_rev_rsp_flg:</TableCell>
         <TableCell>
-          {apiData?.code}
+          {apiData?.c24_rev_rsp_flg}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Message:</TableCell>
+        <TableCell>Payment Reference:</TableCell>
         <TableCell>
-          {apiData?.message}
+          {apiData?.paymentreference}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>tsq_2_count:</TableCell>
         <TableCell>
-          {apiData['created-by']}
+        {apiData?.tsq_2_count}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>tsq_2_rsp_code:</TableCell>
         <TableCell>
-          {apiData['approved-by']}
+        {apiData?.tsq_2_rsp_code}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>c24_rsp_date:</TableCell>
+        <TableCell>
+        {apiData?.c24_rsp_date}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>reversal_rsp_code:</TableCell>
+        <TableCell>
+        {apiData?.reversal_rsp_code}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>originatoraccountnumber:</TableCell>
+        <TableCell>
+        {apiData?.originatoraccountnumber}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>destinationinstitutioncode:</TableCell>
+        <TableCell>
+        {apiData?.destinationinstitutioncode}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>c24_num_trial:</TableCell>
+        <TableCell>
+        {apiData?.c24_num_trial}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>c24_rsp_code:</TableCell>
+        <TableCell>
+        {apiData?.c24_rsp_code}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>responsedate:</TableCell>
+        <TableCell>
+        {apiData?.responsedate}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>beneficiaryaccountnumber:</TableCell>
+        <TableCell>
+        {apiData?.beneficiaryaccountnumber}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>reversal_num_trial:</TableCell>
+        <TableCell>
+        {apiData?.reversal_num_trial}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>amount:</TableCell>
+        <TableCell>
+        {apiData?.amount}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>originatoraccountname:</TableCell>
+        <TableCell>
+        {apiData?.originatoraccountname}
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell>tsq_2_date:</TableCell>
+        <TableCell>
+        {apiData?.tsq_2_date}
         </TableCell>
       </TableRow>
       </TableBody>)
@@ -253,37 +271,6 @@ const FormLayoutsGuarantor = switchID => {
 
       </TabContext>
 
-      <Divider />
-
-<CardContent sx={{ px: [6, 10] }}>
-  <InputLabel
-    htmlFor='invoice-note'
-    sx={{ mb: 2, fontWeight: 500, fontSize: '1.5rem', lineHeight: 'normal' }}
-  >
-    Message:
-  </InputLabel>
-  <CustomTextField
-    rows={2}
-    value={message}
-    fullWidth
-    onChange={e => setMessage(e.target.value)}
-    multiline
-    id='invoice-note'
-    defaultValue=''
-  />
-</CardContent>
-<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], mb: '3rem' }}>
-            <Button onClick={handleApprove}  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#71ace0',  '&:hover': {
-                    backgroundColor: '#22668D'
-                  } }}>
-           {isButtonDisabled ? 'Processing...' : 'Approve'}
-            </Button>
-            <Button onClick={handleDecline} disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-                    backgroundColor: '#f50606'
-                  } }}>
-            {isButtonDisabled ? 'Processing...' : 'Decline'}
-            </Button>
-          </Box>
 
     </Card>
   )

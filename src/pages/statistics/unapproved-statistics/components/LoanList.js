@@ -61,7 +61,7 @@ const columns = [
     field: 'id',
     minWidth: 150,
     headerName: 'ID',
-    renderCell: ({ row }) => <LinkStyled href={`/switch-service/${row.id}`}>{`#${row.id}`}</LinkStyled>
+    renderCell: ({ row }) => <LinkStyled href={`/statistics/${row.id}`}>{`#${row.id}`}</LinkStyled>
   },
   {
     flex: 0.1,
