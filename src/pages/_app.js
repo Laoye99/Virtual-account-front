@@ -100,15 +100,14 @@ const App = props => {
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>{`${themeConfig.templateName} - Staff Loan Automation`}</title>
+          <title>{`${themeConfig.templateName} - Interbank Transfer Switching Service`}</title>
           <meta
             name='description'
-            content={`${themeConfig.templateName} – Material Design React Admin Dashboard Template – AB Microfinance Bank Staff Loan Automation`}
+            content={`${themeConfig.templateName} – United Bank of Africa – Interbank Transfer Switching Service`}
           />
-          <meta name='keywords' content='AB Microfinance Bank Staff Loan Automation' />
+          <meta name='keywords' content='UBA Interbank Transfer Switching Service' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
-
         <AuthProvider>
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>
