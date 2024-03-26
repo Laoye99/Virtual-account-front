@@ -192,14 +192,14 @@ const FormLayoutsGuarantor = switchID => {
       </TableRow>
 
       <TableRow>
-        <TableCell>originatoraccountnumber:</TableCell>
+        <TableCell>Originator Account Number:</TableCell>
         <TableCell>
         {apiData?.originatoraccountnumber}
         </TableCell>
       </TableRow>
 
       <TableRow>
-        <TableCell>destinationinstitutioncode:</TableCell>
+        <TableCell>Destination Institution Code:</TableCell>
         <TableCell>
         {apiData?.destinationinstitutioncode}
         </TableCell>
@@ -220,14 +220,14 @@ const FormLayoutsGuarantor = switchID => {
       </TableRow>
 
       <TableRow>
-        <TableCell>responsedate:</TableCell>
+        <TableCell>Response Date:</TableCell>
         <TableCell>
         {apiData?.responsedate}
         </TableCell>
       </TableRow>
 
       <TableRow>
-        <TableCell>beneficiaryaccountnumber:</TableCell>
+        <TableCell>Beneficiary Account Number:</TableCell>
         <TableCell>
         {apiData?.beneficiaryaccountnumber}
         </TableCell>
@@ -241,14 +241,20 @@ const FormLayoutsGuarantor = switchID => {
       </TableRow>
 
       <TableRow>
-        <TableCell>amount:</TableCell>
+        <TableCell>Amount:</TableCell>
         <TableCell>
         {apiData?.amount}
         </TableCell>
       </TableRow>
+      <TableRow>
+        <TableCell>Beneficiary Account Name:</TableCell>
+        <TableCell>
+        {apiData?.beneficiaryaccountname}
+        </TableCell>
+      </TableRow>
 
       <TableRow>
-        <TableCell>originatoraccountname:</TableCell>
+        <TableCell>Originator Account Name:</TableCell>
         <TableCell>
         {apiData?.originatoraccountname}
         </TableCell>

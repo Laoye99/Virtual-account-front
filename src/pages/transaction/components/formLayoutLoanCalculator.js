@@ -63,13 +63,31 @@ const useStyles = makeStyles(theme => ({
 
 
 const columns = [
-  {
+
+   {
     flex: 0.1,
-    field: 'sessionid',
     minWidth: 60,
-    headerName: 'sessionid',
-    renderCell: ({ row }) => <LinkStyled href={`/transaction/${row.sessionid}`}>{`#${row.sessionid}`}</LinkStyled>
+    sortable: false,
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: ({ row }) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip title='View'>
+          <IconButton size='small' component={Link} href={`/transaction/${row.sessionid}`}>
+            <Icon icon='tabler:eye' />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    )
   },
+
+  // {
+  //   flex: 0.1,
+  //   field: 'sessionid',
+  //   minWidth: 60,
+  //   headerName: 'sessionid',
+  //   renderCell: ({ row }) => <LinkStyled href={`/transaction/${row.sessionid}`}>{`#${row.sessionid}`}</LinkStyled>
+  // },
 
   {
     flex: 0.1,
@@ -116,23 +134,6 @@ const columns = [
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["responsedate"] || 0}</Typography>
   },
 
-
-  // {
-  //   flex: 0.1,
-  //   minWidth: 100,
-  //   sortable: false,
-  //   field: 'actions',
-  //   headerName: 'Actions',
-  //   renderCell: ({ row }) => (
-  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-  //       <Tooltip title='View'>
-  //         <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
-  //           <Icon icon='tabler:eye' />
-  //         </IconButton>
-  //       </Tooltip>
-  //     </Box>
-  //   )
-  // }
 ]
 
 const FormLayoutLoanCalculator = () => {

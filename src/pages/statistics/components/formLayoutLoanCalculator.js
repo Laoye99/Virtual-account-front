@@ -144,11 +144,10 @@ const FormLayoutLoanCalculator = () => {
   const [issueDate, setIssueDate] = useState(new Date())
   const [dueDate, setDueDate] = useState(new Date())
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
-
-  // const [frequency, setFrequency] = useState(null);
   const [tenor, setTenor] = useState('')
   const [loantype, setLoanType] = useState('')
   const [amountt, setAmount] = useState('')
+  const [data2, setData2] = useState([])
 
 
 
@@ -256,6 +255,7 @@ console.log(formattedEndDate, formattedStartDate)
       if (response.data.data[0] && response.data.data[0].hasOwnProperty('sessionid')) {
         toast.success(response.data.message)
     } else {
+      setData2(response.data.data)
       toast.success("Please select endpoint to view Performance statistics")
     }
 
@@ -350,7 +350,26 @@ console.log(formattedEndDate, formattedStartDate)
                 </Grid>
 
 {
-  data[0] ? (null) : ( <Grid item xs={12} sm={3}>
+  data[0] ? (<Grid item xs={12} sm={3}>
+    <CustomTextField
+                               select
+                               fullWidth
+                               defaultValue=''
+                               label='select endpoint'
+                               id='form-layouts-tabs-multiple-select'
+                               SelectProps={{
+                                 multiple: false,
+                                 value: months,
+                                 onChange: handleSelectChange
+                               }}
+                             >
+                               {data2.map(month => (
+                                 <MenuItem key={month.id} value={month.endpoint}>
+                                   {month.endpoint}, count-{month.count}
+                                 </MenuItem>
+                               ))}
+                             </CustomTextField>
+                     </Grid>) : ( <Grid item xs={12} sm={3}>
     <CustomTextField
       select
       fullWidth
@@ -369,34 +388,6 @@ console.log(formattedEndDate, formattedStartDate)
     </CustomTextField>
   </Grid>)
 }
-
-
-                {
-                  data[0] ? (<Grid item xs={12} sm={3}>
-                    <CustomTextField
-                                               select
-                                               fullWidth
-                                               defaultValue=''
-                                               label='select endpoint'
-                                               id='form-layouts-tabs-multiple-select'
-                                               SelectProps={{
-                                                 multiple: false,
-                                                 value: months,
-                                                 onChange: handleSelectChange
-                                               }}
-                                             >
-                                               {newData.map(month => (
-                                                 <MenuItem key={month.id} value={month.endpoint}>
-                                                   {month.endpoint}, count-{month.count}
-                                                 </MenuItem>
-                                               ))}
-                                             </CustomTextField>
-                                     </Grid>) : (
-                  null
-                  )
-                }
-
-
 
                 <Grid item xs={12} sm={3}>
                   <CardActions sx={{ mb: 2, mt: 2 }}>
