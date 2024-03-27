@@ -365,7 +365,7 @@ console.log(formattedEndDate, formattedStartDate)
       select
       fullWidth
       defaultValue=''
-      label='Endpoint'
+      label='Switch type'
       placeholder='Loan Type?'
       id='form-layouts-tabs-multiple-select'
       SelectProps={{

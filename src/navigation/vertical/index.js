@@ -62,7 +62,7 @@ const navigation = () => {
     {
       title: 'Fee configuration',
       icon: 'tabler:layout-grid',
-      path: '/tables/data-grid',
+      path: '/fee-configuration',
       action: 'user',
       subject: 'user'
     },
