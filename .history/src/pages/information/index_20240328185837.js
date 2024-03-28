@@ -30,9 +30,7 @@ const FileUploader = () => {
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
+      
         <PageHeader
           title={
             <Typography variant='h4'>
@@ -46,7 +44,7 @@ const FileUploader = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/information/uploaded-document'
+          href='/fee-configuration/uploaded-document'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -57,7 +55,6 @@ const FileUploader = () => {
         >
           Veiw Unapproved Documents
         </Button>
-        </CardContent>
         <Grid item xs={12}>
           <CardSnippet
             title='Upload File in CSV format only'

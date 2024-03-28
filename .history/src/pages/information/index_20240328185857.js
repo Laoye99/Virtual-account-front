@@ -46,7 +46,7 @@ const FileUploader = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/information/uploaded-document'
+          href='/fee-configuration/uploaded-document'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -57,7 +57,7 @@ const FileUploader = () => {
         >
           Veiw Unapproved Documents
         </Button>
-        </CardContent>
+        
         <Grid item xs={12}>
           <CardSnippet
             title='Upload File in CSV format only'

@@ -46,7 +46,7 @@ const FileUploader = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/information/uploaded-document'
+          href='/in/uploaded-document'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
