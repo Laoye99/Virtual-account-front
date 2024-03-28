@@ -69,7 +69,7 @@ const navigation = () => {
     {
       title: 'Account information',
       icon: 'tabler:typography',
-      path: '/information',
+      path: '/in',
       action: 'user',
       subject: 'user'
     },
