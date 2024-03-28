@@ -5,6 +5,8 @@ import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 
 // ** Custom Components Imports
 import PageHeader from 'src/@core/components/page-header'
@@ -20,6 +22,7 @@ import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploade
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
+import Icon from 'src/@core/components/icon'
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -30,6 +33,9 @@ const FileUploader = () => {
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
+      <CardContent
+        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
+      >
         <PageHeader
           title={
             <Typography variant='h4'>
@@ -40,6 +46,21 @@ const FileUploader = () => {
           }
           subtitle={<Typography sx={{ color: 'text.secondary' }}>Fee Configuration Upload</Typography>}
         />
+          <Button
+          component={Link}
+          variant='contained'
+          href='/fee-configuration/uploaded-document'
+          startIcon={<Icon icon='tabler:eye' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
+          Veiw Unapproved Documents
+        </Button>
+        </CardContent>
         <Grid item xs={12}>
           <CardSnippet
             title='Upload File in CSV format only'
