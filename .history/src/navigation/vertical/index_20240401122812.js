@@ -40,14 +40,14 @@ const navigation = () => {
 
     {
       title: 'Response Code Configuration',
-      path: '/response',
+      path: '/ewsponse',
       icon: 'tabler:checkbox',
       action: 'user',
       subject: 'user'
     },
     {
       title: 'Balance Inquiry',
-      path: '/balance',
+      path: '/forms/form-wizard',
       icon: 'tabler:text-wrap-disabled',
       action: 'user',
       subject: 'user'

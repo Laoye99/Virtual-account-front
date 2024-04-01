@@ -47,7 +47,7 @@ const navigation = () => {
     },
     {
       title: 'Balance Inquiry',
-      path: '/balance',
+      path: '/balan',
       icon: 'tabler:text-wrap-disabled',
       action: 'user',
       subject: 'user'

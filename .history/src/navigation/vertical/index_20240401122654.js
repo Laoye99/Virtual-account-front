@@ -25,7 +25,7 @@ const navigation = () => {
     {
       title: "Financial institution profile",
       icon: 'tabler:credit-card',
-      path: '/institutions',
+      path: '/institution',
       action: 'user',
       subject: 'user'
     },
@@ -40,14 +40,14 @@ const navigation = () => {
 
     {
       title: 'Response Code Configuration',
-      path: '/response',
+      path: '/forms/form-validation',
       icon: 'tabler:checkbox',
       action: 'user',
       subject: 'user'
     },
     {
       title: 'Balance Inquiry',
-      path: '/balance',
+      path: '/forms/form-wizard',
       icon: 'tabler:text-wrap-disabled',
       action: 'user',
       subject: 'user'
