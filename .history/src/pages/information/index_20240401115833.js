@@ -22,7 +22,6 @@ import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploade
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
-import Icon from 'src/@core/components/icon'
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',

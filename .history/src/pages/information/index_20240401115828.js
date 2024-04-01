@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
-
 // ** Custom Components Imports
 import PageHeader from 'src/@core/components/page-header'
 import CardSnippet from 'src/@core/components/card-snippet'
@@ -22,7 +21,6 @@ import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploade
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
-import Icon from 'src/@core/components/icon'
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
