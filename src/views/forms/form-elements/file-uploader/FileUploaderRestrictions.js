@@ -8,18 +8,22 @@ import Button from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
+import axios from 'axios'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
+import authConfig from 'src/configs/auth'
+import { BASE_URL } from 'src/configs/constanst'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
 import { useDropzone } from 'react-dropzone'
 
-const FileUploaderRestrictions = () => {
+const FileUploaderRestrictions = (module_name) => {
   // ** State
   const [files, setFiles] = useState([])
-  console.log(files)
+  console.log(files[0])
+  console.log(module_name)
 
   // ** Hooks
   const { getRootProps, getInputProps } = useDropzone({
@@ -48,6 +52,29 @@ const FileUploaderRestrictions = () => {
     const uploadedFiles = files
     const filtered = uploadedFiles.filter(i => i.name !== file.name)
     setFiles([...filtered])
+  }
+
+  const handleSubmit = async () => {
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+    try {
+      const response = await axios.post(`${BASE_URL}/switch/uploadfile`,{
+        module_name : module_name.module_name,
+        file : files[0]
+      }, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'content-Type': 'multipart/form-data',
+          "ngrok-skip-browser-warning": "http://localhost:3000/"
+        }
+      })
+      console.log(response)
+      toast.success(response.data.message)
+
+      // setApiData(response.data.data[0])
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
   }
 
   const fileList = files.map(file => (
@@ -104,9 +131,9 @@ const FileUploaderRestrictions = () => {
           <List>{fileList}</List>
           <div className='buttons'>
             <Button color='error' variant='outlined' onClick={handleRemoveAllFiles}>
-              Remove All
+              Remove
             </Button>
-            <Button variant='contained'>Upload Files</Button>
+            <Button variant='contained' onClick={handleSubmit}>Upload File</Button>
           </div>
         </Fragment>
       ) : null}

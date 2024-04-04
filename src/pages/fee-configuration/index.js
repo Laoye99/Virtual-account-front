@@ -29,7 +29,11 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
+
 const FileUploader = () => {
+
+  const module_name = "fee_config";
+
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
@@ -39,7 +43,7 @@ const FileUploader = () => {
         <PageHeader
           title={
             <Typography variant='h4'>
-              <LinkStyled href='https://github.com/react-dropzone/react-dropzone/' target='_blank'>
+              <LinkStyled href='#'>
                Fee Configuration
               </LinkStyled>
             </Typography>
@@ -69,7 +73,7 @@ const FileUploader = () => {
               jsx: source.FileUploaderRestrictionsJSXCode
             }}
           >
-            <FileUploaderRestrictions />
+            <FileUploaderRestrictions module_name={module_name} />
           </CardSnippet>
         </Grid>
       </Grid>
