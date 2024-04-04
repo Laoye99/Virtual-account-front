@@ -215,7 +215,7 @@ const FormLayoutLoanCalculator = () => {
             }
           }}
         >
-          Veiw Unapproved Statistics
+          View Unapproved Statistics
         </Button>
         </CardContent>
         <form onSubmit={onSubmit}>

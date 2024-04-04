@@ -312,7 +312,7 @@ console.log(formattedEndDate, formattedStartDate)
             }
           }}
         >
-          Veiw Unapproved Statistics
+          View Unapproved Statistics
         </Button>
         </CardContent>
 

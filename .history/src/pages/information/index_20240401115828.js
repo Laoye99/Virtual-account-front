@@ -56,7 +56,7 @@ const FileUploader = () => {
             }
           }}
         >
-          Veiw Unapproved Documents
+          View Unapproved Documents
         </Button>
         </CardContent>
         <Grid item xs={12}>

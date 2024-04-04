@@ -171,7 +171,7 @@ const LoanList = () => {
             }
           }}
         >
-          Veiw Approved S
+          View Approved S
         </Button>
       </CardContent>
 

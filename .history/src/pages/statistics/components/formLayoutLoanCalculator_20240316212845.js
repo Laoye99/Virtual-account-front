@@ -205,7 +205,7 @@ const FormLayoutLoanCalculator = () => {
             }
           }}
         >
-          Veiw Approved Provider
+          View Approved Provider
         </Button>
         <form onSubmit={onSubmit}>
           <CardContent>

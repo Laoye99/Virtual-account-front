@@ -171,7 +171,7 @@ const LoanList = () => {
             }
           }}
         >
-          Veiw Approved Statistics
+          View Approved Statistics
         </Button>
       </CardContent>
 

@@ -37,10 +37,7 @@ const FileUploader = () => {
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
-      <CardContent
-        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
-      >
-        <PageHeader
+      <PageHeader
           title={
             <Typography variant='h4'>
               <LinkStyled href='#'>
@@ -50,6 +47,9 @@ const FileUploader = () => {
           }
           subtitle={<Typography sx={{ color: 'text.secondary' }}>Fee Configuration Upload</Typography>}
         />
+      <CardContent
+        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
+      >
           <Button
           component={Link}
           variant='contained'
@@ -62,7 +62,21 @@ const FileUploader = () => {
             }
           }}
         >
-          Veiw Unapproved Documents
+          View Unapproved Documents
+        </Button>
+        <Button
+          component={Link}
+          variant='contained'
+          href='/fee-configuration/approved-upload'
+          startIcon={<Icon icon='tabler:eye' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
+          View Approved Document
         </Button>
         </CardContent>
         <Grid item xs={12}>

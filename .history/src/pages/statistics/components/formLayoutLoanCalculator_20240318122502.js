@@ -215,7 +215,7 @@ const FormLayoutLoanCalculator = () => {
             }
           }}
         >
-          Veiw Unapproved Endpoints
+          View Unapproved Endpoints
         </Button>
         </CardContent>
         <form onSubmit={onSubmit}>

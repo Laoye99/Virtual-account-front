@@ -122,7 +122,7 @@ const LoanList = () => {
       })
       .then(response => {
         setData(response.data.data)
-        
+
       })
       .catch(error => {
         // Handle the error here, e.g., show an error message or log the error
@@ -172,7 +172,7 @@ const LoanList = () => {
             }
           }}
         >
-          Veiw Approved Provider
+          View Approved Provider
         </Button>
       </CardContent>
 

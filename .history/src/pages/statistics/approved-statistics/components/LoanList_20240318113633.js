@@ -158,7 +158,7 @@ const LoanList = () => {
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        {/* <TableHeader toggle={toggleAddUserDrawer} /> 
+        {/* <TableHeader toggle={toggleAddUserDrawer} />
         {/* <Button
           component={Link}
           variant='contained'
@@ -171,7 +171,7 @@ const LoanList = () => {
             }
           }}
         >
-          Veiw Approved Provider
+          View Approved Provider
         </Button> */}
       </CardContent>
 

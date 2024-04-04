@@ -171,11 +171,11 @@ const LoanList = () => {
             }
           }}
         >
-          Veiw Approved Provider
+          View Approved Provider
         </Button>
       </CardContent>
 
-      <DataGrid 
+      <DataGrid
         pagination
         rows={data}
         rowHeight={62}

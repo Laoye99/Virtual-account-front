@@ -55,9 +55,9 @@ const FileUploader = () => {
             }
           }}
         >
-          Veiw Unapproved Documents
+          View Unapproved Documents
         </Button>
-        
+
         <Grid item xs={12}>
           <CardSnippet
             title='Upload File in CSV format only'

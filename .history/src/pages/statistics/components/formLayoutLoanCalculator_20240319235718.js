@@ -298,7 +298,7 @@ console.log(formattedEndDate, formattedStartDate)
 
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Statistics</span>} />
 
-        
+
         <Button
           component={Link}
           variant='contained'
@@ -311,7 +311,7 @@ console.log(formattedEndDate, formattedStartDate)
             }
           }}
         >
-          Veiw Unapproved Statistics
+          View Unapproved Statistics
         </Button>
         </CardContent>
 

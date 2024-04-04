@@ -30,7 +30,7 @@ const FileUploader = () => {
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
-      
+
         <PageHeader
           title={
             <Typography variant='h4'>
@@ -53,7 +53,7 @@ const FileUploader = () => {
             }
           }}
         >
-          Veiw Unapproved Documents
+          View Unapproved Documents
         </Button>
         <Grid item xs={12}>
           <CardSnippet

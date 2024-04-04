@@ -306,7 +306,7 @@ console.log(formattedEndDate, formattedStartDate)
             }
           }}
         >
-          Veiw Unapproved Statistics
+          View Unapproved Statistics
         </Button>
         <form onSubmit={onSubmit}>
           <CardContent>
