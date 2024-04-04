@@ -22,6 +22,7 @@ import { useDropzone } from 'react-dropzone'
 const FileUploaderRestrictions = (module_name) => {
   // ** State
   const [files, setFiles] = useState([])
+  const [isButtonDisabled, setButtonDisabled] = useState(false)
   console.log(files[0])
   console.log(module_name)
 
@@ -55,6 +56,7 @@ const FileUploaderRestrictions = (module_name) => {
   }
 
   const handleSubmit = async () => {
+    setButtonDisabled(true)
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     try {
@@ -70,10 +72,12 @@ const FileUploaderRestrictions = (module_name) => {
       })
       console.log(response)
       toast.success(response.data.message)
+      setButtonDisabled(false)
 
       // setApiData(response.data.data[0])
     } catch (error) {
       console.error('Error fetching data:', error)
+      setButtonDisabled(false)
     }
   }
 
@@ -130,10 +134,10 @@ const FileUploaderRestrictions = (module_name) => {
         <Fragment>
           <List>{fileList}</List>
           <div className='buttons'>
-            <Button color='error' variant='outlined' onClick={handleRemoveAllFiles}>
+            <Button color='error' disabled={isButtonDisabled} variant='outlined' onClick={handleRemoveAllFiles}>
               Remove
             </Button>
-            <Button variant='contained' onClick={handleSubmit}>Upload File</Button>
+            <Button variant='contained' disabled={isButtonDisabled} onClick={handleSubmit}> {isButtonDisabled ? 'Processing...' : 'Upload File'}</Button>
           </div>
         </Fragment>
       ) : null}
