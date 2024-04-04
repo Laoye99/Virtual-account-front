@@ -67,7 +67,7 @@ const Dashboard = () => {
                       {item.document_id}-{item.document_type}-{item.module_name}
                     </Typography>
                   </CardContent>
-        <Link href={`/institutions/uploaded-document/details/${item["document_id"]}`}>
+        <Link href={`/information/uploaded-document/details/${item["document_id"]}`}>
                   <Button variant='contained' sx={{ py: 2.5, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: '#f50606',  '&:hover': {
                             backgroundColor: '#f50606'
                           } }}>

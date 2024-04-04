@@ -85,7 +85,7 @@ const FileUploader = () => {
               jsx: source.FileUploaderRestrictionsJSXCode
             }}
           >
-            <FileUploaderRestrictions module_name={module_name}/>
+            <FileUploaderRestrictions />
           </CardSnippet>
         </Grid>
       </Grid>

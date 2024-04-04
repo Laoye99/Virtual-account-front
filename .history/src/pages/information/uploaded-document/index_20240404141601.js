@@ -18,6 +18,7 @@ import { BASE_URL } from 'src/configs/constanst'
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
 
+
 // ** Custom Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
@@ -29,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/switch/uploadfile?module=fin_inst&category=unapproved`, {
+      .get(`${BASE_URL}/switch/uploadfile?module=contra_account"&category=unapproved`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -47,7 +48,8 @@ const Dashboard = () => {
         setSubmitLoading(false)
       })
   }, [])
-  return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :(
+
+  return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :   (
     <ApexChartWrapper>
   <Grid container spacing={6}>
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
@@ -67,7 +69,7 @@ const Dashboard = () => {
                       {item.document_id}-{item.document_type}-{item.module_name}
                     </Typography>
                   </CardContent>
-        <Link href={`/institutions/uploaded-document/details/${item["document_id"]}`}>
+        <Link href={`/information/uploaded-document/details/${item["document_id"]}`}>
                   <Button variant='contained' sx={{ py: 2.5, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: '#f50606',  '&:hover': {
                             backgroundColor: '#f50606'
                           } }}>

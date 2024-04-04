@@ -65,7 +65,7 @@ const FileUploader = () => {
         <Button
         component={Link}
         variant='contained'
-        href='/institutions/approved-upload'
+        href='/information/approved-upload'
         startIcon={<Icon icon='tabler:eye' />}
         sx={{
           backgroundColor: '#f50606',
@@ -85,7 +85,7 @@ const FileUploader = () => {
               jsx: source.FileUploaderRestrictionsJSXCode
             }}
           >
-            <FileUploaderRestrictions module_name={module_name}/>
+            <FileUploaderRestrictions />
           </CardSnippet>
         </Grid>
       </Grid>
