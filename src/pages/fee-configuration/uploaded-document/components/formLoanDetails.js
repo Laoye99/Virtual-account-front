@@ -158,7 +158,7 @@ const FormLayoutsGuarantor = loanId => {
 
     const formData = {
 
-      "approval-status": false,
+      "status": false,
       "message": message
     }
 
@@ -175,7 +175,7 @@ const FormLayoutsGuarantor = loanId => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/switch-service')
+      router.push('/fee-configuration/uploaded-document')
 
     } catch (error) {
       // Handle errors
