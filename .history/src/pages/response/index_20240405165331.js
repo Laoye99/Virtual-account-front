@@ -32,7 +32,6 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 const FileUploader = () => {
 
   const module_name = "rsp_code_next_actn"
-  
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>

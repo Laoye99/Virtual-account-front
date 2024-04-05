@@ -16,7 +16,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BASE_URL } from 'src/configs/constanst'
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { Table } from 'antd';
 
 
 // ** Custom Component Import

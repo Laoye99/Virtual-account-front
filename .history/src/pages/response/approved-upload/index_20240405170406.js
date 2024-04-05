@@ -16,7 +16,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BASE_URL } from 'src/configs/constanst'
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { Table } from 'antd';
 
 
 // ** Custom Component Import
@@ -27,59 +26,11 @@ const Dashboard = () => {
   const [submitLoading, setSubmitLoading] = useState(true)
   console.log(data)
 
-  const columns = [
-    {
-      title: 'institutionname',
-      dataIndex: 'institutionname',
-      key: 'institutionname',
-    },
-    {
-      title: 'batchnumber',
-      dataIndex: 'batchnumber',
-      key: 'batchnumber',
-    },
-    {
-      title: 'entrydate',
-      dataIndex: 'entrydate',
-      key: 'entrydate',
-    },
-    {
-      title: 'transactionlocation',
-      dataIndex: 'transactionlocation',
-      key: 'transactionlocation',
-    },
-    {
-      title: 'deleted_by',
-      dataIndex: 'deleted_by',
-      key: 'deleted_by',
-    },
-    {
-      title: 'del_flg',
-      dataIndex: 'del_flg',
-      key: 'del_flg',
-    },
-    {
-      title: 'category',
-      dataIndex: 'category',
-      key: 'category',
-    },
-    {
-      title: 'channelcode',
-      dataIndex: 'channelcode',
-      key: 'channelcode',
-    },
-    {
-      title: 'del_date',
-      dataIndex: 'del_date',
-      key: 'del_date',
-    }
-  ]
-
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/switch/uploadfile?module=fin_inst&category=approved&fetch-content=true`, {
+      .get(`${BASE_URL}/switch/uploadfile?module=rsp_code_next_actn&category=approved&fetch-content=true`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -104,10 +55,8 @@ const Dashboard = () => {
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
           <Typography variant='h5'>Approved Document</Typography>
         </Grid>
-        <Table
-              columns={columns}
-              dataSource={data}
-            />
+
+
    </Grid>
     </ApexChartWrapper>
   )
