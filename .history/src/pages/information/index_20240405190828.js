@@ -31,8 +31,8 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 
 const FileUploader = () => {
 
-  const module_name = "contra_account";
-
+  const module_name = "contra_account"
+  
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
