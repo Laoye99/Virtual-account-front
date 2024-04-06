@@ -22,28 +22,30 @@ import { Table } from 'antd';
 // ** Custom Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
+const columns = [
+  {
+    title: 'resp_code',
+    dataIndex: 'resp_code',
+    key: 'resp_code',
+  },
+  {
+    title: 'next_actn',
+    dataIndex: 'next_actn',
+    key: 'next_actn',
+  },
+  {
+    title: 'serviceid',
+    dataIndex: 'serviceid',
+    key: 'serviceid',
+  }
+]
+
 const Dashboard = () => {
   const [data, setData] = useState([])
   const [submitLoading, setSubmitLoading] = useState(true)
   console.log(data)
 
-  const columns = [
-    {
-      title: 'resp_code',
-      dataIndex: 'resp_code',
-      key: 'resp_code',
-    },
-    {
-      title: 'next_actn',
-      dataIndex: 'next_actn',
-      key: 'next_actn',
-    },
-    {
-      title: 'serviceid',
-      dataIndex: 'serviceid',
-      key: 'serviceid',
-    }
-  ]
+
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
