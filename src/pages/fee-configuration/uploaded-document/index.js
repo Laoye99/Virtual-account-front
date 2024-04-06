@@ -9,8 +9,6 @@ import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 
 // ** Demo Component Imports
 import LoanList from './components/LoanList'
@@ -50,7 +48,7 @@ const Dashboard = () => {
       })
   }, [])
 
-  return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :  (
+  return (
     <ApexChartWrapper>
   <Grid container spacing={6}>
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
