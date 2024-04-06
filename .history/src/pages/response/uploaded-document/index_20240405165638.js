@@ -46,8 +46,7 @@ const Dashboard = () => {
         console.error('Error fetching data:', error)
         setSubmitLoading(false)
       })
-  }, []);
-  
+  }, [])
   return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :(
     <ApexChartWrapper>
   <Grid container spacing={6}>
@@ -68,7 +67,7 @@ const Dashboard = () => {
                       {item.document_id}-{item.document_type}-{item.module_name}
                     </Typography>
                   </CardContent>
-        <Link href={`/response/uploaded-document/details/${item["document_id"]}`}>
+        <Link href={`/institutions/uploaded-document/details/${item["document_id"]}`}>
                   <Button variant='contained' sx={{ py: 2.5, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: '#f50606',  '&:hover': {
                             backgroundColor: '#f50606'
                           } }}>

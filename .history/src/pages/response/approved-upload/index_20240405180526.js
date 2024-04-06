@@ -13,10 +13,11 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 // ** Demo Component Imports
-import LoanList from './components/LoanList'
 import { BASE_URL } from 'src/configs/constanst'
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
+import { Table } from 'antd';
+
 
 // ** Custom Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
@@ -26,10 +27,23 @@ const Dashboard = () => {
   const [submitLoading, setSubmitLoading] = useState(true)
   console.log(data)
 
+  const columns = [
+    {
+      title: 'next_actn',
+      dataIndex: 'next_actn',
+      key: 'next_actn',
+    },
+    {
+      title: 'next_actn',
+      dataIndex: 'next_actn',
+      key: 'next_actn',
+    }
+  ]
+
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/switch/uploadfile?module=rsp_code_next_actn&category=unapproved`, {
+      .get(`${BASE_URL}/switch/uploadfile?module=rsp_code_next_actn&category=approved&fetch-content=true`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -46,40 +60,16 @@ const Dashboard = () => {
         console.error('Error fetching data:', error)
         setSubmitLoading(false)
       })
-  }, []);
-  
-  return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :(
+  }, [])
+
+  return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :  (
     <ApexChartWrapper>
   <Grid container spacing={6}>
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>Unapproved Documents</Typography>
+          <Typography variant='h5'>Approved Document</Typography>
         </Grid>
-        {
-          data.map((item, index) => {
-            return (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card>
-                  <CardContent sx={{ p: theme => `${theme.spacing(3, 5.25, 4)} !important` }}>
-                    <Typography variant='h5' sx={{ mb: 2 }}>
-                      {item.document_name} by {item.uploaded_by}
-                    </Typography>
-                    <Typography sx={{ mb: 2 }}>{item.upload_date}</Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>
-                      {item.document_id}-{item.document_type}-{item.module_name}
-                    </Typography>
-                  </CardContent>
-        <Link href={`/response/uploaded-document/details/${item["document_id"]}`}>
-                  <Button variant='contained' sx={{ py: 2.5, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0, backgroundColor: '#f50606',  '&:hover': {
-                            backgroundColor: '#f50606'
-                          } }}>
-                   View
-                  </Button>
-                  </Link>
-                </Card>
-              </Grid>
-            );
-          })
-        }
+
+
    </Grid>
     </ApexChartWrapper>
   )

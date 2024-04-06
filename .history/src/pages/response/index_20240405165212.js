@@ -32,7 +32,6 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 const FileUploader = () => {
 
   const module_name = "rsp_code_next_actn"
-  
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
@@ -66,7 +65,7 @@ const FileUploader = () => {
         <Button
         component={Link}
         variant='contained'
-        href='/response/approved-upload'
+        href='/institutions/approved-upload'
         startIcon={<Icon icon='tabler:eye' />}
         sx={{
           backgroundColor: '#f50606',
@@ -86,7 +85,7 @@ const FileUploader = () => {
               jsx: source.FileUploaderRestrictionsJSXCode
             }}
           >
-            <FileUploaderRestrictions module_name={module_name}/>
+            <FileUploaderRestrictions />
           </CardSnippet>
         </Grid>
       </Grid>

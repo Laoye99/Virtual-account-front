@@ -31,7 +31,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 
 const FileUploader = () => {
 
-  const module_name = "rsp_code_next_actn"
+  const module_name = "contra_account"
   
   return (
     <DropzoneWrapper>
@@ -40,11 +40,11 @@ const FileUploader = () => {
           title={
             <Typography variant='h4'>
               <LinkStyled href='https://github.com/react-dropzone/react-dropzone/' target='_blank'>
-              Response Code Configuration
+               Account Information
               </LinkStyled>
             </Typography>
           }
-          subtitle={<Typography sx={{ color: 'text.secondary' }}>Configuration Profile Upload</Typography>}
+          subtitle={<Typography sx={{ color: 'text.secondary' }}>Account Information Upload</Typography>}
         />
         <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
@@ -52,7 +52,7 @@ const FileUploader = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/response/uploaded-document'
+          href='/information/uploaded-document'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -64,19 +64,19 @@ const FileUploader = () => {
           View Unapproved Documents
         </Button>
         <Button
-        component={Link}
-        variant='contained'
-        href='/response/approved-upload'
-        startIcon={<Icon icon='tabler:eye' />}
-        sx={{
-          backgroundColor: '#f50606',
-          '&:hover': {
-            backgroundColor: '#f50606' // Change the background color on hover
-          }
-        }}
-      >
-        View Approved Document
-      </Button>
+          component={Link}
+          variant='contained'
+          href='/information/approved-upload'
+          startIcon={<Icon icon='tabler:eye' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
+          View Approved Document
+        </Button>
         </CardContent>
         <Grid item xs={12}>
           <CardSnippet

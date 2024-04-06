@@ -16,7 +16,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BASE_URL } from 'src/configs/constanst'
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
-import { Table } from 'antd';
 
 
 // ** Custom Component Import
@@ -49,9 +48,34 @@ const Dashboard = () => {
       key: 'transactionlocation',
     },
     {
-      title: 'deleted_by',
-      dataIndex: 'deleted_by',
-      key: 'deleted_by',
+      title: '',
+      dataIndex: '',
+      key: '',
+    },
+    {
+      title: 'cr_acc_derivatn_flg',
+      dataIndex: 'cr_acc_derivatn_flg',
+      key: 'cr_acc_derivatn_flg',
+    },
+    {
+      title: 'cr_acc_prefix',
+      dataIndex: 'cr_acc_prefix',
+      key: 'cr_acc_prefix',
+    },
+    {
+      title: 'cr_acc_suffix',
+      dataIndex: 'cr_acc_suffix',
+      key: 'cr_acc_suffix',
+    },
+    {
+      title: 'cr_acct_num',
+      dataIndex: 'cr_acct_num',
+      key: 'cr_acct_num',
+    },
+    {
+      title: 'del_date',
+      dataIndex: 'del_date',
+      key: 'del_date',
     },
     {
       title: 'del_flg',
@@ -59,20 +83,71 @@ const Dashboard = () => {
       key: 'del_flg',
     },
     {
-      title: 'category',
-      dataIndex: 'category',
-      key: 'category',
+      title: 'dr_acc_derivatn_flg',
+      dataIndex: 'dr_acc_derivatn_flg',
+      key: 'dr_acc_derivatn_flg',
+    },
+
+    {
+      title: 'dr_acc_prefix',
+      dataIndex: 'dr_acc_prefix',
+      key: 'dr_acc_prefix',
     },
     {
-      title: 'channelcode',
-      dataIndex: 'channelcode',
-      key: 'channelcode',
+      title: 'dr_acc_suffix',
+      dataIndex: 'dr_acc_suffix',
+      key: 'dr_acc_suffix',
     },
     {
-      title: 'del_date',
-      dataIndex: 'del_date',
-      key: 'del_date',
-    }
+      title: 'dr_acct_num',
+      dataIndex: 'dr_acct_num',
+      key: 'dr_acct_num',
+    },
+    {
+      title: 'dr_acct_num',
+      dataIndex: 'dr_acct_num',
+      key: 'dr_acct_num',
+    },
+    {
+      title: 'serial_num',
+      dataIndex: 'serial_num',
+      key: 'serial_num',
+    },
+    {
+      title: 'service_id',
+      dataIndex: 'service_id',
+      key: 'service_id',
+    },
+    {
+      title: 'sol_deriv_flag',
+      dataIndex: 'sol_deriv_flag',
+      key: 'sol_deriv_flag',
+    },
+    {
+      title: 'sol_deriv_num_xters',
+      dataIndex: 'sol_deriv_num_xters',
+      key: 'sol_deriv_num_xters',
+    },
+    {
+      title: 'sol_deriv_side_ind',
+      dataIndex: 'sol_deriv_side_ind',
+      key: 'sol_deriv_side_ind',
+    },
+    {
+      title: 'status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+      title: 'trxcrncy',
+      dataIndex: 'trxcrncy',
+      key: 'trxcrncy',
+    },
+    {
+      title: 'use_msg_cr_acc_flg',
+      dataIndex: 'use_msg_cr_acc_flg',
+      key: 'use_msg_cr_acc_flg',
+    },
   ]
 
 

@@ -46,8 +46,7 @@ const Dashboard = () => {
         console.error('Error fetching data:', error)
         setSubmitLoading(false)
       })
-  }, []);
-  
+  }, [])
   return submitLoading ? (<Skeleton height={300} count={10} baseColor='#f4f4f4' />) :(
     <ApexChartWrapper>
   <Grid container spacing={6}>
