@@ -39,7 +39,7 @@ const FileUploader = () => {
         <PageHeader
           title={
             <Typography variant='h4'>
-              <LinkStyled href='#' >
+              <LinkStyled href='https://github.com/react-dropzone/react-dropzone/' '>
                Account Information
               </LinkStyled>
             </Typography>
