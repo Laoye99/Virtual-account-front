@@ -1,3 +1,7 @@
+import React from 'react'
+import { useRouter } from 'next/router'
+import AnalyticsDashboard from 'src/pages/guarantor/index'
+
 // ** MUI Import
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -5,27 +9,30 @@ import Typography from '@mui/material/Typography'
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
-// ** Demo Components Imports
-import FormLayoutLoanCalculator from 'src/pages/transaction/components/formLayoutLoanCalculator'
+import FormLayoutsGuarantor from '../components/formLoanDetails'
 
-const LoanCalculator = () => {
+const Guarantors = () => {
+  const router = useRouter()
+  const { loanId } = router.query
+
+
   return (
     <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h6'>NIP AND UPSL TRANSACTIONS</Typography>
+          <Typography variant='h5'>Uploaded file details</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-        <FormLayoutLoanCalculator/>
+         <FormLayoutsGuarantor loanId={loanId} />
         </Grid>
       </Grid>
     </DatePickerWrapper>
   )
 }
 
-LoanCalculator.acl = {
+Guarantors.acl = {
   action: 'user',
   subject: 'user'
 }
 
-export default LoanCalculator;
+export default Guarantors

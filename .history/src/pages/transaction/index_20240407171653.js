@@ -13,7 +13,7 @@ const LoanCalculator = () => {
     <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h6'>NIP AND UPSL TRANSACTIONS</Typography>
+          <Typography variant='h6'>NIP TRANSACTION</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
         <FormLayoutLoanCalculator/>

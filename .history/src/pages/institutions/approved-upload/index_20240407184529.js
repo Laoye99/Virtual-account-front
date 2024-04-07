@@ -55,7 +55,7 @@ const columns = [
   {
     title: 'institutioncode',
     dataIndex: 'institutioncode',
-    key: 'institutioncode',
+    key: 'del_date',
   },
   {
     title: 'category',

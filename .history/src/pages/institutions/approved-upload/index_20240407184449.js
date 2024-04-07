@@ -53,10 +53,10 @@ const columns = [
     key: 'del_flg',
   },
   {
-    title: 'institutioncode',
-    dataIndex: 'institutioncode',
-    key: 'institutioncode',
-  },
+    title: 'del_date',
+    dataIndex: 'del_date',
+    key: 'del_date',
+  }
   {
     title: 'category',
     dataIndex: 'category',

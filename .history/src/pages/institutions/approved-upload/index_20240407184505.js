@@ -68,9 +68,9 @@ const columns = [
     key: 'channelcode',
   },
   {
-    title: 'del_date',
-    dataIndex: 'del_date',
-    key: 'del_date',
+    title: 'institutioncode',
+    dataIndex: 'institutioncode',
+    key: 'institutioncode',
   },
 
 ]

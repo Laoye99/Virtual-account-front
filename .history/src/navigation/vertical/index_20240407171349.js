@@ -33,7 +33,7 @@ const navigation = () => {
     {
       title: 'Transaction router',
       icon: 'tabler:calendar',
-      path: '/router',
+      path: '/',
       action: 'user',
       subject: 'user'
     },
@@ -45,13 +45,13 @@ const navigation = () => {
       action: 'user',
       subject: 'user'
     },
-    /* {
+    {
       title: 'Balance Inquiry',
       path: '/balance',
       icon: 'tabler:text-wrap-disabled',
       action: 'user',
       subject: 'user'
-    }, */
+    },
     {
       title: 'NIP and UPSL statistics',
       icon: 'tabler:table',
