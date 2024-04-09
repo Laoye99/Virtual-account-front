@@ -185,9 +185,7 @@ const Dashboard = () => {
         <Table
               columns={columns}
               dataSource={data}
-              bordered
             />
-          </div>
 
    </Grid>
     </ApexChartWrapper>
