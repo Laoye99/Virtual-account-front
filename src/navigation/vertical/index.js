@@ -70,18 +70,20 @@ const navigation = () => {
       title: 'Settings',
       icon: 'tabler:settings',
       children: [
-        {
-          title: 'Permissions',
-          path: '/settings/permissions',
-          action: 'ADMIN',
-          subject: 'ADMIN'
-        },
-        {
-          title: 'Permission Group',
-          path: '/settings/roles',
-          action: 'ADMIN',
-          subject: 'ADMIN'
-        },
+
+        // {
+        //   title: 'Permissions',
+        //   path: '/settings/permissions',
+        //   action: 'ADMIN',
+        //   subject: 'ADMIN'
+        // },
+        // {
+        //   title: 'Permission Group',
+        //   path: '/settings/roles',
+        //   action: 'ADMIN',
+        //   subject: 'ADMIN'
+        // },
+
         {
           title: 'Manage Users',
           path: '/settings/user/list',
