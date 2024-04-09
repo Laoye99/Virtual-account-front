@@ -417,7 +417,7 @@ console.log(formattedEndDate, formattedStartDate)
         </form>
       </TabContext>
 
-
+      <div className="datagridremove">
         <DataGrid
         getRowId={data.sessionid}
           autoHeight
@@ -427,6 +427,7 @@ console.log(formattedEndDate, formattedStartDate)
           pageSizeOptions={[5, 10]}
           disableRowSelectionOnClick
         />
+        </div>
 
         {/* Pagination Buttons */}
         <div style={{ textAlign: 'center', marginBottom: '10px' }}>

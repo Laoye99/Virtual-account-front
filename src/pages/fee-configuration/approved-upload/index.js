@@ -181,10 +181,14 @@ const Dashboard = () => {
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
           <Typography variant='h5'>Approved Document</Typography>
         </Grid>
-        <Table
-              columns={columns}
-              dataSource={data}
-            />
+        <div style={{ overflowX: 'auto' }}>
+      <Table
+        columns={columns}
+        dataSource={data}
+        bordered
+      />
+    </div>
+
    </Grid>
     </ApexChartWrapper>
   )

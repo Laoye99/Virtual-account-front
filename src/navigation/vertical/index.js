@@ -45,13 +45,6 @@ const navigation = () => {
       action: 'user',
       subject: 'user'
     },
-    /* {
-      title: 'Balance Inquiry',
-      path: '/balance',
-      icon: 'tabler:text-wrap-disabled',
-      action: 'user',
-      subject: 'user'
-    }, */
     {
       title: 'NIP and UPSL statistics',
       icon: 'tabler:table',
@@ -77,18 +70,20 @@ const navigation = () => {
       title: 'Settings',
       icon: 'tabler:settings',
       children: [
-        {
-          title: 'Permissions',
-          path: '/settings/permissions',
-          action: 'ADMIN',
-          subject: 'ADMIN'
-        },
-        {
-          title: 'Permission Group',
-          path: '/settings/roles',
-          action: 'ADMIN',
-          subject: 'ADMIN'
-        },
+
+        // {
+        //   title: 'Permissions',
+        //   path: '/settings/permissions',
+        //   action: 'ADMIN',
+        //   subject: 'ADMIN'
+        // },
+        // {
+        //   title: 'Permission Group',
+        //   path: '/settings/roles',
+        //   action: 'ADMIN',
+        //   subject: 'ADMIN'
+        // },
+
         {
           title: 'Manage Users',
           path: '/settings/user/list',

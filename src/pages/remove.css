@@ -1,0 +1,7 @@
+.datagridremove .MuiTablePagination-actions{
+  display: none;
+}
+
+.datagridremove .MuiTablePagination-displayedRows{
+  display: none;
+}

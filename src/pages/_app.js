@@ -43,6 +43,7 @@ import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 
 // ** Utils Imports
 import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
+import './remove.css'
 
 // ** Prismjs Styles
 import 'prismjs'
