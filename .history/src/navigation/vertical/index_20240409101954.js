@@ -44,7 +44,7 @@ const navigation = () => {
       icon: 'tabler:checkbox',
       action: 'user',
       subject: 'user'
-    },
+    }, */
     {
       title: 'NIP and UPSL statistics',
       icon: 'tabler:table',
