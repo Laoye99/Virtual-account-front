@@ -23,56 +23,35 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 const columns = [
   {
-    title: 'institutionname',
-    dataIndex: 'institutionname',
-    key: 'institutionname',
+    title: 'service_provider_id',
+    dataIndex: 'service_provider_id',
+    key: 'service_provider_id',
   },
   {
-    title: 'batchnumber',
-    dataIndex: 'batchnumber',
-    key: 'batchnumber',
+    title: 'its_institution_id',
+    dataIndex: 'its_institution_id',
+    key: 'its_institution_id',
   },
   {
-    title: 'entrydate',
-    dataIndex: 'entrydate',
-    key: 'entrydate',
+    title: 'creation_date',
+    dataIndex: 'creation_date',
+    key: 'creation_date',
   },
   {
-    title: 'transactionlocation',
-    dataIndex: 'transactionlocation',
-    key: 'transactionlocation',
+    title: 'institution_name',
+    dataIndex: 'institution_name',
+    key: 'institution_name',
   },
   {
-    title: 'deleted_by',
-    dataIndex: 'deleted_by',
-    key: 'deleted_by',
+    title: 'created_by',
+    dataIndex: 'created_by',
+    key: 'created_by',
   },
   {
-    title: 'del_flg',
-    dataIndex: 'del_flg',
-    key: 'del_flg',
-  },
-  {
-    title: 'institutioncode',
-    dataIndex: 'institutioncode',
-    key: 'institutioncode',
-  },
-  {
-    title: 'category',
-    dataIndex: 'category',
-    key: 'category',
-  },
-  {
-    title: 'channelcode',
-    dataIndex: 'channelcode',
-    key: 'channelcode',
-  },
-  {
-    title: 'del_date',
-    dataIndex: 'del_date',
-    key: 'del_date',
-  },
-
+    title: 'institution_id',
+    dataIndex: 'institution_id',
+    key: 'institution_id',
+  }
 ]
 
 const Dashboard = () => {
@@ -85,7 +64,7 @@ const Dashboard = () => {
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/switch/uploadfile?module=fin_inst&category=approved&fetch-content=true`, {
+      .get(`${BASE_URL}/switch/uploadfile?module=inst_route&category=approved&fetch-content=true`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -114,9 +93,7 @@ const Dashboard = () => {
         <Table
               columns={columns}
               dataSource={data}
-              bordered
             />
-          </div>
    </Grid>
     </ApexChartWrapper>
   )

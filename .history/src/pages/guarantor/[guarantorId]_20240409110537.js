@@ -9,21 +9,22 @@ import Typography from '@mui/material/Typography'
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
-import FormLayoutsGuarantor from 'src/pages/loan-request/components/formLoanDetails'
+import FormLayoutsGuarantor from 'src/pages/guarantor/components/formLayoutGuarantor'
 
 const Guarantors = () => {
   const router = useRouter()
-  const { loanId } = router.query
+  const { guarantorId } = router.query
 
+  //console.log('nnnnnnnnnnnnnnnn', guarantorId)
 
   return (
     <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>LOAN DETAILS</Typography>
+          <Typography variant='h6'>GUARANTOR'S REQUEST</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-          <FormLayoutsGuarantor loanId={loanId} />
+          <FormLayoutsGuarantor guarantorId={guarantorId} />
         </Grid>
       </Grid>
     </DatePickerWrapper>
