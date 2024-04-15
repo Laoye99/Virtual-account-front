@@ -170,11 +170,11 @@ const handleSubmit = async () => {
     setSubmitLoading(true)
 
     const data = {
-        user_id : parseInt(channel, 10),
+        user_id : parseInt(users, 10),
         new_role_id : parseInt(selectedRole, 10) }
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${baseUrl}/switch/updateuserrole`, data, {
+      const response = await axios.post(`${BASE_URL}/switch/updateuserrole`, data, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
@@ -361,15 +361,23 @@ const handleSubmit = async () => {
           </Form.Item>
 
           <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={submitLoading}
-                style={{ paddingTop: "6px" }}
-                onClick={handleSubmit}
-              >
-              </Button>
-            </Form.Item>
+  <Button
+    type="primary"
+    htmlType="submit"
+    loading={submitLoading}
+    style={{
+      paddingTop: "6px",
+      backgroundColor: "red",
+      color: "white",
+      border: "none",
+      borderRadius: "4px",
+      padding: "8px 16px"
+    }}
+    onClick={handleSubmit}
+  >
+    Submit
+  </Button>
+</Form.Item>
 
 
         </Form>
