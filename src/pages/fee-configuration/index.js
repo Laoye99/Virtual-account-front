@@ -19,6 +19,7 @@ import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
 import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploader/FileUploaderRestrictions'
+import figConfig from "./fee_config2.csv"
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
@@ -31,6 +32,19 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 
 
 const FileUploader = () => {
+
+  const downloadCsv = () => {
+    // Create a blob from the CSV file content
+    const blob = new Blob([figConfig], { type: 'text/csv' });
+
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'figConfig.csv';
+
+    // Trigger the download
+    link.click();
+  };
 
   const module_name = "fee_config";
 
@@ -78,6 +92,12 @@ const FileUploader = () => {
         >
           View Approved Document
         </Button>
+        <div>
+    <button onClick={downloadCsv} style={{ display: 'inline-block', padding: '10px 20px', backgroundColor: '#f50606', color: 'white', textDecoration: 'none', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>
+        Get Document
+      </button>
+</div>
+
         </CardContent>
         <Grid item xs={12}>
           <CardSnippet
