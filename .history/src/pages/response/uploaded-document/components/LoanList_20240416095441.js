@@ -124,7 +124,7 @@ const LoanList = (switchID) => {
 
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`${BASE_URL}/switch/uploadfile?module_name=rsp_code_next_actn&id=${guarantor}`, null, {
+      const response = await axios.put(`${BASE_URL}/switch/uploadfile?module_name=fin_inst&id=${guarantor}`, null, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
