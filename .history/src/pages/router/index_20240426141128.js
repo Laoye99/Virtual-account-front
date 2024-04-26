@@ -19,8 +19,7 @@ import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
 import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploader/FileUploaderRestrictions'
-import contraAcct from './contra_acc.csv'
-
+import
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
 import Icon from 'src/@core/components/icon'
@@ -32,20 +31,7 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 
 const FileUploader = () => {
 
-  const downloadCsv = () => {
-    // Create a blob from the CSV file content
-    const blob = new Blob([contraAcct], { type: 'text/csv' });
-
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = 'contraAcct.csv';
-
-    // Trigger the download
-    link.click();
-  };
-
-  const module_name = "contra_account";
+  const module_name = "inst_route";
 
   return (
     <DropzoneWrapper>
@@ -53,12 +39,12 @@ const FileUploader = () => {
         <PageHeader
           title={
             <Typography variant='h4'>
-              <LinkStyled href='#' >
-               Account Information
+              <LinkStyled href='#'>
+               Transaction Router
               </LinkStyled>
             </Typography>
           }
-          subtitle={<Typography sx={{ color: 'text.secondary' }}>Account Information Upload</Typography>}
+          subtitle={<Typography sx={{ color: 'text.secondary' }}>Transaction Router Profile Upload</Typography>}
         />
         <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
@@ -66,7 +52,7 @@ const FileUploader = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/information/uploaded-document'
+          href='/router/uploaded-document'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -78,25 +64,19 @@ const FileUploader = () => {
           View Unapproved Documents
         </Button>
         <Button
-          component={Link}
-          variant='contained'
-          href='/information/approved-upload'
-          startIcon={<Icon icon='tabler:eye' />}
-          sx={{
-            backgroundColor: '#f50606',
-            '&:hover': {
-              backgroundColor: '#f50606' // Change the background color on hover
-            }
-          }}
-        >
-          View Approved Document
-        </Button>
-        <div>
-    <button onClick={downloadCsv} style={{ display: 'inline-block', padding: '10px 20px', backgroundColor: '#f50606', color: 'white', textDecoration: 'none', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>
-        Get Document
-      </button>
-</div>
-
+        component={Link}
+        variant='contained'
+        href='/router/approved-upload'
+        startIcon={<Icon icon='tabler:eye' />}
+        sx={{
+          backgroundColor: '#f50606',
+          '&:hover': {
+            backgroundColor: '#f50606' // Change the background color on hover
+          }
+        }}
+      >
+        View Approved Document
+      </Button>
         </CardContent>
         <Grid item xs={12}>
           <CardSnippet

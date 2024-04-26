@@ -91,12 +91,6 @@ const FileUploader = () => {
         >
           View Approved Document
         </Button>
-        <div>
-    <button onClick={downloadCsv} style={{ display: 'inline-block', padding: '10px 20px', backgroundColor: '#f50606', color: 'white', textDecoration: 'none', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>
-        Get Document
-      </button>
-</div>
-
         </CardContent>
         <Grid item xs={12}>
           <CardSnippet

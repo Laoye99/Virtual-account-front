@@ -19,7 +19,7 @@ import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
 import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploader/FileUploaderRestrictions'
-import contraAcct from './contra_acc.csv'
+import feeConfig from "./fee_config2.csv"
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
@@ -30,43 +30,44 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
+
 const FileUploader = () => {
 
   const downloadCsv = () => {
     // Create a blob from the CSV file content
-    const blob = new Blob([contraAcct], { type: 'text/csv' });
+    const blob = new Blob([feeConfig], { type: 'text/csv' });
 
     // Create a link element
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'contraAcct.csv';
+    link.download = 'figConfig.csv';
 
     // Trigger the download
     link.click();
   };
 
-  const module_name = "contra_account";
+  const module_name = "fee_config";
 
   return (
     <DropzoneWrapper>
       <Grid container spacing={6} className='match-height'>
-        <PageHeader
+      <PageHeader
           title={
             <Typography variant='h4'>
-              <LinkStyled href='#' >
-               Account Information
+              <LinkStyled href='#'>
+               Fee Configuration
               </LinkStyled>
             </Typography>
           }
-          subtitle={<Typography sx={{ color: 'text.secondary' }}>Account Information Upload</Typography>}
+          subtitle={<Typography sx={{ color: 'text.secondary' }}>Fee Configuration Upload</Typography>}
         />
-        <CardContent
+      <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        <Button
+          <Button
           component={Link}
           variant='contained'
-          href='/information/uploaded-document'
+          href='/fee-configuration/uploaded-document'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -80,7 +81,7 @@ const FileUploader = () => {
         <Button
           component={Link}
           variant='contained'
-          href='/information/approved-upload'
+          href='/fee-configuration/approved-upload'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -106,7 +107,7 @@ const FileUploader = () => {
               jsx: source.FileUploaderRestrictionsJSXCode
             }}
           >
-            <FileUploaderRestrictions module_name={module_name}/>
+            <FileUploaderRestrictions module_name={module_name} />
           </CardSnippet>
         </Grid>
       </Grid>

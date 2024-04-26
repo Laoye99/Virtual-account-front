@@ -96,7 +96,6 @@ const FileUploader = () => {
         Get Document
       </button>
 </div>
-
         </CardContent>
         <Grid item xs={12}>
           <CardSnippet
