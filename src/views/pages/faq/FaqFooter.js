@@ -37,34 +37,34 @@ const StyledBox2 = styled(Box)(({ theme }) => ({
 const FaqFooter = () => {
   return (
     <Box sx={{ mt: 13, textAlign: 'center' }}>
-      <CustomChip rounded size='small' skin='light' color='primary' label='Question' />
+      <CustomChip rounded size='small' skin='light' color='primary' label='Documentation' />
       <Typography variant='h4' sx={{ my: 2 }}>
-        You still have a question?
+      Want to get documentation?
       </Typography>
       <Typography sx={{ mb: 6, color: 'text.secondary' }}>
-        If you cannot find a question in our FAQ, you can always contact us. We will answer to you shortly!
+        You can find the comprehensive documentation through the link below.
       </Typography>
 
       <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
           <StyledBox1>
             <CustomAvatar skin='light' variant='rounded' sx={{ mb: 2.5, height: 38, width: 38 }}>
-              <Icon fontSize='1.75rem' icon='tabler:phone' />
+              <Icon fontSize='1.75rem' icon='mdi:file-document' />
             </CustomAvatar>
             <Typography
-              href='/'
-              variant='h4'
-              component={Link}
-              onClick={e => e.preventDefault()}
-              sx={{ mb: 2.5, textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
-            >
-              + (810) 2548 2568
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>We are always happy to help!</Typography>
+            component={Link}
+  href="https://docs.google.com/document/d/10HftPb0Audl7oqvLbPBGem28vaA4hyNJWXzo4jKzMQo/edit?usp=sharing" // Replace this with the URL of your external document
+  target="_blank"
+  rel="noopener noreferrer"
+  variant='h4'
+  sx={{ mb: 2.5, textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
+>
+ Click here
+</Typography>
           </StyledBox1>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <StyledBox2>
             <CustomAvatar skin='light' variant='rounded' sx={{ mb: 2.5, height: 38, width: 38 }}>
               <Icon fontSize='1.75rem' icon='tabler:mail' />
@@ -80,7 +80,7 @@ const FaqFooter = () => {
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Best way to get answer faster!</Typography>
           </StyledBox2>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   )

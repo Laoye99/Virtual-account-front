@@ -19,7 +19,7 @@ import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
 import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploader/FileUploaderRestrictions'
-import respCode from './next-action (1).csv'
+import respCode from './next-action.csv'
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'

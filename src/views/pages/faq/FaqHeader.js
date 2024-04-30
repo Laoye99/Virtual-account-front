@@ -55,20 +55,6 @@ const FaqHeader = () => {
           >
             <img src='/images/pages/faq-illustration.png' alt='illustration' width='230' />
           </Box>
-
-        {/* <CustomTextFieldStyled
-          size='medium'
-          value={searchTerm}
-          placeholder='Search a question....'
-          onChange={e => handleFaqFilter(e)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <Icon fontSize='1.25rem' icon='tabler:search' />
-              </InputAdornment>
-            )
-          }}
-        /> */}
         <Typography sx={{ mt: 4, color: 'text.secondary' }}>
           choose a category from the Interbank Transfer Switching Service 👋🏻
         </Typography>
