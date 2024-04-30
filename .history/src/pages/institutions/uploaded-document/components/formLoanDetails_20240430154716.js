@@ -92,7 +92,7 @@ const FormLayoutsGuarantor = loanId => {
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`${BASE_URL}/switch/uploadfile?module=contra_account&document_id=${guarantor}`, {
+      const response = await axios.get(`${BASE_URL}/switch/uploadfile?module=fin_inst&document_id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
@@ -140,7 +140,7 @@ const FormLayoutsGuarantor = loanId => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/information/uploaded-document')
+      router.push('/institution/uploaded-document')
 
     } catch (error) {
       // Handle errors
@@ -175,7 +175,7 @@ const FormLayoutsGuarantor = loanId => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/information/uploaded-document')
+      router.push('/institution/uploaded-document')
 
     } catch (error) {
       // Handle errors
@@ -198,6 +198,7 @@ const FormLayoutsGuarantor = loanId => {
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
+          <legend>Uploaded file Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',

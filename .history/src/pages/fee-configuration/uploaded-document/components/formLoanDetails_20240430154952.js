@@ -92,7 +92,7 @@ const FormLayoutsGuarantor = loanId => {
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`${BASE_URL}/switch/uploadfile?module=contra_account&document_id=${guarantor}`, {
+      const response = await axios.get(`${BASE_URL}/switch/uploadfile?module=fee_config&document_id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
@@ -140,7 +140,7 @@ const FormLayoutsGuarantor = loanId => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/information/uploaded-document')
+      router.push('/fee-configuration/uploaded-document')
 
     } catch (error) {
       // Handle errors
@@ -175,7 +175,7 @@ const FormLayoutsGuarantor = loanId => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/information/uploaded-document')
+      router.push('/fee-configuration/uploaded-document')
 
     } catch (error) {
       // Handle errors
@@ -195,7 +195,7 @@ const FormLayoutsGuarantor = loanId => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Uploaded file Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
           <TableContainer
