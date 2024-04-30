@@ -194,9 +194,10 @@ const FormLayoutsGuarantor = switchID => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Approved Statistcs Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Approved Statistcs Details Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
+          <legend>Approved Statistcs Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',

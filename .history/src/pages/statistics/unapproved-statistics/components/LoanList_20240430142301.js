@@ -61,7 +61,7 @@ const columns = [
     field: 'id',
     minWidth: 150,
     headerName: 'ID',
-    renderCell: ({ row }) => <LinkStyled href={`/statistics/approved-statistics/${row.id}`}>{`#${row.id}`}</LinkStyled>
+    renderCell: ({ row }) => <LinkStyled href={`/statistics/${row.id}`}>{`#${row.id}`}</LinkStyled>
   },
   {
     flex: 0.1,
@@ -85,22 +85,22 @@ const columns = [
     headerName: 'Created by',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created-by"] || 0}</Typography>
   },
-  // {
-  //   flex: 0.1,
-  //   minWidth: 100,
-  //   sortable: false,
-  //   field: 'actions',
-  //   headerName: 'Actions',
-  //   renderCell: ({ row }) => (
-  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-  //       <Tooltip title='View'>
-  //         <IconButton size='small' component={Link} href={`/statistics/approved-statistics/${row.id}`}>
-  //           <Icon icon='tabler:eye' />
-  //         </IconButton>
-  //       </Tooltip>
-  //     </Box>
-  //   )
-  // }
+  {
+    flex: 0.1,
+    minWidth: 100,
+    sortable: false,
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: ({ row }) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip title='View'>
+          <IconButton size='small' component={Link} href={`statistics/unapproved-statistics/${row.id}`}>
+            <Icon icon='tabler:eye' />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    )
+  }
 ]
 
 const LoanList = () => {
@@ -113,7 +113,7 @@ const LoanList = () => {
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/switch/endpoint?approval-status=approved`, {
+      .get(`${BASE_URL}/switch/endpoint?approval-status=unapproved`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -158,11 +158,11 @@ const LoanList = () => {
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-         {/*<TableHeader toggle={toggleAddUserDrawer} />*/}
-        {/* <Button
+        <TableHeader toggle={toggleAddUserDrawer} />
+        <Button
           component={Link}
           variant='contained'
-          href='/switch-service/approved-switch'
+          href='/statistics/approved-statistics'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -171,8 +171,8 @@ const LoanList = () => {
             }
           }}
         >
-          View Approved Provider
-        </Button> */}
+          View Approved Statistics
+        </Button>
       </CardContent>
 
       <DataGrid
@@ -187,7 +187,7 @@ const LoanList = () => {
         onPaginationModelChange={setPaginationModel}
       />
 
- {/* <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} /> */}
+<SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} />
     </Card>
   ) : null
 }

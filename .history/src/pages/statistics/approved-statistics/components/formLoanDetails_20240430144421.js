@@ -197,6 +197,7 @@ const FormLayoutsGuarantor = switchID => {
           <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Approved Statistcs Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
+          <legend>Approved Statistcs Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',
