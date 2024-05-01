@@ -63,24 +63,6 @@ const FaqFooter = () => {
 </Typography>
           </StyledBox1>
         </Grid>
-
-        {/* <Grid item xs={12} md={6}>
-          <StyledBox2>
-            <CustomAvatar skin='light' variant='rounded' sx={{ mb: 2.5, height: 38, width: 38 }}>
-              <Icon fontSize='1.75rem' icon='tabler:mail' />
-            </CustomAvatar>
-            <Typography
-              href='/'
-              variant='h4'
-              component={Link}
-              onClick={e => e.preventDefault()}
-              sx={{ mb: 2.5, textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
-            >
-              hello@help.com
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Best way to get answer faster!</Typography>
-          </StyledBox2>
-        </Grid> */}
       </Grid>
     </Box>
   )
