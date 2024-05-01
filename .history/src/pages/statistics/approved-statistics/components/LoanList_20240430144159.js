@@ -61,7 +61,7 @@ const columns = [
     field: 'id',
     minWidth: 150,
     headerName: 'ID',
-    renderCell: ({ row }) => <LinkStyled href={`/statistics/approved-statistics/${row.id}`}>{`#${row.id}`}</LinkStyled>
+    renderCell: ({ row }) => <LinkStyled href={`/sta/approved-switch/${row.id}`}>{`#${row.id}`}</LinkStyled>
   },
   {
     flex: 0.1,
@@ -85,22 +85,22 @@ const columns = [
     headerName: 'Created by',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created-by"] || 0}</Typography>
   },
-  // {
-  //   flex: 0.1,
-  //   minWidth: 100,
-  //   sortable: false,
-  //   field: 'actions',
-  //   headerName: 'Actions',
-  //   renderCell: ({ row }) => (
-  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-  //       <Tooltip title='View'>
-  //         <IconButton size='small' component={Link} href={`/statistics/approved-statistics/${row.id}`}>
-  //           <Icon icon='tabler:eye' />
-  //         </IconButton>
-  //       </Tooltip>
-  //     </Box>
-  //   )
-  // }
+  {
+    flex: 0.1,
+    minWidth: 100,
+    sortable: false,
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: ({ row }) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip title='View'>
+          <IconButton size='small' component={Link} href={`/statistics/approved-statistics/${row.id}`}>
+            <Icon icon='tabler:eye' />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    )
+  }
 ]
 
 const LoanList = () => {

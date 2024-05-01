@@ -92,7 +92,7 @@ const FormLayoutsGuarantor = switchID => {
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`${BASE_URL}/switch/switch?approval-status=unapproved&id=${guarantor}`, {
+      const response = await axios.get(`${BASE_URL}/switch/endpoint?approval-status=unapproved&id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
@@ -130,7 +130,7 @@ const FormLayoutsGuarantor = switchID => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/approve-endpoint?id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ const FormLayoutsGuarantor = switchID => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/approve-endpoint?id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const FormLayoutsGuarantor = switchID => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/switch-service')
+      router.push('/statistics')
 
     } catch (error) {
       // Handle errors
@@ -195,9 +195,10 @@ const FormLayoutsGuarantor = switchID => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Switch Provider Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
+          <legend>Unapproved S Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',

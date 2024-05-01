@@ -52,6 +52,8 @@ import CustomChip from 'src/@core/components/mui/chip'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import { Box, Collapse } from '@mui/material'
+import TableHeader from './TableHeader'
+import SidebarAddUser from './AddUserDrawer'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
@@ -76,6 +78,7 @@ const FormLayoutsGuarantor = switchID => {
   const [value, setValue] = useState('personal-info')
   const [isLoading, setIsLoading] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false)
+  const [addUserOpen, setAddUserOpen] = useState(false)
 
 
   console.log('nnnnnnnnnnnnnnnnnnnnnnn', apiData)
@@ -92,7 +95,7 @@ const FormLayoutsGuarantor = switchID => {
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`${BASE_URL}/switch/switch?approval-status=unapproved&id=${guarantor}`, {
+      const response = await axios.get(`${BASE_URL}/switch/endpoint?approval-status=approved&id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
@@ -130,7 +133,7 @@ const FormLayoutsGuarantor = switchID => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/approve-endpoint?id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -139,9 +142,6 @@ const FormLayoutsGuarantor = switchID => {
       })
       setButtonDisabled(false)
       toast.success(response.data.message)
-      setMessage("")
-      router.push('/switch-service')
-
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -165,7 +165,7 @@ const FormLayoutsGuarantor = switchID => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/approve-endpoint?id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -174,9 +174,6 @@ const FormLayoutsGuarantor = switchID => {
       })
       setButtonDisabled(false)
       toast.success(response.data.message)
-      setMessage("")
-      router.push('/switch-service')
-
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -184,6 +181,8 @@ const FormLayoutsGuarantor = switchID => {
       setButtonDisabled(false)
     }
   }
+
+  const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
 
   return  (
@@ -195,9 +194,10 @@ const FormLayoutsGuarantor = switchID => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Switch Provider Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Loan Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
+          <legend>Approved Statistcs Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',
@@ -230,13 +230,13 @@ const FormLayoutsGuarantor = switchID => {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>Created By:</TableCell>
         <TableCell>
           {apiData['created-by']}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>Approved By:</TableCell>
         <TableCell>
           {apiData['approved-by']}
         </TableCell>
@@ -253,37 +253,11 @@ const FormLayoutsGuarantor = switchID => {
       </TabContext>
 
       <Divider />
+<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], my: '1rem' }}>
 
-<CardContent sx={{ px: [6, 10] }}>
-  <InputLabel
-    htmlFor='invoice-note'
-    sx={{ mb: 2, fontWeight: 500, fontSize: '1.5rem', lineHeight: 'normal' }}
-  >
-    Message:
-  </InputLabel>
-  <CustomTextField
-    rows={2}
-    value={message}
-    fullWidth
-    onChange={e => setMessage(e.target.value)}
-    multiline
-    id='invoice-note'
-    defaultValue=''
-  />
-</CardContent>
-<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], mb: '3rem' }}>
-            <Button onClick={handleApprove}  disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#71ace0',  '&:hover': {
-                    backgroundColor: '#22668D'
-                  } }}>
-           {isButtonDisabled ? 'Processing...' : 'Approve'}
-            </Button>
-            <Button onClick={handleDecline} disabled={isButtonDisabled} type='submit' variant='contained' sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-                    backgroundColor: '#f50606'
-                  } }}>
-            {isButtonDisabled ? 'Processing...' : 'Decline'}
-            </Button>
           </Box>
-
+          <TableHeader toggle={toggleAddUserDrawer} />
+          <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} guarantor={guarantor} apiData={apiData} />
     </Card>
   )
 }

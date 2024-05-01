@@ -64,8 +64,8 @@ const CustomInput = forwardRef((props, ref) => {
   return <CustomTextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
 })
 
-const FormLayoutsGuarantor = switchID => {
-  const guarantor = switchID.switchID
+const FormLayoutsGuarantor = loanId => {
+  const guarantor = loanId.loanId
   console.log(guarantor)
 
   // ** States
@@ -92,7 +92,7 @@ const FormLayoutsGuarantor = switchID => {
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`${BASE_URL}/switch/switch?approval-status=unapproved&id=${guarantor}`, {
+      const response = await axios.get(`${BASE_URL}/switch/uploadfile?module=fee_config&document_id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
@@ -122,7 +122,7 @@ const FormLayoutsGuarantor = switchID => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     const formData = {
-      "approval-status": true,
+      "status": true,
       "message": message
 
     }
@@ -130,7 +130,7 @@ const FormLayoutsGuarantor = switchID => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/uploadfile/approve?document_id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ const FormLayoutsGuarantor = switchID => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/switch-service')
+      router.push('/fee-configuration/uploaded-document')
 
     } catch (error) {
       // Handle errors
@@ -158,14 +158,14 @@ const FormLayoutsGuarantor = switchID => {
 
     const formData = {
 
-      "approval-status": false,
+      "status": false,
       "message": message
     }
 
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.post(`${BASE_URL}/switch/approve-switch?id=${guarantor}`, formData, {
+      const response = await axios.post(`${BASE_URL}/switch/uploadfile/approve?document_id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const FormLayoutsGuarantor = switchID => {
       setButtonDisabled(false)
       toast.success(response.data.message)
       setMessage("")
-      router.push('/switch-service')
+      router.push('/fee-configuration/uploaded-document')
 
     } catch (error) {
       // Handle errors
@@ -195,7 +195,7 @@ const FormLayoutsGuarantor = switchID => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Switch Provider Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Uploaded file Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
           <TableContainer
@@ -212,33 +212,33 @@ const FormLayoutsGuarantor = switchID => {
   apiData == [] ? (
  null) : ( <TableBody>
       <TableRow>
-        <TableCell>Provider Name:</TableCell>
+        <TableCell>Document Name:</TableCell>
         <TableCell>
-          {apiData?.name}
+          {apiData?.document_name}
         </TableCell>
       </TableRow>
        <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>Uploaded by:</TableCell>
         <TableCell>
-          {apiData?.code}
+          {apiData?.uploaded_by}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Message:</TableCell>
+        <TableCell>Document id:</TableCell>
         <TableCell>
-          {apiData?.message}
+          {apiData?.document_id}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>Document Type:</TableCell>
         <TableCell>
-          {apiData['created-by']}
+          {apiData?.document_type}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Provider Code:</TableCell>
+        <TableCell>module_name:</TableCell>
         <TableCell>
-          {apiData['approved-by']}
+          {apiData?.module_name}
         </TableCell>
       </TableRow>
       </TableBody>)
