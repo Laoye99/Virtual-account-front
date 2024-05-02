@@ -20,24 +20,29 @@ const path = require('path')
 // }
 
 const nextConfig = {
-    trailingSlash: true,
+  trailingSlash: true,
   reactStrictMode: false,
   webpack: (config, { isServer }) => {
-      // Add CSV loader rule
-      config.module.rules.push({
-          test: /\.csv$/,
-          use: ['csv-loader'],
-      });
+    // Add CSV loader rule
+    config.module.rules.push({
+      test: /\.csv$/,
+      use: ['csv-loader'],
+    });
 
-      return config;
-  },
-  module: {
-      rules: [
-          {
-              test: /\.css$/,
-              use: ['style-loader', 'css-loader'],
+    // Add rule for handling zip files with file-loader
+    config.module.rules.push({
+      test: /\.(zip)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
           },
+        },
       ],
+    });
+
+    return config;
   },
 };
 

@@ -11,6 +11,7 @@ import CardContent from '@mui/material/CardContent'
 // ** Custom Components Imports
 import PageHeader from 'src/@core/components/page-header'
 import CardSnippet from 'src/@core/components/card-snippet'
+import JSZip from 'jszip';
 
 // ** Styled Component
 import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
@@ -19,7 +20,9 @@ import DropzoneWrapper from 'src/@core/styles/libs/react-dropzone'
 import FileUploaderSingle from 'src/views/forms/form-elements/file-uploader/FileUploaderSingle'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
 import FileUploaderRestrictions from 'src/views/forms/form-elements/file-uploader/FileUploaderRestrictions'
-import feeConfig from "./fee_config2.csv"
+
+// import feeConfig from "./fee_config2.csv"
+import feeConfig from "./fee_config2.zip"
 
 // ** Source code imports
 import * as source from 'src/views/forms/form-elements/file-uploader/FileUploaderSourceCode'
@@ -34,16 +37,23 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 const FileUploader = () => {
 
   const downloadCsv = () => {
-    // Create a blob from the CSV file content
-    const blob = new Blob([feeConfig], { type: 'text/csv' });
+    // Create a new zip file
+    const zip = new JSZip();
 
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = 'feeConfig.csv';
+    // Add the CSV file to the zip file
+    zip.file('feeConfig.csv', feeConfig);
 
-    // Trigger the download
-    link.click();
+    // Generate the zip file asynchronously
+    zip.generateAsync({ type: 'blob' })
+      .then(function(content) {
+        // Create a link element
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(content);
+        link.download = 'feeConfig.zip';
+
+        // Trigger the download
+        link.click();
+      });
   };
 
   const module_name = "fee_config";
