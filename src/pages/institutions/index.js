@@ -91,11 +91,22 @@ const FileUploader = () => {
       >
         View Approved Document
       </Button>
-      <div>
-      <button onClick={downloadCsv} style={{ display: 'inline-block', padding: '10px 20px', backgroundColor: '#f50606', color: 'white', textDecoration: 'none', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>
+      <Button
+          component={Link}
+          variant='contained'
+          href="https://drive.google.com/file/d/1cu31MuDnMvs2TfAyQvMvCqcpwV2Tn_2y/view?usp=sharing" // Replace this with the URL of your external document
+          target="_blank"
+          rel="noopener noreferrer"
+          startIcon={<Icon icon='tabler:eye' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
           Get Document
-        </button>
-  </div>
+        </Button>
 
         </CardContent>
         <Grid item xs={12}>
