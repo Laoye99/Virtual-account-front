@@ -1,2 +1,0 @@
-SERVICE_ID,APPLCODE,use_msg_dr_acc_flg,use_msg_cr_acc_flg,dr_acc_derivatn_flg,dr_acct_num,dr_acc_prefix,dr_acc_suffix,status
-12,1234,FALSE,FALSE,FALSE,123456,,,active
