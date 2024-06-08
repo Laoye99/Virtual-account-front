@@ -188,7 +188,7 @@ const FormLayoutsGuarantor = accountID => {
     console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`http://localhost:9897/switch/virtual-account?action=deactivate&id=${guarantor}`, formData, {
+      const response = await axios.put(`http://localhost:9897/vaccount/virtual-account?action=deactivate&id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',

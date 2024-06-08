@@ -52,7 +52,6 @@ import CustomChip from 'src/@core/components/mui/chip'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import { Box, Collapse } from '@mui/material'
-
 import TableHeader from './TableHeader'
 import SidebarAddUser from './AddUserDrawer'
 
@@ -67,11 +66,12 @@ const CustomInput = forwardRef((props, ref) => {
   return <CustomTextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
 })
 
-const FormLayoutsGuarantor = accountID => {
-  const guarantor = accountID.accountID
+const FormLayoutsGuarantor = serviceID => {
+  const guarantor = serviceID.serviceID
   console.log(guarantor)
 
   // ** States
+  // const { toggle } = props
   const [open, setOpen] = useState(false)
   const [message, setMessage] = useState('')
   const handleDialogToggle = () => setOpen(!open)
@@ -80,11 +80,8 @@ const FormLayoutsGuarantor = accountID => {
   const [isLoading, setIsLoading] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false)
   const [addUserOpen, setAddUserOpen] = useState(false)
+  const [num, setNum] = useState("")
   const [name, setName] = useState("")
-  const [prefix, setPrefix] = useState("")
-  const [enq, setEnq] = useState("")
-  const [credit, setCredit] = useState("")
-  const [debt, setDebt] = useState("")
 
 
   console.log('nnnnnnnnnnnnnnnnnnnnnnn', apiData)
@@ -96,23 +93,19 @@ const FormLayoutsGuarantor = accountID => {
     setValue(newValue)
   }
 
-//   function findServiceProviderById(guarantor) {
-//     return data.data.find(item => item['service-provider-id'] === guarantor);
-// }
-
   const fetchData = async () => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     setIsLoading(true)
     try {
-      const response = await axios.get(`http://localhost:9897/switch/virtual-account?mc-status=approved&id=${guarantor}`, {
+      const response = await axios.get(`http://localhost:9897/switch/service-provider?mc-status=approved&id=${guarantor}`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'content-Type': 'application/json',
           "ngrok-skip-browser-warning": "http://localhost:3000/"
         }
       })
-      setApiData(response.data.data.find(item => item['service-provider'] === guarantor));
+      setApiData(response.data.data.find(item => item['service-provider-id'] === guarantor))
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -135,18 +128,13 @@ const FormLayoutsGuarantor = accountID => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     const formData = {
-      "service-provider": name === "" ? apiData["service-provider"] : name,
-      "acct-prefix": prefix === "" ? apiData["acct-prefix"] : prefix,
-      "acct-enq-url": enq === "" ? apiData["acct-enq-url"] : enq,
-      "credt-trf-url": credit === "" ? apiData["credt-trf-url"] : credit,
-      "debt-trf-url": debt === "" ? apiData["debt-trf-url"] : debt
-
+      "service-provider-id": num === "" ? apiData["service-provider-id"] : num,
+      "service-provider-name": name === "" ? apiData["service-provider-name"] : name
     }
 
-    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`http://localhost:9897/switch/virtual-account?action=activate&id=${guarantor}`, formData, {
+      const response = await axios.put(`http://localhost:9897/vaccount/service-provider?action=activate&id=${guarantor}`, formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -154,14 +142,10 @@ const FormLayoutsGuarantor = accountID => {
         }
       })
       setButtonDisabled(false)
+      setNum('')
       setName('')
-      setPrefix('')
-      setEnq('')
-      setDebt('')
-      setCredit('')
       toast.success(response.data.message)
-      router.push('/account')
-
+      router.push('/service')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -177,18 +161,13 @@ const FormLayoutsGuarantor = accountID => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
     const formData = {
-      "service-provider": name === "" ? apiData["service-provider"] : name,
-      "acct-prefix": prefix === "" ? apiData["acct-prefix"] : prefix,
-      "acct-enq-url": enq === "" ? apiData["acct-enq-url"] : enq,
-      "credt-trf-url": credit === "" ? apiData["credt-trf-url"] : credit,
-      "debt-trf-url": debt === "" ? apiData["debt-trf-url"] : debt
-
+      "service-provider-id": num === "" ? apiData["service-provider-id"] : num,
+      "service-provider-name": name === "" ? apiData["service-provider-name"] : name
     }
 
-    console.log('newwwwwwwwwwwwwwwwwwwwwwwwwwwwwww', formData)
     try {
       // Make an HTTP POST request to your endpoint
-      const response = await axios.put(`http://localhost:9897/switch/virtual-account?action=deactivate&id=${guarantor}`, formData, {
+      const response = await axios.put(`http://localhost:9897/vaccount/service-provider?action=deactivate&id=${guarantor}`,formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -196,14 +175,10 @@ const FormLayoutsGuarantor = accountID => {
         }
       })
       setButtonDisabled(false)
+      setNum('')
       setName('')
-      setPrefix('')
-      setEnq('')
-      setDebt('')
-      setCredit('')
       toast.success(response.data.message)
-      router.push('/account')
-
+      router.push('/service')
     } catch (error) {
       // Handle errors
       toast.error('Please try again')
@@ -213,6 +188,8 @@ const FormLayoutsGuarantor = accountID => {
   }
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
+
+
   return  (
     <Card>
     <CardContent
@@ -221,7 +198,7 @@ const FormLayoutsGuarantor = accountID => {
       <Button
           component={Link}
           variant='contained'
-          href='/account'
+          href='/service'
           startIcon={<Icon icon='tabler:arrow-left' />}
           sx={{
             backgroundColor: '#f50606',
@@ -240,7 +217,7 @@ const FormLayoutsGuarantor = accountID => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Virtual Account Configuration Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>Service Provider Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
           <TableContainer
@@ -256,34 +233,22 @@ const FormLayoutsGuarantor = accountID => {
 {
   apiData == [] ? (
  null) : ( <TableBody>
-  <TableRow>
-        <TableCell>Service Provider:</TableCell>
+      <TableRow>
+        <TableCell>Service Provider Name:</TableCell>
         <TableCell>
-          {apiData?.['service-provider']}
+        {apiData?.['service-provider-name']}
+        </TableCell>
+      </TableRow>
+       <TableRow>
+        <TableCell>Service Provider ID:</TableCell>
+        <TableCell>
+        {apiData?.['service-provider-id']}
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Account Prefix:</TableCell>
+        <TableCell>Serial Number:</TableCell>
         <TableCell>
-        {apiData?.['acct-prefix']}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell>Acct Enq Url:</TableCell>
-        <TableCell>
-          {apiData?.['acct-enq-url']}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell>Debt Trf Url:</TableCell>
-        <TableCell>
-          {apiData?.['debt-trf-url']}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell>Credt Trf Url:</TableCell>
-        <TableCell>
-          {apiData?.['credt-trf-url']}
+        {apiData?.['serial-num']}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -346,27 +311,24 @@ const FormLayoutsGuarantor = accountID => {
       </TabContext>
 
       <Divider />
+<Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], my: '1rem' }}>
+
+{
+apiData?.['del-flg'] === "false" ? (<Button variant='contained'  onClick={handleActivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+backgroundColor: '#f50606'
+} }}>
+{isButtonDisabled ? 'Processing...' : 'Activate'}
+</Button>) : (   <Button variant='contained'  onClick={handleDeactivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
+  backgroundColor: '#f50606'
+} }}>
+{isButtonDisabled ? 'Processing...' : 'Deactivate'}
+</Button>)
+}
 
 
-      <Box sx={{ display: 'flex', alignItems: 'center', px: [6, 10], my: '1rem' }}>
-
-      {
-      apiData?.['del-flg'] === "false" ? (<Button variant='contained'  onClick={handleActivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-      backgroundColor: '#f50606'
-      } }}>
-      {isButtonDisabled ? 'Processing...' : 'Activate'}
-      </Button>) : (   <Button variant='contained'  onClick={handleDeactivate} sx={{ mr: 3, backgroundColor: '#f50606',  '&:hover': {
-        backgroundColor: '#f50606'
-      } }}>
-      {isButtonDisabled ? 'Processing...' : 'Deactivate'}
-      </Button>)
-      }
-
-
-                <TableHeader toggle={toggleAddUserDrawer} />
-                <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} guarantor={guarantor} apiData={apiData} />
-                </Box>
-
+          <TableHeader toggle={toggleAddUserDrawer} />
+          <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} guarantor={guarantor} apiData={apiData} />
+          </Box>
     </Card>
   )
 }
