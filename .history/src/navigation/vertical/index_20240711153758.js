@@ -30,7 +30,7 @@ const navigation = () => {
     },
     {
       title: 'Switch Registry ',
-      icon: 'tabler:switch-2',
+      icon: 'tabler:switch-',
       path: '/switch-reg',
       action: 'user',
       subject: 'user'

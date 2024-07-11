@@ -62,23 +62,23 @@ const columns = [
     minWidth: 150,
     headerName: 'ID',
     renderCell: ({ row }) => (
-      <LinkStyled href={`/user/${row["id"]}`}>
+      <LinkStyled href={`/switch-reg/${row["id"]}`}>
         {`${row["id"]}`}
       </LinkStyled>
     )
   },
   {
     flex: 0.1,
-    field: 'app_name',
+    field: 'switch_name',
     minWidth: 150,
-    headerName: 'APP-NAME',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["app_name"] || 0}</Typography>
+    headerName: 'SWITCH-NAME',
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["switch_name"] || 0}</Typography>
   },
   {
     flex: 0.1,
-    field: 'app-code',
+    field: 'switch_code',
     minWidth: 120,
-    headerName: 'APP_CODE',
+    headerName: 'SWITCH-CODE',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["app_code"] || 0}</Typography>
   },
   {

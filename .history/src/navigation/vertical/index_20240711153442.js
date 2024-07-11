@@ -29,9 +29,9 @@ const navigation = () => {
       subject: 'user'
     },
     {
-      title: 'Switch Registry ',
-      icon: 'tabler:switch-2',
-      path: '/switch-reg',
+      title: 'Swiich Registry ',
+      icon: 'tabler:list',
+      path: '/swi',
       action: 'user',
       subject: 'user'
     },

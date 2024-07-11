@@ -78,7 +78,7 @@ const columns = [
     flex: 0.1,
     field: 'app-code',
     minWidth: 120,
-    headerName: 'APP_CODE',
+    headerName: 'APP-CODE',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["app_code"] || 0}</Typography>
   },
   {
@@ -196,7 +196,7 @@ const LoanList = () => {
         disableRowSelectionOnClick
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-        getRowId={(row) => row['id']}
+        getRowId={(row) => row['app_code']}
       />
 
  <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} />

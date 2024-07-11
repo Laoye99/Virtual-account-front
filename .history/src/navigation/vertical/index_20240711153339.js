@@ -28,13 +28,7 @@ const navigation = () => {
       action: 'user',
       subject: 'user'
     },
-    {
-      title: 'Switch Registry ',
-      icon: 'tabler:switch-2',
-      path: '/switch-reg',
-      action: 'user',
-      subject: 'user'
-    },
+    last_modify_by
     {
       title: 'Settings',
       icon: 'tabler:settings',

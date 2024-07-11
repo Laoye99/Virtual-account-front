@@ -62,7 +62,7 @@ const columns = [
     minWidth: 150,
     headerName: 'ID',
     renderCell: ({ row }) => (
-      <LinkStyled href={`/user/${row["id"]}`}>
+      <LinkStyled href={`/switch-reg/${row["id"]}`}>
         {`${row["id"]}`}
       </LinkStyled>
     )
@@ -76,9 +76,9 @@ const columns = [
   },
   {
     flex: 0.1,
-    field: 'app-code',
+    field: 'appcode',
     minWidth: 120,
-    headerName: 'APP_CODE',
+    headerName: 'APP-CODE',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["app_code"] || 0}</Typography>
   },
   {

@@ -196,7 +196,7 @@ const LoanList = () => {
         disableRowSelectionOnClick
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-        getRowId={(row) => row['id']}
+        getRowId={(row) => row['app_code']}
       />
 
  <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} />

@@ -12,7 +12,7 @@ const Dashboard = () => {
     <ApexChartWrapper>
   <Grid container spacing={6}>
   <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>API CONFIGURATION TABLE</Typography>
+          <Typography variant='h5'>API TABLES</Typography>
         </Grid>
    <Grid item xs={12} lg={12}>
       <LoanList/>

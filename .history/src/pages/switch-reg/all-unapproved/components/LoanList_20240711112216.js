@@ -28,7 +28,7 @@ import Icon from 'src/@core/components/icon'
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
 import CustomChip from 'src/@core/components/mui/chip'
-import SidebarAddUser from '../all-unapproved/components/AddUserDrawer'
+import SidebarAddUser from './AddUserDrawer'
 
 
 // ** Third Party Imports
@@ -62,14 +62,14 @@ const columns = [
     minWidth: 150,
     headerName: 'ID',
     renderCell: ({ row }) => (
-      <LinkStyled href={`/user/${row["id"]}`}>
+      <LinkStyled href={`/user/all-unapproved/${row["id"]}`}>
         {`${row["id"]}`}
       </LinkStyled>
     )
   },
   {
     flex: 0.1,
-    field: 'app_name',
+    field: 'app-name',
     minWidth: 150,
     headerName: 'APP-NAME',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["app_name"] || 0}</Typography>
@@ -78,7 +78,7 @@ const columns = [
     flex: 0.1,
     field: 'app-code',
     minWidth: 120,
-    headerName: 'APP_CODE',
+    headerName: 'APP-CODE',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["app_code"] || 0}</Typography>
   },
   {
@@ -87,15 +87,6 @@ const columns = [
     minWidth: 120,
     headerName: 'Created by',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created_by"] || 0}</Typography>
-  },
-  {
-    flex: 0.1,
-    field: 'disabled',
-    minWidth: 120,
-    headerName: 'Action',
-    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>
-    {row['disabled'] === "false" ? "Enabled" : "Disabled"}
-  </Typography>
   }
 ]
 
@@ -109,7 +100,7 @@ const LoanList = () => {
   useEffect(() => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     axios
-      .get(`${BASE_URL}/apiRegistry/get_approved`, {
+      .get(`${BASE_URL}/apiRegistry/get_pending`, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'application/json',
@@ -154,26 +145,11 @@ const LoanList = () => {
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        {/* <TableHeader toggle={toggleAddUserDrawer} /> */}
-
-        <Button
-    onClick={toggleAddUserDrawer} variant='contained'
-    startIcon={<Icon icon='tabler:plus' />}
-    sx={{
-      backgroundColor: '#f50606',
-      '&:hover': {
-        backgroundColor: '#f50606'
-      }
-    }}
-  >
-   New User Configuration
-
-  </Button>
-
-        <Button
+         <TableHeader toggle={toggleAddUserDrawer} />
+        {/* <Button
           component={Link}
           variant='contained'
-          href='/user/all-unapproved'
+          href='/switch-service/approved-switch'
           startIcon={<Icon icon='tabler:eye' />}
           sx={{
             backgroundColor: '#f50606',
@@ -182,8 +158,8 @@ const LoanList = () => {
             }
           }}
         >
-          View Unapproved Configurations
-        </Button>
+          View Approved Provider
+        </Button> */}
       </CardContent>
 
       <DataGrid
@@ -199,7 +175,7 @@ const LoanList = () => {
         getRowId={(row) => row['id']}
       />
 
- <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} />
+{/* <SidebarAddUser open={addUserOpen} toggle={toggleAddUserDrawer} /> */}
     </Card>
   ) : null
 }

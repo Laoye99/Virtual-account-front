@@ -20,7 +20,7 @@ const TableHeader = props => {
       backgroundColor: '#f50606'
     } }}
   >
-   Update API Configuration
+   Update API Cofiguration
 
   </Button>
 
