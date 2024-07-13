@@ -19,7 +19,7 @@ const Guarantors = () => {
     <DatePickerWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(8)} !important` }}>
-          <Typography variant='h5'>3RD PARTY ADDRESS DETAILS</Typography>
+          <Typography variant='h5'>THIRD PARTY ADDRESS DETAILS</Typography>
         </Grid>
         <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
           <FormLayoutsGuarantor addressID={addressID} />
