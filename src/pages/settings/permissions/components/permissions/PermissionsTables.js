@@ -75,7 +75,6 @@ const TableHeader = props => {
     };
 
     console.log(permissionData)
-
     // Make a POST request to your API endpoint
     try {
       // Make an HTTP PUT request to your endpoint
@@ -85,17 +84,17 @@ const TableHeader = props => {
           'content-Type': 'application/json',
         },
       });
-
+  
       if (response.status === 200 ) {
         toast.success(response.data.message);
-
+  
         // Redirect to another page after successful submission
        // router.push('/permissions');
       } else {
         console.error('Form submission failed with status:', response.status);
       }
-
-      console.log('Form submitted successfully', response.data);
+  
+      console.log('Form submitted Successfully', response.data);
     } catch (error) {
       toast.error(error.response.data.message);
       console.error('Error submitting form', error);
@@ -104,7 +103,7 @@ const TableHeader = props => {
 
   return (
     <>
-
+ 
        {ability.can('sla:sla-settings-permissions:edit', 'sla:sla-settings-permissions:edit') && (
       <Dialog maxWidth='sm' fullWidth onClose={handleDialogToggle} open={false}>
         <DialogTitle

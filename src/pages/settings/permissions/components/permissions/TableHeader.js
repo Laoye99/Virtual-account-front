@@ -48,18 +48,22 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 
 const TableHeader = props => {
   // ** Props
-  const { value, handleFilter } = props
+  const { value } = props
 
   // ** State
   const [open, setOpen] = useState(false)
   const handleDialogToggle = () => setOpen(!open)
+  const [page, setPage] = useState(1)
   const [name, setName] = useState('')
   const [displayname, setDisplayname] = useState('')
   const [description, setDescription] = useState('')
   const [filteredData, setFilteredData] = useState([]) // Add state for filtered data
   const [searchValue, setSearchValue] = useState('') // Add state for search value
   const [data, setData] = useState([])
-
+  const [next_page_url, setNext_page_url] = useState(null)
+  const [prev_page_url, setPrev_page_url] = useState(null)
+  const [totalPage, setTotalPage] = useState(1)
+ 
   const authContext = useContext(AuthContext)
   const ability = useContext(AbilityContext)
 
@@ -68,33 +72,158 @@ const TableHeader = props => {
   //   e.preventDefault()
 
   // Create a function to fetch the data
-  const fetchData = useCallback(async () => {
-    try {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+  console.log('datadatadatadatadata',data )
+  console.log('next_page_urlnext_page_url',next_page_url )
+  console.log('prev_page_urlprev_page_url',prev_page_url )
+  console.log('totalPagetotalPage',totalPage )
+  const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
+  console.log('storedTokenstoredToken444444',storedToken )
 
-      const response = await axios.get(`${BASE_URL}/admin/permission?page=1`, {
-        params: { q: searchValue },
+  const fetchData = async (pageNumber) => {
+    try {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
+
+      const response = await axios.get(`${BASE_URL}/admin/permission`, {
+        params: { page: page, q: searchValue },
         headers: {
           Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json'
-        }
-      })
-      setData(response.data[0]?.data)
+          'Content-Type': 'application/json',
+        },
+      });
+
+      setData(response.data.data);
+      setTotalPage(response.data.last_page)
+      setNext_page_url(response.data.next_page_url)
+      setPrev_page_url(response.data.prev_page_url)
+      console.log('na dattatatata', data)
+    
     } catch (error) {
-      console.error('An error occurred:', error)
+      if (error.code === "ERR_NETWORK") {
+        window.location.reload();
+      }
+
+      console.error('An error occurred:', error.code);
     }
+  };
+
+  const fetchData22 = async () => {
+    try {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
+
+      const response = await axios.get(`${next_page_url}`, {
+        params: { page: page + 1, q: searchValue },
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      setData(response.data.data);
+      setTotalPage(response.data.last_page)
+      setNext_page_url(response.data.next_page_url)
+      setPrev_page_url(response.data.prev_page_url)
+      console.log('na dattatatata', data)
+    
+    } catch (error) {
+      if (error.code === "ERR_NETWORK") {
+        window.location.reload();
+      }
+
+      console.error('An error occurred:', error.code);
+    }
+  };
+
+
+
+  const fetchData33 = async () => {
+    try {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
+      const response = await axios.get(`${prev_page_url}`, {
+        params: { page: page - 1, q: searchValue },
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      setData(response.data.data);
+      setTotalPage(response.data.last_page)
+      setNext_page_url(response.data.next_page_url)
+      setPrev_page_url(response.data.prev_page_url)
+      console.log('na dattatatata', data)
+    
+    } catch (error) {
+      if (error.code === "ERR_NETWORK") {
+        window.location.reload();
+      }
+
+      console.error('An error occurred:', error.code);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchData(page);
+  }, []); // Include paginationModel.page in dependencies
+
+  const handleFilter = val => {
+    setSearchValue(val) // Update the search value
+  }
+
+  useEffect(() => {
+    // Filter the original data based on the searchValue
+    const searchString = searchValue.toLowerCase()
+
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    axios
+      .get(`${BASE_URL}/admin/permission?search=${searchString}`, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        setData(response.data[0]?.data)
+        setTotalPage(response.data[0]?.last_page)
+        setNext_page_url(response.data[0]?.next_page_url)
+        setPrev_page_url(response.data[0]?.prev_page_url)
+        console.log('watchingggg')
+        console.log('watchingggg',response.data[0]?.data)
+      })
+      .catch(error => {
+        if (error.code === "ERR_NETWORK") {
+          window.location.reload();
+        }
+  
+        console.error('An error occurred:', error.code);
+      })
+
   }, [searchValue])
 
   useEffect(() => {
-    // Fetch data on initial render
-    fetchData()
-  }, [fetchData])
+    // Filter the original data based on the searchValue
+    const searchString = searchValue.toLowerCase()
+
+    
+      const filtered = data?.filter(row => {
+        return (
+          (row.id?.toString() || '').toLowerCase().includes(searchString) ||
+          (row.name || '').toLowerCase().includes(searchString) ||
+          (row.display_name || '').toLowerCase().includes(searchString) ||
+          (row.description || '').toLowerCase().includes(searchString) ||
+          (row.created_at || '').toLowerCase().includes(searchString)
+        )
+      })
+
+      setFilteredData(filtered) // Update the filtered data
+      console.log('filterrrrrrrrrrrrrr',filtered)
+    
+  }, [searchValue, data])
 
   const onSubmit = async e => {
     setOpen(false)
     e.preventDefault()
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-
     //console.log(storedToken)
 
     // Gather the data to be sent
@@ -131,7 +260,7 @@ const TableHeader = props => {
         console.error('Form submission failed with status:', response.status)
       }
 
-      console.log('Form submitted successfully', response.data)
+      console.log('Form submitted Successfully', response.data)
     } catch (error) {
       toast.error(error.response.data.message)
       console.error('Error submitting form', error)
@@ -145,12 +274,14 @@ const TableHeader = props => {
         sx={{ p: 5, pb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
         <CustomTextField
-          value={value}
+          value={searchValue} 
           sx={{ mr: 4, mb: 2 }}
           placeholder='Search Permission'
-          onChange={e => handleFilter(e.target.value)}
+          onChange={e => {
+            e.preventDefault()
+            handleFilter(e.target.value) }}
         />
-        <Button sx={{ mb: 2, backgroundColor: '#f50606' }} variant='contained' onClick={handleDialogToggle}>
+        <Button sx={{ mb: 2, backgroundColor: '#71ace0' }} variant='contained' onClick={handleDialogToggle}>
           Add Permission
         </Button>
       </Box>
@@ -259,7 +390,7 @@ const TableHeader = props => {
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#f50606', // Background color
+                  backgroundColor: '#71ace0', // Background color
                   color: '#fff', // Text color
                   '&:hover': {
                     backgroundColor: '#0056b3' // Hover background color
