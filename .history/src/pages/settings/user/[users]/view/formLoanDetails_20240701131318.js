@@ -268,9 +268,10 @@ const FormLayoutsGuarantor = switchID => {
           onChange={handleTabsChange}
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}`, '& .MuiTab-root': { py: 3.5 } }}
         >
-          <Tab value='personal-info' label={<span style={{ color: '#f50606' }}>User Details</span>} />
+          <Tab value='personal-info' label={<span style={{ color: '#0693e3' }}>User Details</span>} />
         </TabList>
         <fieldset sx={{ marginBottom: '1200px' }}>
+          <legend>User Details</legend>
           <TableContainer
             sx={{
               borderRadius: '6px !important',
@@ -296,7 +297,7 @@ const FormLayoutsGuarantor = switchID => {
                   handleClickOpen()
                   setDialogTitle('Assign')
                 }}
-                style={{ background: '#f50606', color: '#FFF' }}
+                style={{ background: '#22668D', color: '#FFF' }}
               >
                 Assign Role
               </Button>
@@ -378,7 +379,7 @@ const FormLayoutsGuarantor = switchID => {
               variant='contained'
               onClick={handleSubmit}
               sx={{
-                backgroundColor: '#f50606',
+                backgroundColor: '#71ace0',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: '#22668D'

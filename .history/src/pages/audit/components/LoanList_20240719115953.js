@@ -53,6 +53,7 @@ const userStatusObj = {
 }
 
 const columns = [
+  const tableName () => 
   {
     flex: 0.1,
     field: 'audit_id',
@@ -69,21 +70,7 @@ const columns = [
     field: 'table_name',
     minWidth: 150,
     headerName: 'TABLE-NAME',
-    renderCell: ({ row }) => (
-      <Typography sx={{ color: 'text.secondary' }}>
-        {row["table_name"] === "its_3rdparty_addr"
-          ? "Third Party Address"
-          : row["table_name"] === "its_3party_api_config"
-          ? "Third Party API "
-          : row["table_name"] === "api_registry"
-          ? "API Registry"
-          : row["table_name"] === "its_switch_registry"
-          ? "Switch Registry"
-          : row["table_name"] === "its_crypto_config"
-          ? "Crypto Configuration"
-          : ""}
-      </Typography>
-    ),
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["table_name"] || 0}</Typography>
   },
   {
     flex: 0.1,

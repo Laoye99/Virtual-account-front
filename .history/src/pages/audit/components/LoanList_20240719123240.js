@@ -78,9 +78,9 @@ const columns = [
           : row["table_name"] === "api_registry"
           ? "API Registry"
           : row["table_name"] === "its_switch_registry"
-          ? "Switch Registry"
-          : row["table_name"] === "its_crypto_config"
-          ? "Crypto Configuration"
+          ? "API Registry"
+          : row["table_name"] === "api_registry"
+          ? "API Registry"
           : ""}
       </Typography>
     ),

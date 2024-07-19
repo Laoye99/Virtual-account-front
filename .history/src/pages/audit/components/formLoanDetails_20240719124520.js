@@ -182,13 +182,13 @@ const FormLayoutsGuarantor = userID => {
         <TableCell>
           {apiData?.["table_name"] === "its_3rdparty_addr"
           ? "Third Party Address"
-          : apiData["table_name"] === "its_3party_api_config"
+          : row["table_name"] === "its_3party_api_config"
           ? "Third Party API "
-          : apiData["table_name"] === "api_registry"
+          : row["table_name"] === "api_registry"
           ? "API Registry"
-          : apiData["table_name"] === "its_switch_registry"
+          : row["table_name"] === "its_switch_registry"
           ? "Switch Registry"
-          : apiData["table_name"] === "its_crypto_config"
+          : row["table_name"] === "its_crypto_config"
           ? "Crypto Configuration"
           : ""}
         </TableCell>

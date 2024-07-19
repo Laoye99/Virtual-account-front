@@ -26,11 +26,7 @@ export const fetchData = createAsyncThunk('appUsers/fetchData', async params => 
     console.error('An error occurred:', error.code)
   })
 
-  const responseData = response.data;
-const formattedData = "[" + responseData.replace(/}{/g, "},{") + "]";
-const users = JSON.parse(formattedData);
-
-console.log(users);
+  const users = response.data
   const total = response.data.length
   const allData = response.data
   console.log({
@@ -39,7 +35,7 @@ console.log(users);
     params: params,
     total: total
   })
-  console.log('ooooooooooo', response.data)
+  console.log('ooooooooooo', response.da)
 
   return {
     allData: allData,

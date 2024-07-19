@@ -80,7 +80,7 @@ const columns = [
           : row["table_name"] === "its_switch_registry"
           ? "Switch Registry"
           : row["table_name"] === "its_crypto_config"
-          ? "Crypto Configuration"
+          ? "Crypto "
           : ""}
       </Typography>
     ),

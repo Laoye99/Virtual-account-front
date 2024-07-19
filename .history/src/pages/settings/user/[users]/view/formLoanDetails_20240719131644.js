@@ -378,7 +378,7 @@ const FormLayoutsGuarantor = switchID => {
               variant='contained'
               onClick={handleSubmit}
               sx={{
-                backgroundColor: '#f50606',
+                backgroundColor: '#71ace0',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: '#22668D'

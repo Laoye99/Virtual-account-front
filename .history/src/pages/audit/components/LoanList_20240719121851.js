@@ -74,13 +74,9 @@ const columns = [
         {row["table_name"] === "its_3rdparty_addr"
           ? "Third Party Address"
           : row["table_name"] === "its_3party_api_config"
-          ? "Third Party API "
+          ? "Third Party API Configuration"
           : row["table_name"] === "api_registry"
           ? "API Registry"
-          : row["table_name"] === "its_switch_registry"
-          ? "Switch Registry"
-          : row["table_name"] === "its_crypto_config"
-          ? "Crypto Configuration"
           : ""}
       </Typography>
     ),

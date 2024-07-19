@@ -33,7 +33,7 @@ const Guarantors = () => {
           sx={{
             backgroundColor: '#f50606',
             '&:hover': {
-              backgroundColor: '#f50606' // Change the background color on hover
+              backgroundColor: '#71ace0' // Change the background color on hover
             }
           }}
         >

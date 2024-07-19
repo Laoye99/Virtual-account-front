@@ -296,7 +296,7 @@ const FormLayoutsGuarantor = switchID => {
                   handleClickOpen()
                   setDialogTitle('Assign')
                 }}
-                style={{ background: '#f50606', color: '#FFF' }}
+                style={{ background: '#22668D', color: '#FFF' }}
               >
                 Assign Role
               </Button>
@@ -378,7 +378,7 @@ const FormLayoutsGuarantor = switchID => {
               variant='contained'
               onClick={handleSubmit}
               sx={{
-                backgroundColor: '#f50606',
+                backgroundColor: '#71ace0',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: '#22668D'

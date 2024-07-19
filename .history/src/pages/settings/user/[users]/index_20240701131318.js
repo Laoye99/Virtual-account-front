@@ -31,9 +31,9 @@ const Guarantors = () => {
           href='/settings/user/list'
           startIcon={<Icon icon='tabler:arrow-left' />}
           sx={{
-            backgroundColor: '#f50606',
+            backgroundColor: '#71ace0',
             '&:hover': {
-              backgroundColor: '#f50606' // Change the background color on hover
+              backgroundColor: '#71ace0' // Change the background color on hover
             }
           }}
         >
