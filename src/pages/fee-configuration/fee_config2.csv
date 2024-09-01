@@ -1,0 +1,2 @@
+service_id,fee_amt,cr_acc_derivation_flg,cr_acct_prefix,cr_acct_suffix,cr_acct_num,channel_id,fix_amt,add_to_amt,status
+12,140,false,,,12345,1,false,false,inactive

@@ -19,7 +19,7 @@ import authConfig from 'src/configs/auth'
 import { styled } from '@mui/material/styles'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import TableHeader from './TableHeader'
+import TableHeader from '../../components/TableHeader'
 
 
 // ** Icon Imports
@@ -158,8 +158,8 @@ const LoanList = () => {
       <CardContent
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        {/* <TableHeader toggle={toggleAddUserDrawer} /> */}
-        {/* <Button
+
+        <Button
           component={Link}
           variant='contained'
           href='/switch-service/approved-switch'
@@ -171,8 +171,26 @@ const LoanList = () => {
             }
           }}
         >
-          View Approved Provider
-        </Button> */}
+          View Unapproved Provider
+        </Button>
+
+        <Button
+          component={Link}
+          variant='contained'
+          href='/switch-service/approved-switch'
+          startIcon={<Icon icon='tabler:plus' />}
+          sx={{
+            backgroundColor: '#f50606',
+            '&:hover': {
+              backgroundColor: '#f50606' // Change the background color on hover
+            }
+          }}
+        >
+           New switch provider
+        </Button>
+
+
+
       </CardContent>
 
       <DataGrid

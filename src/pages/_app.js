@@ -101,12 +101,12 @@ const App = props => {
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>{`${themeConfig.templateName} - Virtual Account Service Service`}</title>
+          <title>{`${themeConfig.templateName} - Interbank Transfer Switching Service`}</title>
           <meta
             name='description'
-            content={`${themeConfig.templateName} – United Bank of Africa – Virtual Account Service`}
+            content={`${themeConfig.templateName} – United Bank of Africa – Interbank Transfer Switching Service`}
           />
-          <meta name='keywords' content='UBA Virtual Account Service Service' />
+          <meta name='keywords' content='UBA Interbank Transfer Switching Service' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
         <AuthProvider>

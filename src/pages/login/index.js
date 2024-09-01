@@ -208,10 +208,10 @@ const LoginPage = () => {
 
             <Box sx={{ my: 6 }}>
               <Typography variant='h3' sx={{ mb: 1.5 }}>
-                {email ? 'Welcome' : 'Welcome to UBA'} {`Virtual Account Service  👋🏻`}
+                {email ? 'Welcome' : 'Welcome to UBA'} {`Interbank Transfer Switching Service 👋🏻`}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                Please sign-in to your account 
+                Please sign-in to your account and start the adventure
               </Typography>
             </Box>
 

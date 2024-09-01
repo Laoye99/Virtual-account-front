@@ -74,27 +74,21 @@ const RolesCards = () => {
   const [open, setOpen] = useState(false)
   const [dialogTitle, setDialogTitle] = useState('Add')
   const [selectedCheckbox, setSelectedCheckbox] = useState([])
-  const [selectedCheckboxId, setSelectedCheckboxId] = useState([])
   const [isIndeterminateCheckbox, setIsIndeterminateCheckbox] = useState(false)
   const [apiData, setApiData] = useState([])
   const [selectedPermissionIds, setSelectedPermissionIds] = useState([])
   const [apiData2, setApiData2] = useState([])
-  const [apiData22, setApiData22] = useState([])
   const [roleName, setRoleName] = useState('')
   const [roleDescription, setRoleDescription] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [editingRole, setEditingRole] = useState(null)
-  const [deleteRole, setDeleteRole] = useState(0)
+  const [deleteRole, setDeleteRole] = useState(null)
   const [displayName, setDisplayName] = useState('')
   const [apiData3, setApiData3] = useState([])
-  const [alreadyRole, setAlreadyRole] = useState([])
-  const [exists, setExists] = useState([])
   const ability = useContext(AbilityContext)
 
   const initialSelectedPermissions = apiData2.filter(i => i.assigned).map(i => `${i.id}-read`)
-  console.log('apiData2apiData2 here',apiData2)
-  console.log('apiData2apiData22 gggggggggggggggg',apiData22)
- // console.log('warrrrrrrrrrrrraaaaaaaaaaaarrrraarrrrrrraaaaaaaaaaaaaa here',apiData)
+
   const handleRoleNameChange = event => {
     setRoleName(event.target.value)
   }
@@ -103,13 +97,8 @@ const RolesCards = () => {
     setRoleDescription(event.target.value)
   }
 
-  const handleSetDeleteID = (itemId) => {
+  const handleSetDeleteID = itemId => {
     setDeleteRole(itemId)
-    // alert(deleteRole)
-    // alert(itemId)
-    setDeleteRole(itemId)
-    console.log('itemIditemId deleteeeee',itemId)
-   // alert(deleteRole)
   }
 
   const handleClickOpen = itemId => {
@@ -155,56 +144,21 @@ const RolesCards = () => {
   const handleClose = () => {
     setOpen(false)
     setSelectedCheckbox([])
-    setApiData2([])
     setIsIndeterminateCheckbox(false)
-    setTimeout(() => {
-      window.location.reload();
-    }, 2)
   }
 
   const togglePermission = id => {
-    // alert(id)
-    // alert(apiData22)
-    // console.log('selectedCheckbox id',selectedCheckbox)
     const arr = selectedCheckbox
-    const  isAssigned = apiData22.some(item => item === parseInt(id));
-    
-    //const isAssigned = apiData22.some(item => item.id === id);
-   // alert(isAssigned);
-
-    if (isAssigned) {
-       // alert('Element exists');
-        //apiData22.pop(parseInt(id))
-        apiData22.splice(apiData22.indexOf(parseInt(id)),1)
-  
-       // apiData22.some(item => item === parseInt(id));
-        setSelectedCheckboxId([...apiData22])
+    if (selectedCheckbox.includes(id)) {
+      arr.splice(arr.indexOf(id)
+, 1)
+      setSelectedCheckbox([...arr])
     } else {
-       // alert('Element doesn\'t exist, add it');
-        apiData22.push(parseInt(id))
-        setSelectedCheckboxId([...apiData22])
+      arr.push(id)
+
+      setSelectedCheckbox([...arr])
     }
-
-     // alert(apiData22)
-  //   if (selectedCheckbox.includes(id)) {
-  //    // arr.splice(arr.indexOf(id)
-  // //   arr.pop(id)
-  // arr.splice(arr.indexOf(id)
-  // , 1)
-  //     setSelectedCheckbox([...arr])
-  //     setSelectedCheckboxId([...arr])
-  //   } else {
-  //     arr.push(id)
-
-  //     setSelectedCheckbox([...arr])
-  //     setSelectedCheckboxId([...arr])
-  //   }
-    // console.log('selectedCheckboxselectedCheckbox',arr)
-    // console.log('Permission Array here',arr)
-    console.log('selectedCheckbox id22222222',selectedCheckboxId)
   }
-
-
 
   useEffect(() => {
     // Create an array of selected permission IDs as numbers
@@ -281,24 +235,16 @@ const RolesCards = () => {
   const editRole = async itemId => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     console.log(itemId)
-    const sumPermissionId = [...apiData22]
-
-    // const data = {
-    //   name: displayName,
-    //   name: displayName,
-    //   description: roleDescription,
-    //   permissions: sumPermissionId,
-    //   display_name: displayName
-    // }
 
     const data = {
-      permissions: sumPermissionId
+      name: displayName,
+      name: displayName,
+      description: roleDescription,
+      permissions: selectedPermissionIds,
+      display_name: displayName
     }
 
-    // console.log('passed datadatadata',sumPermissionId)
-    // console.log('selectedPermissionIds',selectedPermissionIds)
-    // console.log('alreadyRole',alreadyRole)
-    // console.log('arrrr',data)
+    console.log(data)
 
     setIsLoading(true)
     try {
@@ -310,10 +256,6 @@ const RolesCards = () => {
       })
       handleClose()
       toast.success(response.data.message)
-      setTimeout(() => {
-        window.location.reload();
-      }, 20) 
-      
       fetchData()
       setRoleName('')
       setRoleDescription('')
@@ -350,57 +292,19 @@ const RolesCards = () => {
           'content-Type': 'application/json'
         }
       })
-   
       setDisplayName(response.data.model.display_name)
       setDisplayName(response.data.model.display_name)
       setApiData2(response.data.permissions) // Update the state with the fetched data
-      
-      const loanArray = Object.values(response?.data?.permissions);
-      // Now you can use map
-      loanArray.map(item => item.data)
-     
-     // console.log('loanArrayloanArrayloanArray', JSON.stringify(loanArray))
-     // setApiData22(loanArray);
-
-     const assignedIds = loanArray
-    .filter(loanArray => loanArray.assigned === true)
-    .map(loanArray => loanArray.id);
-
-      console.log('assignedIdsassignedIds====>', assignedIds); // Output: [1, 3, ...]
-      setApiData22(assignedIds);
+      console.log(response.data.permissions)
       setSelectedCheckbox(initialSelectedPermissions)
-      const truePermission = response.data.permissions
-      const assignedPermissionIds = truePermission.filter(permission => permission.assigned).map(permission => permission.id);
-      setAlreadyRole(assignedPermissionIds)
-
     } catch (error) {
       console.error('Error fetching data:', error)
     }
   }
 
-  // const fetchData22 = async() => {
-  //   try {
-  //     const response = await axios.get(`${BASE_URL}/admin/roles/edit/1`, {
-  //       headers: {
-  //         Authorization: `Bearer ${storedToken}`,
-  //         'content-Type': 'application/json'
-  //       }
-  //     })
-  //     setApiData2(response.data.permissions) // Update the state with the fetched data
-  //     console.log(response.data.permissions)
-     
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error)
-  //   }
-  // }
-
- 
-    useEffect(() => {
-      fetchData2(editingRole)
-    }, [editingRole])
-
-
-
+  useEffect(() => {
+    fetchData2(editingRole)
+  }, [editingRole])
 
   const fetchData3 = async () => {
     try {
@@ -421,25 +325,10 @@ const RolesCards = () => {
     fetchData3()
   }, [])
 
-  const handleSubmitDelete = (itemId) => {
-    setDeleteRole(itemId)
-    // alert(itemId)
-    // alert(deleteRole)
-    deleteRoleNow(itemId)
-   // console.log('deleteRoledeleteRole bbbbbbbbb',deleteRole)
-  }
-
-/**
- * The function `deleteRoleNow` is an asynchronous function that sends a POST request to delete a role
- * using axios with authorization headers and handles success and error responses accordingly.
- */
   const deleteRoleNow = async itemId => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-   // console.log('sssssaaaaaaawe',itemId)
-    // alert(deleteRole)
-    // alert(deleteRole)
-   // alert(itemId)
-    
+    console.log(itemId)
+
     setIsLoading(true)
     try {
       const response = await axios.post(`${BASE_URL}/admin/roles/delete/${itemId}`, null, {
@@ -460,7 +349,9 @@ const RolesCards = () => {
     }
   }
 
-  
+  const handleSubmitDelete = () => {
+    deleteRoleNow(deleteRole)
+  }
 
   const renderCards = () =>
     apiData.map((item, index) => (
@@ -502,7 +393,7 @@ const RolesCards = () => {
                     handleSetDeleteID(item.id)
                     const confirmation = window.confirm('Are you sure you want to delete this role?')
                     if (confirmation) {
-                      handleSubmitDelete(item.id)
+                      handleSubmitDelete()
                     }
                   }}
                   size='small'
@@ -551,7 +442,7 @@ const RolesCards = () => {
                   <Box sx={{ textAlign: 'right' }}>
                     <Button
                       variant='contained'
-                      sx={{ mb: 3, whiteSpace: 'nowrap', backgroundColor: '#71ace0' }}
+                      sx={{ mb: 3, whiteSpace: 'nowrap', backgroundColor: '#f50606' }}
                       onClick={() => {
                         handleClickOpen()
                         setDialogTitle('Add')
@@ -689,10 +580,8 @@ const RolesCards = () => {
                 <TableBody>
                   {apiData2?.map((i, index) => {
                     const id = i.id
-                    const isChecked = i.assigned || selectedCheckbox.includes(`${id}-read`);
-                    console.log('checkeedddddd items',isChecked)
-                    console.log('isChecked',isChecked)
-                    console.log('idd',id)
+                    const isChecked = i.assigned
+                    console.log(isChecked)
 
                     return (
                       <TableRow key={index} sx={{ '& .MuiTableCell-root:first-of-type': { pl: '0 !important' } }}>
@@ -712,12 +601,9 @@ const RolesCards = () => {
                             control={
                               <Checkbox
                                 size='small'
-                                // id={`${id}-read`}
-                                // onChange={() => togglePermission(`${id}-read`)}
-                                id={`${id}`}
-                                onChange={() => togglePermission(`${id}`)}
-                                // checked={isChecked}
-                                defaultChecked={isChecked}
+                                id={`${id}-read`}
+                                onChange={() => togglePermission(`${id}-read`)}
+                                checked={isChecked}
                               />
                             }
                           />
@@ -744,7 +630,7 @@ const RolesCards = () => {
               variant='contained'
               onClick={handleSubmit}
               sx={{
-                backgroundColor: '#71ace0',
+                backgroundColor: '#f50606',
                 color: 'white',
                 '&:hover': {
                   backgroundColor: '#22668D'

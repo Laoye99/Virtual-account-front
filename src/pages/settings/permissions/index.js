@@ -47,7 +47,7 @@ const defaultColumns = [
   {
     flex: 0.2,
     field: 'id',
-    minWidth: 40,
+    minWidth: 30,
     headerName: 'ID',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.id}</Typography>
   },
@@ -93,31 +93,24 @@ const PermissionsTable = () => {
   //const [value, setValue] = useState('')
   const [editValue, setEditValue] = useState('')
   const [editDialogOpen, setEditDialogOpen] = useState(false) // Initially set to false
-  const [paginationModel, setPaginationModel] = useState()
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
   const [filteredData, setFilteredData] = useState([]) // Add state for filtered data
   const [searchValue, setSearchValue] = useState('') // Add state for search value
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
   const [displayname, setDisplayname] = useState('')
   const [description, setDescription] = useState('')
-  const [page, setPage] = useState(1)
-  const [next_page_url, setNext_page_url] = useState(null)
-  const [prev_page_url, setPrev_page_url] = useState(null)
-  const [totalPage, setTotalPage] = useState(1)
-  const [value, setValue] = useState('')
-
 
   // ** Hooks
   const dispatch = useDispatch()
   const store = useSelector(state => state.permissions)
-  // const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
-  // console.log('storedTokenstoredToken33333333',storedToken )
+
   // Create a function to fetch the data
-  const fetchData = async (pageNumber) => {
+  const fetchData = useCallback(async () => {
     try {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
-      const response = await axios.get(`${BASE_URL}/admin/permission`, {
+      const response = await axios.get(`${BASE_URL}/admin/permission?page=1`, {
         params: { q: searchValue },
         headers: {
           Authorization: `Bearer ${storedToken}`,
@@ -125,98 +118,19 @@ const PermissionsTable = () => {
         }
       })
       setData(response.data[0]?.data)
-      setTotalPage(response.data[0]?.last_page)
-      setNext_page_url(response.data[0]?.next_page_url)
-      setPrev_page_url(response.data[0]?.prev_page_url)
-      console.log('na dattatatata', data)
     } catch (error) {
       if (error.code == "ERR_NETWORK"){
         window.location.reload()
       }
-     
+
       console.error('An error occurred:', error.code)
     }
-  };
-
-  const fetchData22 = async () => {
-    try {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
-
-      const response = await axios.get(`${next_page_url}`, {
-        params: { page: page + 1, q: searchValue },
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setData(response.data[0]?.data);
-      setTotalPage(response.data[0]?.last_page)
-      setNext_page_url(response.data[0]?.next_page_url)
-      setPrev_page_url(response.data[0]?.prev_page_url)
-      console.log('na dattatatata', data)
-    
-    } catch (error) {
-      if (error.code === "ERR_NETWORK") {
-        window.location.reload();
-      }
-
-      console.error('An error occurred:', error.code);
-    }
-  };
-
-
-
-  const fetchData33 = async () => {
-    try {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName);
-
-      const response = await axios.get(`${prev_page_url}`, {
-        params: { page: page - 1, q: searchValue },
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setData(response.data[0]?.data);
-      setTotalPage(response.data[0]?.last_page)
-      setNext_page_url(response.data[0]?.next_page_url)
-      setPrev_page_url(response.data[0]?.prev_page_url)
-      console.log('na dattatatata', data)
-    
-    } catch (error) {
-      if (error.code === "ERR_NETWORK") {
-        window.location.reload();
-      }
-
-      console.error('An error occurred:', error.code);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (page < totalPage) {
-      setPage(page + 1);
-      fetchData22(); // Fetch data for the next page
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-      fetchData33(); // Fetch data for the previous page
-    }
-  };
+  }, [searchValue])
 
   useEffect(() => {
-    fetchData(page);
-  }, []); // Include paginationModel.page in dependencies
-
-
-  // useEffect(() => {
-  //   // Fetch data on initial render
-  //   fetchData()
-  // }, [fetchData])
+    // Fetch data on initial render
+    fetchData()
+  }, [fetchData])
 
   const handleEditPermission = ({ id, name, displayname, description }) => {
     setEditValue(id)
@@ -270,7 +184,7 @@ const PermissionsTable = () => {
         console.error('Permission Update failed with status:', response.status)
       }
 
-      console.log('Permission Updated Successfully', response.data)
+      console.log('Permission Updated successfully', response.data)
     } catch (error) {
       toast.error(error.response.data.message)
       console.error('Error Updating Permission', error)
@@ -281,40 +195,12 @@ const PermissionsTable = () => {
     alert(id)
   }
 
-  
-  // useEffect(() => {
-  //   // Filter the original data based on the searchValue
-  //   const searchString = searchValue.toLowerCase()
-
-  //   const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-  //   axios
-  //     .get(`${BASE_URL}/admin/permission?search=${searchString}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${storedToken}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //     .then(response => {
-  //       setData(response.data.data);
-  //       setTotalPage(response.data.last_page)
-  //       setNext_page_url(response.data.next_page_url)
-  //       setPrev_page_url(response.data.prev_page_url)
-  //     })
-  //     .catch(error => {
-  //       if (error.code === "ERR_NETWORK") {
-  //         window.location.reload();
-  //       }
-  
-  //       console.error('An error occurred:', error.code);
-  //     })
-  // }, [searchValue])
-
   useEffect(() => {
     // Filter the original data based on the searchValue
     const searchString = searchValue.toLowerCase()
 
-    
-      const filtered = data?.filter(row => {
+    if (data) {
+      const filtered = data.filter(row => {
         return (
           (row.id?.toString() || '').toLowerCase().includes(searchString) ||
           (row.name || '').toLowerCase().includes(searchString) ||
@@ -325,8 +211,7 @@ const PermissionsTable = () => {
       })
 
       setFilteredData(filtered) // Update the filtered data
-      console.log('filterrrrrrrrrrrrrr',filtered)
-    
+    }
   }, [searchValue, data])
 
   const columns = [
@@ -372,25 +257,19 @@ const PermissionsTable = () => {
             }
             subtitle={
               <Typography sx={{ color: 'text.secondary' }}>
-                Kindly Use this table to manage your permissions.
+                Kindly Use this manage to manage your permissions.
               </Typography>
             }
           />
         </Grid>
         <Grid item xs={12}>
           <Card>
-            {/* <TableHeader value={searchValue}  onChange={e => {
-            e.preventDefault()
-            handleFilter(e.target.value) }} /> */}
-
-            <TableHeader  />
-            <div className="datagridremove">
+            <TableHeader value={searchValue} handleFilter={handleFilter} />
             <DataGrid
               autoHeight
-            //  pagination
-              rows={data}
-             // rows={filteredData}
-            //  getRowId={row => `${row?.id}-${row?.name}`}
+              pagination
+              rows={filteredData}
+              getRowId={row => `${row?.id}-${row?.name}`}
               rowHeight={62}
               columns={columns}
               checkboxSelection
@@ -399,42 +278,6 @@ const PermissionsTable = () => {
               paginationModel={paginationModel}
               onPaginationModelChange={setPaginationModel}
             />
-            </div>
-
-              {/* Pagination Buttons */}
-       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-        <button
-          onClick={handlePrevPage}
-          disabled={page === 1}
-          style={{
-            padding: '8px 12px',
-            marginRight: '5px',
-            backgroundColor: '#f2f2f2',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
-            cursor: page === 1 ? 'not-allowed' : 'pointer',
-            color: page === 1 ? '#999' : '#333'
-          }}
-        >
-          Previous
-        </button>
-        <span style={{ margin: '0 10px' }}>Page {page} of {totalPage}</span>
-        <button
-          onClick={handleNextPage}
-          disabled={page === totalPage}
-          style={{
-            padding: '8px 12px',
-            marginLeft: '5px',
-            backgroundColor: '#f2f2f2',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
-            cursor: page === totalPage ? 'not-allowed' : 'pointer',
-            color: page === totalPage ? '#999' : '#333'
-          }}
-        >
-          Next
-        </button>
-        </div>
             {/* Move the IconButton with handleEditPermission here */}
             {/* <IconButton onClick={() => handleEditPermission(editValue)}>
               <Icon icon='tabler:edit' />
@@ -538,7 +381,7 @@ const PermissionsTable = () => {
                 type='submit'
                 variant='contained'
                 sx={{
-                  backgroundColor: '#71ace0', // Background color
+                  backgroundColor: '#f50606', // Background color
                   color: '#fff', // Text color
                   marginRight: '10px', // Right margin
                   padding: '10px 20px' // Padding
@@ -576,8 +419,8 @@ const PermissionsTable = () => {
 }
 
 PermissionsTable.acl = {
-  action: 'sla:sla-settings-permissions:view',
-  subject: 'sla:sla-settings-permissions:view'
+  action: 'ADMIN',
+  subject: 'ADMIN'
 }
 
 export default PermissionsTable

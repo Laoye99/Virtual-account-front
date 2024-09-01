@@ -85,22 +85,22 @@ const columns = [
     headerName: 'Created by',
     renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row["created-by"] || 0}</Typography>
   },
-  // {
-  //   flex: 0.1,
-  //   minWidth: 100,
-  //   sortable: false,
-  //   field: 'actions',
-  //   headerName: 'Actions',
-  //   renderCell: ({ row }) => (
-  //     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-  //       <Tooltip title='View'>
-  //         <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
-  //           <Icon icon='tabler:eye' />
-  //         </IconButton>
-  //       </Tooltip>
-  //     </Box>
-  //   )
-  // }
+  {
+    flex: 0.1,
+    minWidth: 100,
+    sortable: false,
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: ({ row }) => (
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip title='View'>
+          <IconButton size='small' component={Link} href={`/switch-service/${row.id}`}>
+            <Icon icon='tabler:eye' />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    )
+  }
 ]
 
 const LoanList = () => {
@@ -129,27 +129,6 @@ const LoanList = () => {
       })
   }, [])
 
-  // const handleFilter = val => {
-  //   setSearchValue(val) // Update the search value
-  // }
-
-  // useEffect(() => {
-  //   // Filter the original data based on the searchValue
-  //   const searchString = searchValue.toLowerCase()
-
-  //   const filtered = data?.filter(row => {
-  //     const statusText = row.status === 0 ? 'in-progress' : row.status === 1 ? 'approved' : 'declined'
-
-  //     return (
-  //       row.id.toString().toLowerCase().includes(searchString) ||
-  //       statusText.toLowerCase().includes(searchString) ||
-  //       row.amount.toString().includes(searchString) ||
-  //       row.created_at.toLowerCase().includes(searchString)
-  //     )
-  //   })
-
-  //   setFilteredData(filtered) // Update the filtered data
-  // }, [searchValue, data])
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
 
@@ -159,20 +138,7 @@ const LoanList = () => {
         sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
         <TableHeader toggle={toggleAddUserDrawer} />
-        <Button
-          component={Link}
-          variant='contained'
-          href='/switch-service/approved-switch'
-          startIcon={<Icon icon='tabler:eye' />}
-          sx={{
-            backgroundColor: '#f50606',
-            '&:hover': {
-              backgroundColor: '#f50606' // Change the background color on hover
-            }
-          }}
-        >
-          View Approved Provider
-        </Button>
+
       </CardContent>
 
       <DataGrid
